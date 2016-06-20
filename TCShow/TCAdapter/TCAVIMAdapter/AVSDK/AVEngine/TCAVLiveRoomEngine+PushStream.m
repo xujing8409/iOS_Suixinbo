@@ -347,7 +347,8 @@ static NSString *const kTCAVLiveRoomEnginePushingMap = @"kTCAVLiveRoomEnginePush
         DebugLog(@"开启%@成功, 推流地址:%@ %@", [ws pushTipOf:type], [ws pushUrlOf:pushRequest], ws.pushingMap);
     } errBlock:^(int code, NSString *err) {
         // 推流失败
-        DebugLog(@"开启%@失败 (code = %d, err = %@)(导致推流不成功的原因：因上次推流的时候异常退出时，业务后台去要强行关闭推流，如果不，则下次再使用相同的channelInfo.channelName进行推流，则会不成功)", [ws pushTipOf:type], code, err);
+        // 导致推流不成功的原因：因上次推流的时候异常退出时，业务后台去要强行关闭推流，如果不，则下次再使用相同的channelInfo.channelName进行推流，则会不成功
+        DebugLog(@"开启%@失败 (code = %d, err = %@)", [ws pushTipOf:type], code, err);
         [ws disableHostCtrlState:state];
         
         [ws.pushingMap removeObjectForKey:@(type)];

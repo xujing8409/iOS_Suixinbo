@@ -188,7 +188,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
             }
             DebugLog(@"开启录制成功");
         } errBlock:^(int code, NSString *err) {
-            // 推流失败
+            // 录制失败
             DebugLog(@"开启录制失败 (code = %d, err = %@)", code, err);
             ws.recordTryItem = nil;
             [ws disableHostCtrlState:EAVCtrlState_Record];
