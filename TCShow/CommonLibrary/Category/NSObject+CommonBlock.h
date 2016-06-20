@@ -14,6 +14,8 @@ typedef void (^CommonBlock)(id selfPtr);
 
 typedef void (^CommonCompletionBlock)(id selfPtr, BOOL isFinished);
 
+typedef void (^CommonFinishBlock)(BOOL isFinished);
+
 @interface NSObject (CommonBlock)
 
 - (void)excuteBlock:(CommonBlock)block;

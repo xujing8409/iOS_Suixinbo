@@ -323,7 +323,7 @@ char pinyinFirstLetter(unsigned short hanzi)
 
 - (NSString *)stringByUrlEncoding
 {
-	NSString *url = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)self,  NULL,  (CFStringRef)@"?!@#$^&%*+,:;='\"`<>()[]{}/\\| ",  kCFStringEncodingUTF8));
+	NSString *url = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,  (CFStringRef)self,  NULL,  (CFStringRef)@"!*'();:@&=+$,/?%#[]",  kCFStringEncodingUTF8));
 
     return CommonReturnAutoReleased(url);
 }
