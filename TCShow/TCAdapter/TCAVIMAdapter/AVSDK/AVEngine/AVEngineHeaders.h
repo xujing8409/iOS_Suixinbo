@@ -23,4 +23,6 @@
 
 #import "TCAVMultiLiveRoomEngine.h"
 
+#import "TCAVCallRoomEngine.h"
+
 #endif /* AVEngineHeaders_h */
