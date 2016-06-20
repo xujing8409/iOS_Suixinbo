@@ -11,7 +11,7 @@
 
 
 //  内部错误码转写
-#define TAVLocalizedError(avErrorTip) NSLocalizedString(avErrorTip, avErrorTip)
+#define TAVLocalizedError(intCode) NSLocalizedString(([NSString stringWithFormat:@"%d", (int)intCode]), ([NSString stringWithFormat:@"%d", (int)intCode]))
 
 //==================================================================================
 // 是否是将AVSDK在直播场景下使用
@@ -136,6 +136,15 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 
 #endif
 
+
+
+//==================================================================================
+// 电话场景的支持
+// 是否支持电话场景
+#ifndef kSupportCallScene
+// 默认是不用支持电话场景
+#define kSupportCallScene 0
+#endif
 
 
 //==================================================================================

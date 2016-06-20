@@ -13,11 +13,16 @@
 // 导入TCAdapter宏配置文件
 #import "TCAdapterConfig.h"
 
+#import "TCAVTipTag.h"
 // 导入索引头文件
 
 #import "AVIMAble.h"
 
 #import "TCAVIMMIManager.h"
+
+#if kSupportCallScene
+#import "TCAVCallManager.h"
+#endif
 
 #import "TIMAdapter.h"
 

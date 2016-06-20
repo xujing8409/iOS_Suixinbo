@@ -174,6 +174,24 @@ typedef NS_ENUM(NSInteger, AVIMCommand) {
     
     // 中间预留扩展
     
+    
+    // 添加电话场景的命令字
+    AVIMCMD_Call = 0x080,       // 电话场景起始关键字
+    AVIMCMD_Call_Dialing,       // 正在呼叫
+    AVIMCMD_Call_Connected,     // 连接进行通话
+    AVIMCMD_Call_LineBusy,      // 电话占线
+    AVIMCMD_Call_Disconnected,  // 挂断
+    AVIMCMD_Call_Invite,        // 通话过程中，邀请第三方进入到房间
+    AVIMCMD_Call_NoAnswer,      // 无人接听
+    
+    // 电话内行为
+    AVIMCMD_Call_EnableMic,     // 打开mic
+    AVIMCMD_Call_DisableMic,    // 关闭Mic
+    AVIMCMD_Call_EnableCamera,  // 打开Camera
+    AVIMCMD_Call_DisableCamera, // 关闭互动者Camera
+    // 中间预留其他与电话相关的命令
+    AVIMCMD_Call_AllCount = 0x0B0,  // 0x080---0x0B0 这间的为电话命令
+    
     AVIMCMD_Custom = 0x100,     // 用户自定义消息类型开始值
     
     /*
@@ -196,7 +214,7 @@ typedef NS_ENUM(NSInteger, AVIMCommand) {
     AVIMCMD_Multi_Host_EnableInteractMic,  // 主播打开互动者Mic，C2C消息 ： 2053
     AVIMCMD_Multi_Host_DisableInteractMic, // 主播关闭互动者Mic，C2C消息 ：2054
     AVIMCMD_Multi_Host_EnableInteractCamera, // 主播打开互动者Camera，C2C消息 ：2055
-    AVIMCMD_Multi_Host_DisableInteractCamera, // 主播打开互动者Camera，C2C消息 ： 2056
+    AVIMCMD_Multi_Host_DisableInteractCamera, // 主播关闭互动者Camera，C2C消息 ： 2056
     // ==========================
     
     
