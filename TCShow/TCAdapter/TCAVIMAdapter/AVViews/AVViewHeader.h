@@ -19,4 +19,6 @@
 
 #import "TCAVMultiLiveViewController.h"
 
+#import "TCAVCallViewController.h"
+
 #endif /* AVViewHeader_h */

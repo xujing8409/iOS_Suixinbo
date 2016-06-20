@@ -22,7 +22,7 @@
 @end
 
 
-// QAVEndpoint 无法存储使用，否则会会野指针问题
+// QAVEndpoint 无法存储使用，否则会有野指针问题
 @interface TCAVIMEndpoint : NSObject<AVMultiUserAble>
 
 @property(nonatomic, copy) NSString     *identifier;   ///< 成员id。

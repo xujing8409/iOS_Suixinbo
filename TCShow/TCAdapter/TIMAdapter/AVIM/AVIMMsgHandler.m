@@ -60,6 +60,13 @@
     return self;
 }
 
+- (void)switchToLiveRoom:(id<AVRoomAble>)imRoom
+{
+    _imRoomInfo = imRoom;
+    NSString *cid = [_imRoomInfo liveIMChatRoomId];
+    _chatRoomConversation = [[TIMManager sharedInstance] getConversation:TIM_GROUP receiver:cid];
+}
+
 - (void)setIsCacheMode:(BOOL)isCacheMode
 {
     _isCacheMode = isCacheMode;
@@ -358,10 +365,10 @@
 {
     id<AVIMMsgAble> cachedMsg = [self cacheRecvGroupSender:sender textMsg:msg];
     [self enCache:cachedMsg noCache:^{
-    if (cachedMsg)
-    {
-        [self performSelectorOnMainThread:@selector(onRecvGroupMsgInMainThread:) withObject:cachedMsg waitUntilDone:YES];
-    }
+        if (cachedMsg)
+        {
+            [self performSelectorOnMainThread:@selector(onRecvGroupMsgInMainThread:) withObject:cachedMsg waitUntilDone:YES];
+        }
     }];
 }
 
@@ -380,7 +387,7 @@
         BOOL hasHandle = YES;
         if (type > 0 && sender)
         {
-           
+            
             switch (type)
             {
                 case AVIMCMD_EnterLive:
@@ -388,16 +395,16 @@
                     AVIMMsg *enterMsg = [self onRecvSenderEnterLiveRoom:sender];
                     
                     [self enCache:enterMsg noCache:^{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        DebugLog(@"收到消息：%@", enterMsg);
-                        if (enterMsg)
-                        {
-                            [_roomIMListner onIMHandler:self recvGroupMsg:enterMsg];
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            DebugLog(@"收到消息：%@", enterMsg);
+                            if (enterMsg)
+                            {
+                                [_roomIMListner onIMHandler:self recvGroupMsg:enterMsg];
+                            }
                         });
                     }];
                     
-                        
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [_roomIMListner onIMHandler:self joinGroup:@[sender]];
                     });
@@ -408,16 +415,16 @@
                 {
                     AVIMMsg *exitMsg = [self onRecvSenderExitLiveRoom:sender];
                     [self enCache:exitMsg noCache:^{
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        DebugLog(@"收到消息：%@", exitMsg);
-                        
-                        if (exitMsg)
-                        {
-                            [_roomIMListner onIMHandler:self recvGroupMsg:exitMsg];
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            DebugLog(@"收到消息：%@", exitMsg);
+                            
+                            if (exitMsg)
+                            {
+                                [_roomIMListner onIMHandler:self recvGroupMsg:exitMsg];
+                            }
                         });
                     }];
-
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([[sender imUserId] isEqualToString:[[_imRoomInfo liveHost] imUserId]])
                         {
@@ -441,10 +448,12 @@
         
         if (!hasHandle)
         {
+            __weak id<AVIMMsgListener> wrl = _roomIMListner;
+            __weak AVIMMsgHandler *ws = self;
             [self enCache:cachedMsg noCache:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_roomIMListner onIMHandler:self recvCustomGroup:cachedMsg];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [wrl onIMHandler:ws recvCustomGroup:cachedMsg];
+                });
             }];
         }
     }
@@ -460,14 +469,14 @@
 {
     id<AVIMMsgAble> cachedMsg =[self cacheRecvC2CSender:sender customMsg:msg];
     [self enCache:cachedMsg noCache:^{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Demo中此类不处理C2C消息
-        if (cachedMsg)
-        {
-            DebugLog(@"收到消息：%@", cachedMsg);
-            [_roomIMListner onIMHandler:self recvCustomC2C:cachedMsg];
-        }
-    });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Demo中此类不处理C2C消息
+            if (cachedMsg)
+            {
+                DebugLog(@"收到消息：%@", cachedMsg);
+                [_roomIMListner onIMHandler:self recvCustomC2C:cachedMsg];
+            }
+        });
     }];
     
 }
@@ -477,7 +486,7 @@
     AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:msg];
     if (!_isPureMode)
     {
-    [amsg prepareForRender];
+        [amsg prepareForRender];
     }
     return amsg;
 }
@@ -487,7 +496,7 @@
     AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:@"进来了"];
     if (!_isPureMode)
     {
-    [amsg prepareForRender];
+        [amsg prepareForRender];
     }
     return amsg;
 }
@@ -496,7 +505,7 @@
     AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:@"离开了"];
     if (!_isPureMode)
     {
-    [amsg prepareForRender];
+        [amsg prepareForRender];
     }
     return amsg;
 }
@@ -508,7 +517,7 @@
     cmsg.sender = sender;
     if (!_isPureMode)
     {
-    [cmsg prepareForRender];
+        [cmsg prepareForRender];
     }
     return cmsg;
 }
@@ -520,7 +529,7 @@
     cmsg.sender = sender;
     if (!_isPureMode)
     {
-    [cmsg prepareForRender];
+        [cmsg prepareForRender];
     }
     return cmsg;
     

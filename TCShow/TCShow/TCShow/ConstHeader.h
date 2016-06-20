@@ -33,7 +33,7 @@
 #define kSdkAppId       @"1400001692"
 #define kSdkAccountType @"884"
 
-
+#define kIsTCShowSupportIMCustom 1
 //=========================================================
 
 #define kDefaultUserIcon            [UIImage imageNamed:@"default_head@2x.jpg"]
@@ -45,6 +45,6 @@
 #define kAppMiddleTextFont      [UIFont systemFontOfSize:14]
 #define kAppSmallTextFont       [UIFont systemFontOfSize:12]
 
-#define kIsTCShowSupportIMCustom 1
+
 
 #endif /* ConstHeader_h */

@@ -15,6 +15,7 @@
 
 - (void)dealloc
 {
+    DebugLog(@"界面[%@ : %p] 释放成功", [self class], self);
     _roomEngine = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[TIMManager sharedInstance] setUserStatusListener:[IMAPlatform sharedInstance]];
@@ -63,12 +64,12 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
             // 待退出直播间成功后再调此方法到登录界面
             ip.offlineExitLivingBlock = ^{
                 [[IMAPlatform sharedInstance] logout:^{
-                    [[HUDHelper sharedInstance] tipMessage:@"退出成功" delay:0.5 completion:^{
+                    [ws tipMessage:@"退出成功" delay:0.5 completion:^{
                         ws.navigationController.navigationBarHidden = NO;
                         [[IMAAppDelegate sharedAppDelegate] enterLoginUI];
                     }];
                 } fail:^(int code, NSString *msg) {
-                    [[HUDHelper sharedInstance] tipMessage:@"退出成功" delay:0.5 completion:^{
+                    [ws tipMessage:@"退出成功" delay:0.5 completion:^{
                         ws.navigationController.navigationBarHidden = NO;
                         [[IMAAppDelegate sharedAppDelegate] enterLoginUI];
                     }];
@@ -103,11 +104,12 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     self.view.backgroundColor = kBlackColor;
     self.navigationController.navigationBarHidden = YES;
     
+    if ([self isImmediatelyEnterLive])
+    {
     [self checkNetWorkBeforeLive];
+    }
     
 }
-
-
 
 
 - (void)onAudioInterruption:(NSNotification*)notification
@@ -160,24 +162,39 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 - (void)startEnterLive
 {
     [self addPhoneListener];
+    
+    if (_isSwitchingRoom)
+    {
+        _roomInfo = _switchingToRoom;
+        _isHost = [_currentUser isEqual:[_roomInfo liveHost]];
+        
+        // 观众
+        [[HUDHelper sharedInstance] syncLoading:@"正在切换房间"];
+        DebugLog(@"-----观众>>>>>观众开始进入直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
+        [_roomEngine switchToLive:_roomInfo];
+        _switchingToRoom = nil;
+    }
+    else
+    {
     if (_isHost)
     {
         // 主播
         [[HUDHelper sharedInstance] syncLoading:@"正在创建房间"];
-        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         DebugLog(@"-----主播>>>>>主播开始直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
         [_roomEngine enterLive:_roomInfo];
-        //        });
+            
     }
     else
     {
         // 观众
         [[HUDHelper sharedInstance] syncLoading:@"正在加入房间"];
-        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
         DebugLog(@"-----观众>>>>>观众开始进入直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
         [_roomEngine enterLive:_roomInfo];
-        //        });
     }
+}
+
+
 }
 
 
@@ -264,6 +281,22 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     _isExiting = YES;
 }
 
+// 切换直播间
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    if ([_roomEngine isRoomRunning] && _isHost)
+    {
+        _isSwitchingRoom = YES;
+        _switchingToRoom = room;
+        [self checkAndEnterAVRoom];
+        return YES;
+    }
+    DebugLog(@"当前房间状态不正确，不允许切换");
+    
+    
+    return NO;
+}
+
 // 真正退出房间
 - (void)exitLive
 {
@@ -283,7 +316,15 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 #if TARGET_IPHONE_SIMULATOR
     [self onExitLiveSucc:YES tipInfo:@"退出成功"];
 #else
+    if (_roomEngine)
+    {
     [_roomEngine exitLive];
+    }
+    else
+    {
+        DebugLog(@"还未启动RoonRngine");
+        [self onAVEngine:_roomEngine exitRoom:_roomInfo succ:YES tipInfo:@"退出成功"];
+    }
 #endif
 }
 // HOST/Guest进入直播回调
@@ -294,6 +335,15 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     [self addNetwokChangeListner];
     }
     [self onEnterLiveSucc:succ tipInfo:tip];
+}
+
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine switchRoom:(id<AVRoomAble>)room succ:(BOOL)succ tipInfo:(NSString *)tip
+{
+    DebugLog(@"切换房间%@", succ ? @"成功" : @"失败");
+    _isSwitchingRoom = NO;
+    _switchingToRoom = nil;
+    [self onEnterLiveSucc:succ tipInfo:tip];
+    
 }
 
 
@@ -358,7 +408,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 - (void)onAVEngineWaitFirstRemoteFrameTimeOut:(TCAVBaseRoomEngine *)engine
 {
     // do nothing
-    [[HUDHelper sharedInstance] tipMessage:@"请求画面超时" delay:1 completion:^{
+    [self tipMessage:@"请求画面超时" delay:1 completion:^{
         [self exitLive];
     }];
 }
@@ -384,16 +434,23 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 @implementation TCAVBaseViewController (ProtectedMethod)
 
+- (BOOL)isImmediatelyEnterLive
+{
+    return YES;
+}
 
 // 添加电话监听: 进入直播成功后监听
 - (void)addPhoneListener
 {
+    if (!_callCenter)
+    {
     _callCenter = [[CTCallCenter alloc] init];
     __weak TCAVBaseViewController *ws = self;
     _callCenter.callEventHandler = ^(CTCall *call) {
         // 需要在主线程执行
         [ws performSelectorOnMainThread:@selector(handlePhostEvent:) withObject:call waitUntilDone:YES];
     };
+}
 }
 
 - (void)handlePhostEvent:(CTCall *)call
@@ -448,8 +505,11 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 - (void)createRoomEngine
 {
+    if (!_roomEngine)
+    {
     _roomEngine = [[TCAVBaseRoomEngine alloc] initWith:_currentUser];
     _roomEngine.delegate = self;
+}
 }
 
 
@@ -515,14 +575,18 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 - (void)onExitLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
 {
-    
-    [[HUDHelper sharedInstance] tipMessage:tip delay:0.5 completion:^{
+    [self tipMessage:tip delay:0.5 completion:^{
         [self onExitLiveUI];
     }];
 }
 
 - (void)addAVSDKObservers
 {
+    if (_isSwitchingRoom)
+    {
+        return;
+    }
+    
     NSError* error=nil;
     AVAudioSession *aSession = [AVAudioSession sharedInstance];
     
@@ -573,7 +637,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
                 UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:@"网络提示" message:tip cancelButtonTitle:@"退出" otherButtonTitles:@[[NSString stringWithFormat:@"继续%@", ac]] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                     if (buttonIndex == 0)
                     {
-                        [[HUDHelper sharedInstance] tipMessage:@"退出成功" delay:2 completion:^{
+                        [ws tipMessage:@"退出成功" delay:2 completion:^{
                             [ws onExitLiveUI];
                         }];
                     }
@@ -599,7 +663,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         {
             // 当前无网络
             NSString *tip = [NSString stringWithFormat:@"当前无网络，无法%@直播", _isHost ? @"创建" : @"加入"];
-            [[HUDHelper sharedInstance] tipMessage:tip delay:2 completion:^{
+            [self tipMessage:tip delay:2 completion:^{
                 [self onExitLiveUI];
             }];
         }
@@ -709,6 +773,11 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     self.KVOController = nil;
 }
 
+
+- (void)tipMessage:(NSString *)msg delay:(CGFloat)seconds completion:(void (^)())completion
+{
+    [[HUDHelper sharedInstance] tipMessage:msg delay:seconds completion:completion];
+}
 
 @end
 

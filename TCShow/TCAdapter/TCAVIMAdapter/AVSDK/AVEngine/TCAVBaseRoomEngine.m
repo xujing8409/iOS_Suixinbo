@@ -10,13 +10,7 @@
 
 
 @implementation TCAVBaseRoomEngine
-{
-    BOOL        _hasShowFirstRemoteFrame;
-#if kSupportTimeStatistics
-    BOOL        _hasShowLocalFirstFrame;
-    BOOL        _hasSemiAutoCameraVideo;
-#endif
-}
+
 
 - (void)dealloc
 {
@@ -99,6 +93,62 @@
     [self onRealEnterLive:room];
 }
 
+
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    if (!_isRoomAlive)
+    {
+        DebugLog(@"上一次的房间还未进入成功，不能进行切换房间");
+        return NO;
+    }
+    
+    if (room == nil)
+    {
+        DebugLog(@"要切换的房间为空");
+        return NO;
+    }
+    
+    if ([room liveAVRoomId] == [_roomInfo liveAVRoomId])
+    {
+        DebugLog(@"要切换的房间与当前的房间一致，不用切换");
+        return NO;
+    }
+    
+    _switchingToRoom = room;
+    [self exitLive];
+    return YES;
+    
+}
+
+- (void)onExitRoomCompleteToSwitchToLive
+{
+    if (_switchingToRoom)
+    {
+        _isAtForeground = YES;
+        _hasRecvSemiAutoCamera = NO;
+        [self stopFirstFrameTimer];
+        _hasStatisticFirstFrame = NO;
+
+        
+#if kSupportTimeStatistics
+        // 用于进出房间时间统计
+        _logStartDate = nil;
+        _hasShowLocalFirstFrame = NO;
+        _hasSemiAutoCameraVideo = NO;
+#endif
+        _hasShowFirstRemoteFrame = NO;
+        
+        DebugLog(@"开始从房间［%@, %d］切换房间［%@, %d］", [_roomInfo liveTitle], [_roomInfo liveAVRoomId], [_switchingToRoom liveTitle], [_switchingToRoom liveAVRoomId]);
+        [[HUDHelper sharedInstance] syncLoading:TAVLocalizedError(ETCAVBaseRoomEngine_SwitchRoom_Tip)];
+        [self enterLive:_switchingToRoom];
+        _switchingToRoom = nil;
+    }
+    else
+    {
+        [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_ExitRoom_Succ_Tip)];
+    }
+}
+
 // 停止直播
 - (void)exitLive
 {
@@ -106,8 +156,15 @@
     
     if (!_isRoomAlive)
     {
+        if (_switchingToRoom)
+        {
+            [self onExitRoomCompleteToSwitchToLive];
+        }
+        else
+        {
         // 都没进房间过，直接返回退出成功
-        [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:@"退出成功"];
+            [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_ExitRoom_Succ_Tip)];
+        }
         return;
     }
     
@@ -115,8 +172,15 @@
     
     if (!_avContext)
     {
-        DebugLog(@"avContext已销毁");
-        [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:@"退出成功"];
+        if (_switchingToRoom)
+        {
+            [self onExitRoomCompleteToSwitchToLive];
+        }
+        else
+        {
+            DebugLog(@"avContext已销毁");
+            [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_ExitRoom_Succ_Tip)];
+        }
         return;
     }
 #if kSupportTimeStatistics
@@ -165,7 +229,7 @@
             TCAVIMLog(@"进入AVRoom出错:%d", (int)result);
             __weak TCAVBaseRoomEngine *ws = self;
             [_avContext stopContext:^(QAVResult result) {
-                [ws onContextCloseComplete:@"进入房间失败"];
+                [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterRoom_Fail_Tip)];
             }];
         }
     }
@@ -175,7 +239,7 @@
         // 检查当前网络
         __weak TCAVBaseRoomEngine *ws = self;
         [_avContext stopContext:^(QAVResult result) {
-            [ws onContextCloseComplete:@"当前网络不可用"];
+            [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_Network_Invailed_Tip)];
         }];
     }
 }
@@ -207,7 +271,7 @@
         // 不
         __weak TCAVBaseRoomEngine *ws = self;
         [_avContext stopContext:^(QAVResult result) {
-            [ws onContextCloseComplete:@"进入AV房间失败"];
+            [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterAVRoom_Fail_Tip)];
         }];
 #endif
         
@@ -264,6 +328,13 @@
 #endif
         [_delegate onAVEngine:self recvSemiAutoVideo:identifierList];
         _hasRecvSemiAutoCamera = YES;
+        
+        // 防止半自动下，也会有画面无法到达情况
+        DebugLog(@"开始首帧画面计时");
+        _hasStatisticFirstFrame = YES;
+        
+        _firstFrameTimer = [NSTimer scheduledTimerWithTimeInterval:[self maxWaitFirstFrameSec] target:self selector:@selector(onWaitFirstFrameTimeOut) userInfo:nil repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:_firstFrameTimer forMode:NSRunLoopCommonModes];
     }
 }
 
@@ -465,7 +536,17 @@
     if ([room liveAVRoomId] == 0)
     {
         DebugLog(@"房间id为空");
-        [_delegate onAVEngine:self enterRoom:room succ:NO tipInfo:@"房间信息不正确"];
+        if (_isSwitchingRoom)
+        {
+            if ([_delegate respondsToSelector:@selector(onAVEngine:switchRoom:succ:tipInfo:)])
+            {
+                [_delegate onAVEngine:self switchRoom:_roomInfo succ:NO tipInfo:@"房间信息不正确"];
+            }
+        }
+        else
+        {
+            [_delegate onAVEngine:self enterRoom:room succ:NO tipInfo:@"房间信息不正确"];
+        }
         return;
     }
 #if kSupportTimeStatistics
@@ -474,7 +555,12 @@
         _logStartDate = [NSDate date];
     }
 #endif
+    
+#if kIsUseAVSDKAsLiveScene
     TCAVIMLog(@"-----[%@]>>>>>开始进入直播间：%@", [self isHostLive] ? @"主播" : @"观众", _isUseSharedContext ? @"" : @"StartContext");
+#else
+    TCAVIMLog(@"-----[%@]>>>>>开始进入直播间：%@", [self isHostLive] ? @"主播" : @"观众", @"StartContext");
+#endif
     _roomInfo = room;
     
     
@@ -559,7 +645,7 @@
 - (void)onEnterAVRoomSucc
 {
     _isRoomAlive = YES;
-    NSString *tip = [self isHostLive] ? @"创建直播间成功" : @"进入直播间成功";
+    NSString *tip = [self isHostLive] ? TAVLocalizedError(ETCAVBaseRoomEngine_Host_EnterAVRoom_Succ_Tip) : TAVLocalizedError(ETCAVBaseRoomEngine_Guest_EnterAVRoom_Succ_Tip);
     
 #if kSupportTimeStatistics
     
@@ -568,7 +654,18 @@
 #else
     DebugLog(@"%@", tip);
 #endif
-    [_delegate onAVEngine:self enterRoom:_roomInfo succ:YES tipInfo:tip];
+    
+    if (_isSwitchingRoom)
+    {
+        if ([_delegate respondsToSelector:@selector(onAVEngine:switchRoom:succ:tipInfo:)])
+        {
+            [_delegate onAVEngine:self switchRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_SwitchRoom_Succ_Tip)];
+        }
+    }
+    else
+    {
+        [_delegate onAVEngine:self enterRoom:_roomInfo succ:YES tipInfo:tip];
+    }
 }
 
 - (void)onContextCloseComplete:(NSString *)tip
@@ -578,7 +675,15 @@
 #else
     DebugLog(@"退房成功");
 #endif
-    [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo: tip ? tip : @"退出成功"];
+    
+    if (_switchingToRoom)
+    {
+        [self onExitRoomCompleteToSwitchToLive];
+    }
+    else
+    {
+        [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo: tip ? tip : TAVLocalizedError(ETCAVBaseRoomEngine_ExitRoom_Succ_Tip)];
+    }
 }
 
 - (NSString *)eventTip:(QAVUpdateEvent)event

@@ -36,6 +36,11 @@
     return [[_mainUser imUserId] isEqualToString:userid];
 }
 
+- (BOOL)hasInteractUsers
+{
+    return _multiResource.count > 0;
+}
+
 // 是否是互动观众
 - (BOOL)isInteractUser:(id<IMUserAble>)user
 {
@@ -97,38 +102,6 @@
 }
 
 
-- (BOOL)addInteractUser:(id<AVMultiUserAble>)user
-{
-    if (!user)
-    {
-        return NO;
-    }
-    // 检查是否已在互动
-    id<AVMultiUserAble> iu = [self interactUserOf:user];
-    if (iu)
-    {
-        DebugLog(@"%@ 正在互动中，不再重复添加", user);
-        return NO;
-    }
-    
-    
-    NSInteger count = [_roomEngine canRequestMore];
-    if (count <= 0)
-    {
-        DebugLog(@"已达到请求上限，不能再请求");
-        [[HUDHelper sharedInstance] tipMessage:[NSString stringWithFormat:@"最多只能有%d个互动观众", (int)[_roomEngine maxRequestViewCount]]];
-        return NO;
-    }
-    
-    // 如果在不继续请求
-    if (!_multiResource)
-    {
-        _multiResource = [[NSMutableArray alloc] init];
-    }
-    
-    [_multiResource addObject:user];
-    return YES;
-}
 
 - (id<AVMultiUserAble>)removeInteractUser:(id<AVMultiUserAble>)user
 {
@@ -191,6 +164,31 @@
                 completion(NO, @"不在互动中");
             }
         }
+    }
+}
+
+- (void)registAsMainUser:(id<AVMultiUserAble>)user
+{
+    // main已赋值时，不能再处理
+    if (_mainUser)
+    {
+        DebugLog(@"主屏幕用户已存在，不能再注册");
+        return;
+    }
+    
+    BOOL hasAdd = [self addInteractUser:user];
+    
+    if (hasAdd)
+    {
+        _mainUser = user;
+    
+        // 设置界面相关
+        [_mainUser setAvInvisibleInteractView:nil];
+        [_mainUser setAvInteractArea:[_preview bounds]];
+        
+        
+        [_preview addRenderFor:_mainUser];
+        
     }
 }
 
@@ -338,6 +336,8 @@
             else
             {
                 [_preview removeRenderOf:iu];
+                // TODO:下面这句有可能会有影响
+                _mainUser = nil;
             }
             
             // 回收窗口
@@ -520,6 +520,44 @@
     }
 }
 
+
+@end
+
+
+@implementation TCAVIMMIManager (ProtectedMethod)
+
+- (BOOL)addInteractUser:(id<AVMultiUserAble>)user
+{
+    if (!user)
+    {
+        return NO;
+    }
+    // 检查是否已在互动
+    id<AVMultiUserAble> iu = [self interactUserOf:user];
+    if (iu)
+    {
+        DebugLog(@"%@ 正在互动中，不再重复添加", user);
+        return NO;
+    }
+    
+    
+    NSInteger count = [_roomEngine canRequestMore];
+    if (count <= 0)
+    {
+        DebugLog(@"已达到请求上限，不能再请求");
+        [[HUDHelper sharedInstance] tipMessage:[NSString stringWithFormat:@"最多只能有%d个互动观众", (int)[_roomEngine maxRequestViewCount]]];
+        return NO;
+    }
+    
+    // 如果在不继续请求
+    if (!_multiResource)
+    {
+        _multiResource = [[NSMutableArray alloc] init];
+    }
+    
+    [_multiResource addObject:user];
+    return YES;
+}
 
 @end
 

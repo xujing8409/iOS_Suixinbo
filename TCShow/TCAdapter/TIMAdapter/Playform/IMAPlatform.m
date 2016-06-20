@@ -70,14 +70,17 @@ static Class kHostClass = Nil;
     TIMManager *manager = [TIMManager sharedInstance];
     
     [manager setEnv:cfg.environment];
-#if 0
-    [manager initLogSettings:YES logPath:[manager getLogPath]];
-    [manager setLogLevel:cfg.logLevel];
-#else
     [manager initLogSettings:cfg.enableConsoleLog logPath:[manager getLogPath]];
     [manager setLogLevel:cfg.logLevel];
-#endif
+    [manager disableAutoReport];
     
+    [manager initSdk:[kSdkAppId intValue] accountType:kSdkAccountType];
+    
+    [manager setConnListener:self];
+    
+    [manager setRefreshListener:self];
+    
+    [manager setUserStatusListener:self];
     
 #if DEBUG
 #else
@@ -100,13 +103,7 @@ static Class kHostClass = Nil;
     [manager initFriendshipSetting:setting];
     [manager enableFriendshipProxy];
     
-    [manager initSdk:[kSdkAppId intValue] accountType:kSdkAccountType];
     
-    [manager setConnListener:self];
-    
-    [manager setRefreshListener:self];
-    
-    [manager setUserStatusListener:self];
 }
 
 
@@ -138,7 +135,7 @@ static Class kHostClass = Nil;
     // 被踢下线，则清空单例中的数据，再登录后再重新创建
     [self saveToLocal];
     
-    [[TIMManager sharedInstance] setFriendshipProxyListener:nil];
+    // [[TIMManager sharedInstance] setFriendshipProxyListener:nil];
 }
 
 - (void)logout:(TIMLoginSucc)succ fail:(TIMFail)fail

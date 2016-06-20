@@ -14,9 +14,9 @@
 @required
 
 // 收到自定义的TIMAdapter内的多人互动消息
-- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomC2CMultiMsg:(AVIMCMD *)msg;
+- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomC2CMultiMsg:(id<AVIMMsgAble>)msg;
 
-- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroupMultiMsg:(AVIMCMD *)msg;
+- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroupMultiMsg:(id<AVIMMsgAble>)msg;
 
 @end
 

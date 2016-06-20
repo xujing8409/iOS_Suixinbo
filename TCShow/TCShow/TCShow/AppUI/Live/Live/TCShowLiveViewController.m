@@ -308,9 +308,9 @@
     [_liveView.msgView insertMsg:msg];
 }
 
-- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(AVIMCMD *)msg
+- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(id<AVIMMsgAble>)msg
 {
-    switch (msg.userAction)
+    switch ([msg msgType])
     {
         case AVIMCMD_Praise:
         {

@@ -13,6 +13,6 @@
 - (void)login:(TIMLoginParam *)param succ:(TIMLoginSucc)succ fail:(TIMFail)fail;
 
 // 配置进入主界面后的要拉取的数据
-- (void)configOnEnterMainUIWith:(TIMLoginParam *)param;
+- (void)configOnLoginSucc:(TIMLoginParam *)param;
 
 @end

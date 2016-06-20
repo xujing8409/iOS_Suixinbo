@@ -45,15 +45,22 @@
         _msgHandler = [[MultiAVIMMsgHandler alloc] initWith:_roomInfo];
         _multiManager.msgHandler = (MultiAVIMMsgHandler *)_msgHandler;
     }
+    else
+    {
+        [_msgHandler switchToLiveRoom:_roomInfo];
+    }
 }
 
 - (void)createRoomEngine
 {
+    if (!_roomEngine)
+    {
     id<AVMultiUserAble> ah = (id<AVMultiUserAble>)_currentUser;
     [ah setAvMultiUserState:_isHost ? AVMultiUser_Host : AVMultiUser_Guest];
     [ah setAvCtrlState:[self defaultAVHostConfig]];
     _roomEngine = [[TCAVMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVMultiUserAble>)_currentUser enableChat:_enableIM];
     _roomEngine.delegate = self;
+}
 }
 
 // 外部分配user窗口位置，此处可在界面显示相应的小窗口
@@ -166,7 +173,7 @@
             if (iiu)
             {
                 NSString *tip = [NSString stringWithFormat:@"互动观众(%@)退出直播", iuid];
-                [[HUDHelper sharedInstance] tipMessage:tip delay:2 completion:^{
+                [self tipMessage:tip delay:2 completion:^{
                     [_multiManager forcedCancelInteractUser:iiu];
                 }];
             }

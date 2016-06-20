@@ -32,6 +32,11 @@
     NSString                        *_audioSesstionCategory;    // 进入房间时的音频类别
     NSString                        *_audioSesstionMode;        // 进入房间时的音频模式
     AVAudioSessionCategoryOptions   _audioSesstionCategoryOptions;       // 进入房间时的音频类别选项
+    
+@protected
+    BOOL                           _isSwitchingRoom;
+    id<AVRoomAble>                 _switchingToRoom;
+    
 }
 
 @property (nonatomic, readonly) BOOL isExiting;
@@ -50,11 +55,21 @@
 // 外部通过此方法更新_isExiting的值
 - (void)willExitLiving;
 
+// 切换直播间（当前必须正在直播间才可以切换）
+// 当前用户若为主播，不允许切换
+- (BOOL)switchToLive:(id<AVRoomAble>)room;
+
 @end
 
 
 // 供子类重写
 @interface TCAVBaseViewController (ProtectedMethod)
+
+// 是否直接进入到直播
+// 直播/互动直播场下: 直接进入, return YES
+// 电话场景下：等电话拔电话流程结束后，再进入 , return NO
+
+- (BOOL)isImmediatelyEnterLive;
 
 // 添加电话监听: 进入直播成功后监听
 - (void)addPhoneListener;
@@ -114,5 +129,7 @@
 
 // 退出直播回调
 - (void)onExitLiveSucc:(BOOL)succ tipInfo:(NSString *)tip;
+
+- (void)tipMessage:(NSString *)msg delay:(CGFloat)seconds completion:(void (^)())completion;
 
 @end

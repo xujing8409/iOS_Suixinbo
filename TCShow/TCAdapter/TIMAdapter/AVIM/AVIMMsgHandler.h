@@ -88,6 +88,10 @@
 // 外部逻辑保证imRoom对应的直播聊天室已经创建成功
 - (instancetype)initWith:(id<AVRoomAble>)imRoom;
 
+// 切换到对应的直播间
+// 外部保证imRoom的正确性
+- (void)switchToLiveRoom:(id<AVRoomAble>)imRoom;
+
 // 进入直播间
 - (void)enterLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;
 

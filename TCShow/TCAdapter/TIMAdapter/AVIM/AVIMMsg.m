@@ -71,6 +71,27 @@
     }
     return self;
 }
+#if kSupportCallScene
++ (instancetype)parseCustom:(TIMCustomElem *)elem
+{
+    NSData *data = elem.data;
+    if (data)
+    {
+        NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        AVIMCMD *parse = [NSObject parse:[AVIMCMD class] jsonString:dataStr];
+        if (parse.msgType > AVIMCMD_None)
+        {
+            parse.callInfo = [parse.actionParam objectFromJSONString];
+            
+            return parse;
+        }
+    }
+    
+    DebugLog(@"自定义消息不是AVIMCMD类型");
+    return nil;
+    
+}
+#endif
 
 - (NSData *)packToSendData
 {

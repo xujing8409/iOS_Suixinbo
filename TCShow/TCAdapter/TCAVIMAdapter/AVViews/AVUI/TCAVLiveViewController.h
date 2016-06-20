@@ -95,4 +95,6 @@
 
 - (void)releaseIMMsgHandler;
 
+- (void)onAVLiveEnterLiveSucc:(BOOL)succ tipInfo:(NSString *)tip;
+
 @end

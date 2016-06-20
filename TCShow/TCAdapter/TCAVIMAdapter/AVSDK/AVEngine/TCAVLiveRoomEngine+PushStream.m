@@ -419,14 +419,16 @@ static NSString *const kTCAVLiveRoomEnginePushingMap = @"kTCAVLiveRoomEnginePush
         [[IMSdkInt sharedInstance] requestMultiVideoStreamerStop:req.roomInfo channelIDs:@[@(req.pushResp.channelID)] okBlock:^{
             if (completion)
             {
-                completion(YES, [NSString stringWithFormat:@"停止%@成功", tip]);
+                NSString *tipFormat = TAVLocalizedError(ETCAVLiveRoomEngine_StopPushStream_Format_Succ_Tip);
+                completion(YES, [NSString stringWithFormat:tipFormat, tip]);
             }
             [ws.pushingMap removeObjectForKey:@(item.tryIndex)];
         } errBlock:^(int code, NSString *err) {
             DebugLog(@"停止%@失败 (code = %d, err = %@)", tip, code, err);
             if (completion)
             {
-                completion(YES, [NSString stringWithFormat:@"停止%@失败", tip]);
+                NSString *tipFormat = TAVLocalizedError(ETCAVLiveRoomEngine_StopPushStream_Format_Fail_Tip);
+                completion(YES, [NSString stringWithFormat:tipFormat, tip]);
             }
             [ws.pushingMap removeObjectForKey:@(item.tryIndex)];
         }];
@@ -456,7 +458,7 @@ static NSString *const kTCAVLiveRoomEnginePushingMap = @"kTCAVLiveRoomEnginePush
                     DebugLog(@"停止所有推流成功");
                     if (completion)
                     {
-                        completion(YES, @"停止推流成功");
+                        completion(YES, TAVLocalizedError(ETCAVLiveRoomEngine_PushStream_ExitStop_Succ_Tip));
                     }
                 }
             }];
@@ -467,7 +469,7 @@ static NSString *const kTCAVLiveRoomEnginePushingMap = @"kTCAVLiveRoomEnginePush
         DebugLog(@"没有进行推流");
         if (completion)
         {
-            completion(YES, @"当前没有推流");
+            completion(YES, TAVLocalizedError(ETCAVLiveRoomEngine_ExitNoPushStream_Succ_Tip));
         }
     }
 }

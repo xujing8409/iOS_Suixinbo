@@ -35,8 +35,13 @@
 
 - (instancetype)initWith:(NSInteger)command;
 - (instancetype)initWith:(NSInteger)command param:(NSString *)param;
+#if kSupportCallScene
++ (instancetype)parseCustom:(TIMCustomElem *)elem;
+#endif
 
 // 将消息封装成Json，然后下发
 - (NSData *)packToSendData;
 
 @end
+
+

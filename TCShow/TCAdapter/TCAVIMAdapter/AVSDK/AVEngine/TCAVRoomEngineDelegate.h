@@ -80,5 +80,8 @@
 // 添加录制返回
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine onRecord:(BOOL)succ recordRequest:(TCAVLiveRoomRecordRequest *)req;
 
+
+@optional
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine switchRoom:(id<AVRoomAble>)room succ:(BOOL)succ tipInfo:(NSString *)tip;
 @end
 

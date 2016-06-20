@@ -172,6 +172,19 @@
     }
 }
 
+// 切换直播间
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    BOOL succ = [super switchToLive:room];
+    if (succ)
+    {
+        // 界面停止渲染
+        [_livePreview stopPreview];
+    }
+    return succ;
+}
+
+
 
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine enableCamera:(BOOL)succ tipInfo:(NSString *)tip
 {
@@ -179,7 +192,7 @@
     if (!succ)
     {
         DebugLog(@"----->>>>>打开相机失败");
-        [[HUDHelper sharedInstance] tipMessage:tip delay:2 completion:^{
+        [self tipMessage:tip delay:2 completion:^{
             [self alertExitLive];
         }];
     }
@@ -281,6 +294,10 @@
     {
         _msgHandler = [[AVIMMsgHandler alloc] initWith:_roomInfo];
     }
+    else
+    {
+        [_msgHandler switchToLiveRoom:_roomInfo];
+    }
 }
 
 - (void)releaseIMMsgHandler
@@ -291,16 +308,17 @@
 
 - (void)createRoomEngine
 {
+    if (!_roomEngine)
+    {
     id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
     [ah setAvCtrlState:[self defaultAVHostConfig]];
     _roomEngine = [[TCAVLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
     _roomEngine.delegate = self;
-    
     if (!_isHost)
     {
         [_liveView setRoomEngine:_roomEngine];
     }
-    
+    }
 }
 
 - (void)onExitLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
@@ -317,6 +335,11 @@
 {
     [super onEnterLiveSucc:succ tipInfo:tip];
     
+    [self onAVLiveEnterLiveSucc:succ tipInfo:tip];
+}
+
+- (void)onAVLiveEnterLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
+{
     if (succ)
     {
         if (_enableIM)

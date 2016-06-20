@@ -70,6 +70,9 @@
 		92BC94631CBE1E52003D9EF1 /* PublishLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BC94621CBE1E52003D9EF1 /* PublishLiveViewController.m */; };
 		92BC94671CBE1F2E003D9EF1 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BC94661CBE1F2E003D9EF1 /* UIPlaceHolderTextView.m */; };
 		92BC946B1CBE5E72003D9EF1 /* WebModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BC946A1CBE5E72003D9EF1 /* WebModels.m */; };
+		92CD1D111D12CB3B00E43AF0 /* TCAVCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1D101D12CB3B00E43AF0 /* TCAVCallViewController.m */; };
+		92CD1D151D12CCF100E43AF0 /* TCAVCallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1D131D12CCF100E43AF0 /* TCAVCallManager.m */; };
+		92CD1D181D12CD3200E43AF0 /* TCAVCallRoomEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1D171D12CD3200E43AF0 /* TCAVCallRoomEngine.m */; };
 		92D2C9B71CC4D60D00501760 /* TCShowLiveMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2C9B61CC4D60D00501760 /* TCShowLiveMsg.m */; };
 		92D2CB831CC4E4D200501760 /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2C9E41CC4E4D200501760 /* ADTransition.m */; };
 		92D2CB841CC4E4D200501760 /* ADFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2C9E71CC4E4D200501760 /* ADFlipTransition.m */; };
@@ -372,6 +375,13 @@
 		92BC94681CBE1F3B003D9EF1 /* CustomUIHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomUIHeader.h; sourceTree = "<group>"; };
 		92BC94691CBE5E72003D9EF1 /* WebModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebModels.h; sourceTree = "<group>"; };
 		92BC946A1CBE5E72003D9EF1 /* WebModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebModels.m; sourceTree = "<group>"; };
+		92CD1D0F1D12CB3B00E43AF0 /* TCAVCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallViewController.h; sourceTree = "<group>"; };
+		92CD1D101D12CB3B00E43AF0 /* TCAVCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallViewController.m; sourceTree = "<group>"; };
+		92CD1D121D12CCF100E43AF0 /* TCAVCallManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallManager.h; sourceTree = "<group>"; };
+		92CD1D131D12CCF100E43AF0 /* TCAVCallManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallManager.m; sourceTree = "<group>"; };
+		92CD1D141D12CCF100E43AF0 /* TCAVTipTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVTipTag.h; sourceTree = "<group>"; };
+		92CD1D161D12CD3200E43AF0 /* TCAVCallRoomEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallRoomEngine.h; sourceTree = "<group>"; };
+		92CD1D171D12CD3200E43AF0 /* TCAVCallRoomEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallRoomEngine.m; sourceTree = "<group>"; };
 		92D2C9B51CC4D60D00501760 /* TCShowLiveMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShowLiveMsg.h; sourceTree = "<group>"; };
 		92D2C9B61CC4D60D00501760 /* TCShowLiveMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShowLiveMsg.m; sourceTree = "<group>"; };
 		92D2C9E21CC4E4D200501760 /* ADHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADHeaders.h; sourceTree = "<group>"; };
@@ -1503,6 +1513,9 @@
 		92D2CB131CC4E4D200501760 /* TCAdapter */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1D121D12CCF100E43AF0 /* TCAVCallManager.h */,
+				92CD1D131D12CCF100E43AF0 /* TCAVCallManager.m */,
+				92CD1D141D12CCF100E43AF0 /* TCAVTipTag.h */,
 				92D2CB141CC4E4D200501760 /* AVIMAble.h */,
 				92D2CB151CC4E4D200501760 /* TCAdapterHeader.h */,
 				92553E6C1D005FDC00BE2D6C /* TCAdapterConfig.h */,
@@ -1540,6 +1553,8 @@
 		92D2CB181CC4E4D200501760 /* AVEngine */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1D161D12CD3200E43AF0 /* TCAVCallRoomEngine.h */,
+				92CD1D171D12CD3200E43AF0 /* TCAVCallRoomEngine.m */,
 				92D2CB1E1CC4E4D200501760 /* TCAVRoomEngineDelegate.h */,
 				92D2CB191CC4E4D200501760 /* AVEngineHeaders.h */,
 				92D2CB1A1CC4E4D200501760 /* TCAVBaseRoomEngine.h */,
@@ -1610,6 +1625,8 @@
 		92D2CB391CC4E4D200501760 /* AVUI */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1D0F1D12CB3B00E43AF0 /* TCAVCallViewController.h */,
+				92CD1D101D12CB3B00E43AF0 /* TCAVCallViewController.m */,
 				92D2CB3A1CC4E4D200501760 /* TCAVBaseViewController.h */,
 				92D2CB3B1CC4E4D200501760 /* TCAVBaseViewController.m */,
 				92D2CB3C1CC4E4D200501760 /* TCAVLiveViewController.h */,
@@ -1940,6 +1957,7 @@
 				92D2CBBD1CC4E4D200501760 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				92D2CC091CC4E4D200501760 /* IMAHost+AVUserAble.m in Sources */,
 				92D2CBEB1CC4E4D200501760 /* UINavigationController+Transition.m in Sources */,
+				92CD1D151D12CCF100E43AF0 /* TCAVCallManager.m in Sources */,
 				92D2CBD91CC4E4D200501760 /* BaseViewController.m in Sources */,
 				92D2CBF41CC4E4D200501760 /* AVGLBaseView.m in Sources */,
 				92D2CB901CC4E4D200501760 /* FTUtils+UIGestureRecognizer.m in Sources */,
@@ -2018,6 +2036,7 @@
 				92D2CBF81CC4E4D200501760 /* AVGLRenderView.mm in Sources */,
 				92D2CBD31CC4E4D200501760 /* UIImageView+WebCache.m in Sources */,
 				92D2CB921CC4E4D200501760 /* CLSafeMutableArray.m in Sources */,
+				92CD1D111D12CB3B00E43AF0 /* TCAVCallViewController.m in Sources */,
 				92BC94631CBE1E52003D9EF1 /* PublishLiveViewController.m in Sources */,
 				928ADB121CBE66E4002CC4FF /* TCShowHost.m in Sources */,
 				92D2CBF01CC4E4D200501760 /* TCAVBaseRoomEngine.m in Sources */,
@@ -2111,6 +2130,7 @@
 				92D2CBC71CC4E4D200501760 /* SDImageCache.m in Sources */,
 				929408C41CD88D79004A0FE2 /* TCShowLiveRoomEngine.m in Sources */,
 				925941C01CC6607400227DD7 /* TCShowLiveInputView.m in Sources */,
+				92CD1D181D12CD3200E43AF0 /* TCAVCallRoomEngine.m in Sources */,
 				92D2CBC31CC4E4D200501760 /* Reachability.m in Sources */,
 				92D2CBB61CC4E4D200501760 /* JSONKit.m in Sources */,
 			);
@@ -2238,6 +2258,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "32d8f732-d114-494a-adda-1c2bdeec6d7e";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = DailyBuild;
 		};
@@ -2366,6 +2387,7 @@
 					"$(PROJECT_DIR)/TCShowModel/QCloudUploadSDK",
 					"$(SRCROOT)/TCShowModel/QCloudUploadSDK",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -2407,6 +2429,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.TCShow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Release;
 		};

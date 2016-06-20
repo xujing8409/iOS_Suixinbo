@@ -26,6 +26,7 @@
         DebugLog(@"登录成功:%@ tinyid:%llu sig:%@", param.identifier, [[IMSdkInt sharedInstance] getTinyId], param.userSig);
         [IMAPlatform setAutoLogin:YES];
         
+        
         if (succ)
         {
             succ();
@@ -35,8 +36,7 @@
         DebugLog(@"TIMLogin Failed: code=%d err=%@", code, msg);
         if (code == kEachKickErrorCode)
         {
-            // 互踢重联
-            // 重新再登录一次
+            //互踢重联，重新再登录一次
             [ws offlineKicked:param succ:succ fail:fail];
         }
         else
@@ -73,13 +73,23 @@
     [alert show];
 }
 
-- (void)configOnEnterMainUIWith:(TIMLoginParam *)param
+
+- (void)configOnLoginSucc:(TIMLoginParam *)param
 {
     // 配置, 获取个人名片
     [self configHost:param];
     
+    // 获取好友列表
+    //不能在登录成功之后获取好友里表，需要在OnProxyStatusChange回调成功的时候获取好友列表，否则可能获取不到
+//    [self configContact];
+    
+    // 获取会话列表
+   // [self configConversation];
+    
+#if kSupportAVChatRoom
     // TODO：用户可结合自身逻辑，看是否处理退历器直播间消息
     [self asyncExitHistoryAVChatRoom];
+#endif
 }
 
 

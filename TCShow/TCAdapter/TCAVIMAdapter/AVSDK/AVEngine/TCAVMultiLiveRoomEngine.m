@@ -88,16 +88,12 @@
     
 }
 
-- (BOOL)hasEnableCameraBeforeEnterBackground
-{
-    if ([self isHostLive])
+
+
+- (void)onRoomEnterBackground
     {
-        return _hasEnableCameraBeforeEnterBackground;
-    }
-    else
-    {
-        return [self isCameraEnable];
-    }
+    _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
+    [super onRoomEnterBackground];
 }
 
 // ower write super method
@@ -108,6 +104,19 @@
     BOOL needAdd = YES;
     NSString *userid = [user imUserId];
     NSString *curId = [_IMUser imUserId];
+    
+    if (user == nil)
+    {
+        needAdd = NO;
+    }
+    
+    if ([userid isEqualToString:curId])
+    {
+        needAdd = NO;
+    }
+    
+    if (needAdd)
+    {
     for (NSInteger i = 0; i < _multiUser.count; i++)
     {
         id<IMUserAble> iu = [_multiUser objectAtIndex:i];
@@ -129,7 +138,7 @@
             break;
         }
     }
-    
+    }
     
     
     if (!_multiUser)
@@ -143,13 +152,23 @@
         needAdd = NO;
     }
     
-    DebugLog(@"请求%@的画面", [user imUserId]);
     if (needAdd)
     {
+        DebugLog(@"请求%@的画面", [user imUserId]);
         [_multiUser addObject:user];
     }
     
     return needAdd;
+}
+
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    BOOL succ = [super switchToLive:room];
+    if (succ)
+    {
+        _hasEnabelCamera = NO;
+    }
+    return succ;
 }
 
 // 异步请求用户user的画面
@@ -262,7 +281,8 @@
         {
             if ([_delegate respondsToSelector:@selector(onAVEngine:requestViewOf:succ:tipInfo:)])
             {
-                [_delegate onAVEngine:self requestViewOf:user succ:NO tipInfo:@"请求主播画面失败"];
+                NSString *tip = TAVLocalizedError(ETCAVMultiLiveRoomEngine_RequestHostView_Fail_Tip);
+                [_delegate onAVEngine:self requestViewOf:user succ:NO tipInfo:tip];
             }
         }
     }
@@ -417,7 +437,9 @@
     
     if ([_delegate respondsToSelector:@selector(onAVEngine:changeRole:tipInfo:)])
     {
-        [_delegate onAVEngine:self changeRole:succ tipInfo:succ ? @"修改成功" : @"修改失败"];
+        
+        NSString *tip = [NSString stringWithFormat:TAVLocalizedError(ETCAVMultiLiveRoomEngine_ChangeRole_Format_Tip), succ ? @"成功" : @"失败"];
+        [_delegate onAVEngine:self changeRole:succ tipInfo:tip];
     }
 }
 

@@ -85,27 +85,33 @@
     return self;
 }
 
-// 重试前的检查
-- (BOOL)beforeTryCheck:(TCAVCompletion)completion;
+- (void)completion:(TCAVCompletion)completion succ:(BOOL)succ withTag:(TCAVTipTag)tag
 {
-    if (![self isRoomRunning])
+    NSString *tip = TAVLocalizedError(tag);
+    [self completion:completion succ:succ withTip:tip];
+}
+
+- (void)completion:(TCAVCompletion)completion succ:(BOOL)succ withTip:(NSString *)tip
     {
-        DebugLog(@"房间isRoomRunning = NO");
+    DebugLog(@"%@", tip);
         if (completion)
         {
-            completion(NO, @"房间isRoomRunning = NO");
+        completion(succ, tip);
         }
-        return NO;
     }
     
-    if (!_avContext)
+// 重试前的检查
+- (BOOL)beforeTryCheck:(TCAVCompletion)completion;
     {
-        DebugLog(@"_avContext 为 空");
-        if (completion)
+    if (![self isRoomRunning])
         {
-            completion(NO, @"_avContext 为 空");
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotRunning_Tip];
+        return NO;
         }
         
+    if (!_avContext)
+    {
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_AVContextNull_Tip];
         return NO;
     }
     return YES;
@@ -127,21 +133,13 @@
 {
     if (!_isRoomAlive)
     {
-        DebugLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        if (completion)
-        {
-            completion(NO, @"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotAlive_Tip];
         return;
     }
     
     if (_isHandlingMic)
     {
-        DebugLog(@"正在处理Mic");
-        if (completion)
-        {
-            completion(NO, @"正在处理Mic");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_EnablingMic_Tip];
         return;
     }
     
@@ -150,11 +148,8 @@
     BOOL tarMic = (state & EAVCtrlState_Mic);
     if (!ise && enable == tarMic)
     {
-        DebugLog(@"当前Mic已%@，不需要重复操作", enable ? @"打开" : @"关闭");
-        if (completion)
-        {
-            completion(NO, [NSString stringWithFormat:@"当前Mic已%@，不需要重复操作", enable ? @"打开" : @"关闭"]);
-        }
+        NSString *tip = [NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableMicNotTry_Format_Tip), enable ? @"打开" : @"关闭"];
+        [self completion:completion succ:NO withTip:tip];
         return;
     }
     
@@ -187,12 +182,8 @@
             {
                 [self disableHostCtrlState:EAVCtrlState_Mic];
             }
-            if (completion)
-            {
-                completion(YES, @"enableMic成功");
-            }
             
-            DebugLog(@"enableMic成功");
+            [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableMic_Succ_Tip];
         }
         else
         {
@@ -201,11 +192,7 @@
             {
                 _handleMicTryCount = 0;
                 _isHandlingMic = NO;
-                if (completion)
-                {
-                    completion(NO, @"enableMicr失败");
-                }
-                DebugLog(@"enableMicr失败");
+                [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableMic_Fail_Tip];
             }
             else
             {
@@ -231,21 +218,13 @@
 {
     if (!_isRoomAlive)
     {
-        DebugLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        if (completion)
-        {
-            completion(NO, @"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotAlive_Tip];
         return;
     }
     
     if (_isHandlingSpeaker)
     {
-        DebugLog(@"正在处理Speaker");
-        if (completion)
-        {
-            completion(NO, @"正在处理Speaker");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_EnablingSpeaker_Tip];
         return;
     }
     
@@ -254,11 +233,8 @@
     BOOL tarSpeaker = (state & EAVCtrlState_Speaker);
     if (!ise && enable == tarSpeaker)
     {
-        DebugLog(@"当前Speaker已%@，不需要重复操作", enable ? @"打开" : @"关闭");
-        if (completion)
-        {
-            completion(NO, [NSString stringWithFormat:@"当前Speaker已%@，不需要重复操作", enable ? @"打开" : @"关闭"]);
-        }
+        NSString *tip = [NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableSpeakerNotTry_Format_Tip), enable ? @"打开" : @"关闭"];
+        [self completion:completion succ:NO withTip:tip];
         return;
     }
     
@@ -286,11 +262,7 @@
             {
                 [self disableHostCtrlState:EAVCtrlState_Speaker];
             }
-            if (completion)
-            {
-                completion(YES, @"enableSpeaker成功");
-            }
-            DebugLog(@"enableSpeaker成功");
+            [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableSpeaker_Succ_Tip];
         }
         else
         {
@@ -299,11 +271,7 @@
             {
                 _handleSpeakerTryCount = 0;
                 _isHandlingSpeaker = NO;
-                if (completion)
-                {
-                    completion(NO, @"enableSpeaker失败");
-                }
-                DebugLog(@"enableSpeaker失败");
+                [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableSpeaker_Fail_Tip];
             }
             else
             {
@@ -372,21 +340,13 @@
 {
     if (!_isRoomAlive)
     {
-        DebugLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        if (completion)
-        {
-            completion(NO, @"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotAlive_Tip];
         return;
     }
     
     if (_isHandlingCamera)
     {
-        DebugLog(@"正在处理Camera");
-        if (completion)
-        {
-            completion(NO, @"正在处理Camera");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_EnablingCamera_Tip];
         return;
     }
     
@@ -395,11 +355,8 @@
     BOOL tarCar = (state & EAVCtrlState_Camera);
     if (!ise && enable == tarCar)
     {
-        DebugLog(@"当前Camera已%@，不需要重复操作", enable ? @"打开" : @"关闭");
-        if (completion)
-        {
-            completion(NO, [NSString stringWithFormat:@"当前Camera已%@，不需要重复打开", enable ? @"打开" : @"关闭"]);
-        }
+        NSString *tip = [NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableCameraNotTry_Format_Tip), enable ? @"打开" : @"关闭"];
+        [self completion:completion succ:NO withTip:tip];
         return;
     }
     
@@ -508,33 +465,20 @@
 {
     if (!_isRoomAlive)
     {
-        DebugLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        if (completion)
-        {
-            completion(NO, @"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotAlive_Tip];
         return;
     }
     
     if (_isHandlingCamera)
     {
-        DebugLog(@"正在操作摄像头");
-        if (completion)
-        {
-            completion(NO, @"正在操作摄像头");
-        }
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_EnablingCamera_Tip];
         return;
     }
     
     if (![self isCameraEnable])
     {
-        DebugLog(@"当前相机未打开");
         // 相机未打开情况下，后置摄像头，直接switch切换不到前置，
-        if (completion)
-        {
-            completion(NO, @"当前相机未打开");
-        }
-
+        [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_SwitchCamera_NotOn_Tip];
         return;
     }
     
@@ -742,7 +686,9 @@
     {
         [self startFirstFrameTimer];
     }
-    [_delegate onAVEngine:self requestViewOf:_IMUser succ:succ tipInfo:succ ? @"请求画面成功" : @"请求画面失败"];
+    
+    NSString *tip = succ ? TAVLocalizedError(ETCAVLiveRoomEngine_RequestHostView_Succ_Tip) : TAVLocalizedError(ETCAVLiveRoomEngine_RequestHostView_Fail_Tip);
+    [_delegate onAVEngine:self requestViewOf:_IMUser succ:succ tipInfo:tip];
 }
 
 - (void)enterLive:(id<AVRoomAble>)room
@@ -1010,6 +956,11 @@
         }
         [self asyncEnableCamera:YES isEnterRoom:YES needNotify:YES completion:nil];
     }
+    else
+    {
+    // 不开相计时，不作首帧计时
+        _hasShowLocalFirstFrame = YES;
+    }
     
     [self onEnterRoomCheckPush];
     
@@ -1023,7 +974,7 @@
     _isHandlingCamera = NO;
     
     BOOL succ = result == QAV_OK;
-    NSString *tip = succ ? @"切换摄像头成功" : @"切换摄像头失败";
+    NSString *tip = succ ? TAVLocalizedError(ETCAVLiveRoomEngine_SwitchCamera_Succ_Tip) : TAVLocalizedError(ETCAVLiveRoomEngine_SwitchCamera_Fail_Tip);
     DebugLog(@"%@", tip);
     
     if (completion)
@@ -1087,7 +1038,7 @@
     }
     
     
-    NSString *returnTip = [NSString stringWithFormat:@"%@摄像头%@", enable ? @"打开" : @"关闭", succ ? @"成功" : @"失败"];
+    NSString *returnTip = [NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableCamera_Format_Tip), enable ? @"打开" : @"关闭", succ ? @"成功" : @"失败"];
     DebugLog(@"enableCamera %@", returnTip);
     if (needNotify)
     {
@@ -1161,7 +1112,10 @@
 #endif
         [super onRealEnterLive:room];
     } fail:^(int code, NSString *msg) {
-        [wd onAVEngine:ws enterRoom:wr succ:NO tipInfo:isHost ? @"创建直播聊天室失败" : @"加入直播聊天室失败"];
+        
+        NSString *tip = isHost ? TAVLocalizedError(ETCAVLiveRoomEngine_HostEnterIMChatRoom_Succ_Tip) : TAVLocalizedError(ETCAVLiveRoomEngine_GuestEnterIMChatRoom_Fail_Tip);
+        DebugLog(@"%@", tip);
+        [wd onAVEngine:ws enterRoom:wr succ:NO tipInfo:tip];
     }];
 }
 

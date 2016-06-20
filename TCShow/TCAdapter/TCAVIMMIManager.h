@@ -78,6 +78,8 @@
 - (BOOL)isMainUser:(id<IMUserAble>)user;
 - (BOOL)isMainUserByID:(NSString *)userid;
 
+- (BOOL)hasInteractUsers;
+
 // 是否是互动观众
 - (BOOL)isInteractUser:(id<IMUserAble>)user;
 
@@ -88,6 +90,8 @@
 // 与主屏幕用户进行
 - (void)switchAsMainUser:(id<AVMultiUserAble>)user completion:(TCAVCompletion)completion;
 
+// 只是注册为主屏幕
+- (void)registAsMainUser:(id<AVMultiUserAble>)user;
 // for Guest
 - (void)registAsMainUser:(id<AVMultiUserAble>)user isHost:(BOOL)host;
 
@@ -125,6 +129,13 @@
 
 - (void)enableInteractUser:(id<AVMultiUserAble>)user ctrlState:(AVCtrlState)state;
 - (void)disableInteractUser:(id<AVMultiUserAble>)user ctrlState:(AVCtrlState)state;
+
+@end
+
+
+@interface TCAVIMMIManager (ProtectedMethod)
+
+- (BOOL)addInteractUser:(id<AVMultiUserAble>)user;
 
 @end
 

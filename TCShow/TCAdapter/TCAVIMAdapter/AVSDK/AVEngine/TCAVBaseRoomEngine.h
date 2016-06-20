@@ -56,9 +56,17 @@
 #if kSupportTimeStatistics
 @protected
     // 用于进出房间时间统计
-    NSDate                                  *_logStartDate;
+    NSDate                                  *_logStartDate;                 // 用户计时
+    BOOL                                    _hasShowLocalFirstFrame;        // 摄像头打开后是否显示画面
+    BOOL                                    _hasSemiAutoCameraVideo;        // 是否收到推送的视频画面
 #endif
     
+    BOOL                                    _hasShowFirstRemoteFrame;
+    
+    
+@protected
+    id<AVRoomAble>                          _switchingToRoom;               // 要切换到的房间信息
+    BOOL                                    _isSwitchingRoom;               // 当前是否在切换房间
 }
 
 @property (nonatomic, weak) id<TCAVRoomEngineDelegate> delegate;
@@ -77,6 +85,10 @@
 // 主播：开始直播
 // 观众：观看直播
 - (void)enterLive:(id<AVRoomAble>)room;
+
+// 切换直播间
+// 本质上是先退出上一次的房间，enterLive到要切换的房间
+- (BOOL)switchToLive:(id<AVRoomAble>)room;
 
 // 主播：退出直播
 // 观众：退出直播
@@ -124,6 +136,7 @@
 
 // 创建房间的信息，重写此方法来修改房间参数
 - (QAVMultiParam *)createdAVRoomParam;
+
 - (UInt64)roomAuthBitMap;
 
 // 增加此方法方便用户处理在直播过程中通过配置不同的角色名，控制直播效果
@@ -148,6 +161,8 @@
 - (void)startFirstFrameTimer;
 // 等待第一帧的时长，默认10s
 - (NSInteger)maxWaitFirstFrameSec;
+
+- (void)onWaitFirstFrameTimeOut;
 // 停步首帧计时
 - (void)stopFirstFrameTimer;
 
