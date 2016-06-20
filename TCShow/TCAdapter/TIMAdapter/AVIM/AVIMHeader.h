@@ -25,4 +25,6 @@
 
 #import "MultiAVIMMsgHandler.h"
 
+#import "AVIMCMD+TCAVCall.h"
+
 #endif /* AVIMHeader_h */

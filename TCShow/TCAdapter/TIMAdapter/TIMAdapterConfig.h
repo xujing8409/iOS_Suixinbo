@@ -60,5 +60,30 @@
 
 #define IMALocalizedError(intCode, enStr) NSLocalizedString(([NSString stringWithFormat:@"%d", (int)intCode]), enStr)
 
+//==============================
+#if kSupportCallScene
+// 语音视频通话中用到的关键字
+// int 类型
+#define kTCAVCall_AVRoomID          @"AVRoomID"
+
+// NSString, 群号可为空
+#define kTCAVCall_IMGroupID         @"IMGroupID"
+
+// NSString, 呼叫提示
+#define kTCAVCall_CallTip           @"CallTip"
+
+// BOOL，YES:语音，NO，视频
+#define kTCAVCall_CallType           @"CallType"
+
+// Double, 呼叫时间
+#define kTCAVCall_CallDate          @"CallDate"
+#endif
+
+//==============================
+// IMA内部使用的字休
+//#define kIMALargeTextFont       [UIFont systemFontOfSize:16]
+//#define kIMAMiddleTextFont      [UIFont systemFontOfSize:14]
+//#define kIMASmallTextFont       [UIFont systemFontOfSize:12]
+
 
 #endif /* TIMAdapterConfig_h */
