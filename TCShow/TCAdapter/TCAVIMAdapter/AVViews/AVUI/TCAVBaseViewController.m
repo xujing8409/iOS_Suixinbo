@@ -284,7 +284,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 // 切换直播间
 - (BOOL)switchToLive:(id<AVRoomAble>)room
 {
-    if ([_roomEngine isRoomRunning] && _isHost)
+    if ([_roomEngine isRoomRunning] && !_isHost)
     {
         _isSwitchingRoom = YES;
         _switchingToRoom = room;
