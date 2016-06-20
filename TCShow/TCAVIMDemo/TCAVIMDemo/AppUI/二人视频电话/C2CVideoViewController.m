@@ -9,6 +9,16 @@
 #import "C2CVideoViewController.h"
 #import "C2CVideoUIViewController.h"
 
+
+@implementation C2CVideoRoomEngine
+
+- (UInt64)roomAuthBitMap
+{
+    return QAV_AUTH_BITS_DEFAULT;
+}
+
+@end
+
 @interface C2CVideoViewController ()
 
 @end
@@ -22,6 +32,18 @@
     [self addChild:uivc inRect:self.view.bounds];
     
     _liveView = uivc;
+}
+
+- (void)createRoomEngine
+{
+    if (!_roomEngine)
+    {
+        id<AVMultiUserAble> ah = (id<AVMultiUserAble>)_currentUser;
+        [ah setAvMultiUserState:_isHost ? AVMultiUser_Host : AVMultiUser_Guest];
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        _roomEngine = [[C2CVideoRoomEngine alloc] initWith:(id<IMHostAble, AVMultiUserAble>)_currentUser enableChat:_enableIM];
+        _roomEngine.delegate = self;
+    }
 }
 
 - (NSInteger)defaultAVHostConfig
@@ -41,7 +63,7 @@
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine enableCamera:(BOOL)succ tipInfo:(NSString *)tip
 {
     [super onAVEngine:engine enableCamera:succ tipInfo:tip];
-    if (_isHost)
+    if (_isHost && succ)
     {
         [_multiManager registSelfOnRecvInteractRequest];
     }

@@ -8,6 +8,25 @@
 
 #import "LiveMicViewController.h"
 
+
+@implementation LiveMicRoomEngine
+
+- (UInt64)roomAuthBitMap
+{
+    if ([self isHostLive])
+    {
+        // 主播权限全开
+        return QAV_AUTH_BITS_DEFAULT;
+    }
+    else
+    {
+        // 观众只开接收权限 +
+        return QAV_AUTH_BITS_JOIN_ROOM | QAV_AUTH_BITS_RECV_AUDIO | QAV_AUTH_BITS_RECV_VIDEO | QAV_AUTH_BITS_RECV_SUB | QAV_AUTH_BITS_SEND_AUDIO;
+    }
+}
+
+@end
+
 @interface LiveMicViewController ()
 
 @end
@@ -21,6 +40,21 @@
     [self addChild:uivc inRect:self.view.bounds];
     
     _liveView = uivc;
+}
+
+- (void)createRoomEngine
+{
+    if (!_roomEngine)
+    {
+        id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        _roomEngine = [[LiveMicRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
+        _roomEngine.delegate = self;
+        if (!_isHost)
+        {
+            [_liveView setRoomEngine:_roomEngine];
+        }
+    }
 }
 
 - (NSInteger)defaultAVHostConfig

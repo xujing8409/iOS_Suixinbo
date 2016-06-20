@@ -8,6 +8,11 @@
 
 #import "TCAVMultiLiveViewController.h"
 
+
+@interface C2CVideoRoomEngine : TCAVMultiLiveRoomEngine
+
+@end
+
 @interface C2CVideoViewController : TCAVMultiLiveViewController
 
 

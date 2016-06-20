@@ -8,6 +8,10 @@
 
 #import "TCAVLiveViewController.h"
 
+@interface LiveMicRoomEngine : TCAVLiveRoomEngine
+
+@end
+
 @interface LiveMicViewController : TCAVLiveViewController
 
 @end

@@ -8,6 +8,10 @@
 
 #import "TCAVLiveViewController.h"
 
+@interface C2CVoiceRoomEngine : TCAVMultiLiveRoomEngine
+
+@end
+
 @interface C2CVoiceViewController : TCAVLiveViewController
 
 @end
