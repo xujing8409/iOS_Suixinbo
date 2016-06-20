@@ -19,6 +19,8 @@
     UIView                      *_animationView;        // 开启泻染时，因开摄像头会有有闪，添加动画效果
 }
 
+@property (nonatomic, readonly) AVGLBaseView *imageView;
+
 // user为该画面对应的对象
 // 默认全屏显示, 本地只有路画面
 - (void)addRenderFor:(id<IMUserAble>)user;

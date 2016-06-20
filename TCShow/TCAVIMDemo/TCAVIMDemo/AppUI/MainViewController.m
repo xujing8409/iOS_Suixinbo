@@ -72,6 +72,14 @@
     item.funcDesc = @"主要功能：仿QQ语音视频聊天";
     [_data addObject:item];
     
+    item = [[TCMenuItem alloc] initWithTitle:@"LivePreview直播区域修复" icon:nil action:^(id<MenuAbleItem> menu) {
+        ChangeLivePreviewFrameViewController *vc = [[ChangeLivePreviewFrameViewController alloc] initWith:[AppDelegate sharedAppDelegate].liveRoom user:[IMAPlatform sharedInstance].host];
+        vc.enableIM = NO;
+        [[AppDelegate sharedAppDelegate] pushViewController:vc];
+    }];
+    item.funcDesc = @"主要功能：演示直播过程中全屏，以及缩小显示区域";
+    [_data addObject:item];
+    
     
 }
 

@@ -207,6 +207,7 @@
 		92377D2D1CEA0B31007AD22B /* IMAPlatform+TCAVLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C881CEA0B31007AD22B /* IMAPlatform+TCAVLive.m */; };
 		92377D2E1CEA0B31007AD22B /* IMAPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C8A1CEA0B31007AD22B /* IMAPlatform.m */; };
 		92377D2F1CEA0B31007AD22B /* IMAPlatformConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C8C1CEA0B31007AD22B /* IMAPlatformConfig.m */; };
+		926710401D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */; };
 		926DEC941CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 926DEC911CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m */; };
 		926DEC951CF738CF00F9251B /* TCAVTryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 926DEC931CF738CF00F9251B /* TCAVTryItem.m */; };
 		927600E41CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 927600E31CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m */; };
@@ -671,6 +672,8 @@
 		92553E711D006B7E00BE2D6C /* CommonLibraryMacroConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonLibraryMacroConfig.h; sourceTree = "<group>"; };
 		92553E721D006B9000BE2D6C /* TCAdapterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAdapterConfig.h; sourceTree = "<group>"; };
 		92553E731D006B9800BE2D6C /* TIMAdapterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMAdapterConfig.h; sourceTree = "<group>"; };
+		9267103E1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeLivePreviewFrameViewController.h; sourceTree = "<group>"; };
+		9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeLivePreviewFrameViewController.m; sourceTree = "<group>"; };
 		926DEC901CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+PushStream.h"; sourceTree = "<group>"; };
 		926DEC911CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+PushStream.m"; sourceTree = "<group>"; };
 		926DEC921CF738CF00F9251B /* TCAVTryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVTryItem.h; sourceTree = "<group>"; };
@@ -818,6 +821,7 @@
 		92377AA41CEA052E007AD22B /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				9267103D1D17BBDA0048DAAF /* LivePreview修复区域 */,
 				920B2F331CEDD63B005AB9F2 /* 简单直播Demo */,
 				92377AA51CEA052E007AD22B /* AppUIHeader.h */,
 				92377AAA1CEA052E007AD22B /* CustomUI */,
@@ -1645,6 +1649,15 @@
 			path = Playform;
 			sourceTree = "<group>";
 		};
+		9267103D1D17BBDA0048DAAF /* LivePreview修复区域 */ = {
+			isa = PBXGroup;
+			children = (
+				9267103E1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.h */,
+				9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */,
+			);
+			path = "LivePreview修复区域";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1764,6 +1777,7 @@
 				92377CCD1CEA0B31007AD22B /* MKNetworkOperation.m in Sources */,
 				92377CE71CEA0B31007AD22B /* KeyValue.m in Sources */,
 				92377D041CEA0B31007AD22B /* AVGLRenderView.mm in Sources */,
+				926710401D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m in Sources */,
 				92377CF81CEA0B31007AD22B /* UIView+Layout.m in Sources */,
 				927600E41CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m in Sources */,
 				92377CC11CEA0B31007AD22B /* IOSDeviceConfig.m in Sources */,

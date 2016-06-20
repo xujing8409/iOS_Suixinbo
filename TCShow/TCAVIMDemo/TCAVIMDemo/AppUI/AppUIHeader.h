@@ -25,6 +25,8 @@
 
 #import "MultiVideoViewController.h"
 
+#import "ChangeLivePreviewFrameViewController.h"
+
 
 #import "MainViewController.h"
 #import "SettingHeader.h"
