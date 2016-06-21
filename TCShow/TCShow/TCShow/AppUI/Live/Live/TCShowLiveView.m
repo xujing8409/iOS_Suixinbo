@@ -406,4 +406,10 @@
 {
     [self.bottomView switchToShowMultiInteract:user isMain:YES];
 }
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room
+{
+    _room = room;
+    [_topView changeRoomInfo:room];
+    
+}
 @end

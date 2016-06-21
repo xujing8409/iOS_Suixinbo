@@ -95,6 +95,9 @@
 // for Guest
 - (void)registAsMainUser:(id<AVMultiUserAble>)user isHost:(BOOL)host;
 
+// 更新主屏幕用户信息
+- (void)changeMainUser:(id<AVMultiUserAble>)user isHost:(BOOL)host;
+
 // for Guest
 // 当收到主播邀请后，将自己托管到TCAVIMMultiManager，并进行连麦操作，渲染管理等
 - (void)registSelfOnRecvInteractRequest;
@@ -129,6 +132,8 @@
 
 - (void)enableInteractUser:(id<AVMultiUserAble>)user ctrlState:(AVCtrlState)state;
 - (void)disableInteractUser:(id<AVMultiUserAble>)user ctrlState:(AVCtrlState)state;
+
+- (void)clearAllOnSwitchRoom;
 
 @end
 

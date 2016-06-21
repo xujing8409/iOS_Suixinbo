@@ -198,8 +198,10 @@
     if (_mainUser)
     {
         DebugLog(@"主屏幕用户已存在，不能再注册");
+        [self changeMainUser:user isHost:host];
         return;
     }
+    
     
     BOOL hasAdd = [self addInteractUser:user];
     
@@ -222,6 +224,37 @@
         
     }
 
+}
+
+- (void)changeMainUser:(id<AVMultiUserAble>)user isHost:(BOOL)host
+{
+    // main已赋值时，不能再处理
+    if (_mainUser == nil)
+    {
+        [self registAsMainUser:user isHost:host];
+        return;
+    }
+    
+    BOOL hasAdd = [self addInteractUser:user];
+    
+    if (hasAdd)
+    {
+        _mainUser = user;
+        
+        if (!host)
+        {
+            // 请求画面
+            [_roomEngine asyncRequestViewOf:_mainUser];
+        }
+        
+        // 设置界面相关
+        [_mainUser setAvInvisibleInteractView:nil];
+        [_mainUser setAvInteractArea:[_preview bounds]];
+        
+        
+        [_preview addRenderFor:_mainUser];
+        
+    }
 }
 
 - (void)registSelfOnRecvInteractRequest
@@ -520,6 +553,12 @@
     }
 }
 
+- (void)clearAllOnSwitchRoom
+{
+    _mainUser = nil;
+    _multiResource = nil;
+    [_roomEngine asyncCancelAllRequestView];
+}
 
 @end
 

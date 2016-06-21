@@ -59,4 +59,6 @@
 // for 多人互动
 - (void)onClickSub:(id<AVMultiUserAble>)user;
 
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room;
+
 @end

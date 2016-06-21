@@ -36,5 +36,7 @@
 
 - (void)stopPreview;
 
+- (void)stopAndRemoveAllRender;
+
 
 @end

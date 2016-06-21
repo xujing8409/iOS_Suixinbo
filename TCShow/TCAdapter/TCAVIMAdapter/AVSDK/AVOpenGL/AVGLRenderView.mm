@@ -357,6 +357,20 @@ Vertex loadintVertex[4] =
                 //多人大画面
                 if (_enableCutting == YES)
                 {
+                    float widTest = (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT * _image.width/_image.height;
+                    if (widTest > 1) {
+                        //PC端 720P的情况下，应该要X轴做裁剪
+                        if (self.isFloat)
+                        {
+                            stride_x += (1 - (float)PREVIEW_LAYER_H/PREVIEW_LAYER_W*_image.height/_image.width)/2;
+                        }
+                        else
+                        {
+                            stride_x += (1 - (float)GL_SCREEN_HEIGHT/GL_SCREEN_WIDTH*_image.height/_image.width)/2;
+                        }
+                    }
+                    else
+                    {
                     //如果允许裁剪，说明是普通画面
                     stride_y += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT * _image.width/_image.height)/2;
                     if (self.isFloat && viewWidth != GROUP_SMALL_VIEW_WIDTH)
@@ -372,6 +386,7 @@ Vertex loadintVertex[4] =
                             stride_x += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT*viewHeight/viewWidth)/2;
                         }
                     }
+                }
                 }
                 else
                 {

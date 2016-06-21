@@ -68,6 +68,8 @@
 
 - (void)onRefrshPraiseAndAudience;
 
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room;
+
 @end
 
 
@@ -105,6 +107,7 @@
 
 - (void)onRefrshPARView:(TCAVLiveRoomEngine *)engine;
 
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room;
 
 // protected
 - (void)relayoutPARView;

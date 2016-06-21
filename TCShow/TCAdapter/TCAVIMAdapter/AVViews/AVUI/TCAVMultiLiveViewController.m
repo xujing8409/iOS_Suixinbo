@@ -47,7 +47,13 @@
     }
     else
     {
-        [_msgHandler switchToLiveRoom:_roomInfo];
+        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak id<AVRoomAble> wr = _roomInfo;
+        [_msgHandler exitLiveChatRoom:^{
+            [wav switchToLiveRoom:wr];
+        } fail:^(int code, NSString *msg) {
+            [wav switchToLiveRoom:wr];
+        }];
     }
 }
 
@@ -247,6 +253,19 @@
         }
     }
     [_multiManager addInteractUserOnRecvSemiAutoVideo:hasCamera];
+}
+
+// 切换直播间
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    BOOL succ = [super switchToLive:room];
+    if (succ)
+    {
+        // 界面停止渲染
+        [_multiManager clearAllOnSwitchRoom];
+        
+    }
+    return succ;
 }
 
 

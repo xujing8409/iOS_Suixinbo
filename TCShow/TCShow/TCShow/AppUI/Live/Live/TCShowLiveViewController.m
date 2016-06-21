@@ -12,6 +12,138 @@
 
 @implementation TCShowLiveUIViewController
 
+#if kSupportSwitchRoom
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if (!_liveController.isHost)
+    {
+        UISwipeGestureRecognizer *upGes = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwitchToPreRoom:)];
+        upGes.direction = UISwipeGestureRecognizerDirectionUp;
+        [self.view addGestureRecognizer:upGes];
+        
+        UISwipeGestureRecognizer *downGes = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwitchToNextRoom:)];
+        downGes.direction = UISwipeGestureRecognizerDirectionDown;
+        [self.view addGestureRecognizer:downGes];
+    }
+}
+
+- (void)onSwitchToPreRoom:(UIGestureRecognizer *)ges
+{
+    if (ges.state == UIGestureRecognizerStateEnded)
+    {
+        [self switchToRoom:YES];
+    }
+}
+
+- (void)onSwitchToNextRoom:(UIGestureRecognizer *)ges
+{
+    if (ges.state == UIGestureRecognizerStateEnded)
+    {
+        [self switchToRoom:NO];
+    }
+}
+
+- (void)switchToRoom:(BOOL)preRoom
+{
+    __weak typeof(self) ws = self;
+    LiveListRequest *req = [[LiveListRequest alloc] initWithHandler:^(BaseRequest *request) {
+        LiveListRequest *wreq = (LiveListRequest *)request;
+        TCShowLiveList *resp = (TCShowLiveList *)wreq.response.data;
+        [ws switchToRoom:preRoom atList:resp.recordList];
+    } failHandler:^(BaseRequest *request) {
+        DebugLog(@"没有下一个房间");
+    }];
+    req.pageItem = [[RequestPageParamItem alloc] init];
+    [[WebServiceEngine sharedEngine] asyncRequest:req wait:YES];
+}
+
+- (void)switchToRoom:(BOOL)preRoom atList:(NSArray *)arry
+{
+    if (arry.count)
+    {
+        NSString *curLiveHostID = [[_liveController.roomInfo liveHost] imUserId];
+        TCShowLiveListItem *curItem = nil;
+        for (TCShowLiveListItem *item in  arry)
+        {
+            if ([[item.liveHost imUserId] isEqualToString:curLiveHostID])
+            {
+                curItem = item;
+                break;
+            }
+        }
+        
+        if (arry.count == 1 && curItem != nil)
+        {
+            // 列表中只有当前直播间
+            [[HUDHelper sharedInstance] tipMessage:@"没有其他直播间用于切换"];
+            return;
+        }
+        
+        
+        if (curItem)
+        {
+            NSInteger idx = [arry indexOfObject:curItem];
+            
+            if (preRoom)
+            {
+                if (idx >= 1)
+                {
+                    idx--;
+                }
+                else
+                {
+                    // 有可能切换到列表的最后方导致切换不成功
+                    idx = arry.count - 1;
+                }
+                
+            }
+            else
+            {
+                if (idx == arry.count - 1)
+                {
+                    idx = 0;
+                }
+                else
+                {
+                    // 有可能切换到列表的最后方导致切换不成功
+                    idx++;
+                }
+            }
+            
+            BOOL succ = [_liveController switchToLive:arry[idx]];
+            if (!succ)
+            {
+                DebugLog(@"切换房间不成功");
+                
+            }
+        }
+        else
+        {
+            BOOL succ = [_liveController switchToLive:arry[0]];
+            if (!succ)
+            {
+                DebugLog(@"切换房间不成功");
+                
+            }
+
+        }
+    }
+    else
+    {
+        // 打到当前的直播间在列表中的位置
+        [[HUDHelper sharedInstance] tipMessage:@"没有其他直播间用于切换"];
+    }
+}
+
+- (void)switchToLiveRoom:(id<AVRoomAble>)room
+{
+    [_liveView changeRoomInfo:(id<TCShowLiveRoomAble>)room];
+}
+
+#endif
+
 - (void)addOwnViews
 {
     id<AVRoomAble> room = [_liveController roomInfo];
@@ -360,6 +492,9 @@
 
 - (void)createRoomEngine
 {
+    if (!_roomEngine)
+    {
+    
     id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
     [ah setAvCtrlState:[self defaultAVHostConfig]];
     TCShowLiveRoomEngine *roomEngine = [[TCShowLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
@@ -372,7 +507,7 @@
     {
         [_liveView setRoomEngine:_roomEngine];
     }
-    
+    }    
 }
 
 - (NSInteger)defaultAVHostConfig
@@ -419,6 +554,16 @@
     {
         _msgHandler = [[TCShowAVIMHandler alloc] initWith:_roomInfo];
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
+    }
+    else
+    {
+        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak id<AVRoomAble> wr = _roomInfo;
+        [_msgHandler exitLiveChatRoom:^{
+            [wav switchToLiveRoom:wr];
+        } fail:^(int code, NSString *msg) {
+            [wav switchToLiveRoom:wr];
+        }];
     }
 }
 #if kSupportIMMsgCache
@@ -484,6 +629,17 @@
         }];
     }
     
+}
+
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    BOOL succ = [super switchToLive:room];
+    if (succ)
+    {
+        TCShowLiveUIViewController *vc = (TCShowLiveUIViewController *)_liveView;
+        [vc switchToLiveRoom:room];
+    }
+    return succ;
 }
 
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine onStartPush:(BOOL)succ pushRequest:(TCAVLiveRoomPushRequest *)req

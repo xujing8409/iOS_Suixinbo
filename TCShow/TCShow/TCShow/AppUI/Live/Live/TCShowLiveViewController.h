@@ -39,7 +39,7 @@
 
 - (void)onStartPush:(BOOL)succ pushRequest:(TCAVLiveRoomPushRequest *)req;
 - (void)onStartRecord:(BOOL)succ recordRequest:(TCAVLiveRoomRecordRequest *)req;
-
+- (void)switchToLiveRoom:(id<AVRoomAble>)room;
 @end
 
 

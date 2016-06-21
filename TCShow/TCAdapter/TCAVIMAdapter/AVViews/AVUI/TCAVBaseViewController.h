@@ -34,7 +34,6 @@
     AVAudioSessionCategoryOptions   _audioSesstionCategoryOptions;       // 进入房间时的音频类别选项
     
 @protected
-    BOOL                           _isSwitchingRoom;
     id<AVRoomAble>                 _switchingToRoom;
     
 }
@@ -42,6 +41,7 @@
 @property (nonatomic, readonly) BOOL isExiting;
 @property (nonatomic, readonly) id<IMHostAble> currentUser;
 @property (nonatomic, readonly) id<AVRoomAble> roomInfo;
+@property (nonatomic, readonly) BOOL isHost;
 
 // 创建房间
 - (instancetype)initWith:(id<AVRoomAble>)info user:(id<IMHostAble>)user;
