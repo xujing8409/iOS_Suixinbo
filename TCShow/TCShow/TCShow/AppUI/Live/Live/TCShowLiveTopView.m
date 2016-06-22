@@ -76,6 +76,12 @@
 {
     
 }
+
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room
+{
+    _room = room;
+    [self configOwnViews];
+}
 - (void)configOwnViews
 {
     NSString *url = [[_room liveHost] imUserIconUrl];
@@ -423,5 +429,11 @@
 - (void)onRefrshPARView:(TCAVLiveRoomEngine *)engine
 {
     [_parView onRefrshPARView:engine];
+}
+
+- (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room
+{
+    _room = room;
+    [_timeView changeRoomInfo:room];
 }
 @end

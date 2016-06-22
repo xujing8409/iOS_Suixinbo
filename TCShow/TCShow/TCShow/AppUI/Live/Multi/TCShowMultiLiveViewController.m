@@ -737,6 +737,8 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (void)createRoomEngine
 {
+    if (!_roomEngine)
+    {
     id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
     [ah setAvCtrlState:[self defaultAVHostConfig]];
     _roomEngine = [[TCShowMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
@@ -746,7 +748,7 @@ static BOOL kRectHostCancelInteract = NO;
     {
         [_liveView setRoomEngine:_roomEngine];
     }
-    
+    }
 }
 
 - (NSInteger)defaultAVHostConfig
@@ -770,6 +772,16 @@ static BOOL kRectHostCancelInteract = NO;
         _msgHandler = [[TCShowAVIMMultiHandler alloc] initWith:_roomInfo];
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
         _multiManager.msgHandler = (MultiAVIMMsgHandler *)_msgHandler;
+    }
+    else
+    {
+        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak id<AVRoomAble> wr = _roomInfo;
+        [_msgHandler exitLiveChatRoom:^{
+            [wav switchToLiveRoom:wr];
+        } fail:^(int code, NSString *msg) {
+            [wav switchToLiveRoom:wr];
+        }];
     }
 }
 
@@ -939,7 +951,16 @@ static BOOL kRectHostCancelInteract = NO;
 
 #endif
 
-
+- (BOOL)switchToLive:(id<AVRoomAble>)room
+{
+    BOOL succ = [super switchToLive:room];
+    if (succ)
+    {
+        TCShowLiveUIViewController *vc = (TCShowLiveUIViewController *)_liveView;
+        [vc switchToLiveRoom:room];
+    }
+    return succ;
+}
 
 @end
 

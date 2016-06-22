@@ -295,6 +295,15 @@
     }
 }
 
+- (void)removeAllSubviewKeys
+{
+    NSMutableArray *array = [NSMutableArray arrayWithArray:_subViewsKey];
+    for (NSString *key in array)
+    {
+        [self removeSubviewForKey:key];
+    }
+}
+
 - (AVGLRenderView*)getSubviewForKey:(NSString *)key
 {
     return [_subViews objectForKey:key];

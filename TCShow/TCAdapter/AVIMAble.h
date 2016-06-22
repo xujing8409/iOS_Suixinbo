@@ -152,7 +152,8 @@ typedef NS_ENUM(NSInteger, AVMultiUserState)
 // 直播房间Id
 - (int)liveAVRoomId;
 
-// 直播标题，用于创建直播IM聊天室，不能为空
+// 直播标题，可用于创建直播IM聊天室（具体还需要看使用哪种方式创建）
+// 另外推流以及录制时，使用默认配置时，是需要liveTitle参数
 - (NSString *)liveTitle;
 
 @end

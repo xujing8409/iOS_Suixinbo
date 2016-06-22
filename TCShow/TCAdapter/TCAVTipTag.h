@@ -65,6 +65,8 @@ typedef NS_ENUM(NSInteger, TCAVTipTag)
     ETCAVMultiLiveRoomEngine_RequestHostView_Fail_Tip = 133, // @"请求主播画面失败".
     ETCAVMultiLiveRoomEngine_ChangeRole_Format_Tip = 134, // @"修改角色%@".
     
+    ETCAVBaseRoomEngine_NotRightRoomInfo_Tip = 135, // @"房间信息不正确".
+    
 };
 
 

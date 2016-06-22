@@ -49,6 +49,7 @@
 
 - (void)addSubview:(AVGLRenderView*)view forKey:(NSString *)key;
 - (void)removeSubviewForKey:(NSString *)key;
+- (void)removeAllSubviewKeys;
 - (AVGLRenderView *)getSubviewForKey:(NSString *)key;
 - (NSString*) smallViewsHittest:(CGPoint)point;
 - (BOOL) hasSmallView;

@@ -66,7 +66,7 @@
     
 @protected
     id<AVRoomAble>                          _switchingToRoom;               // 要切换到的房间信息
-    BOOL                                    _isSwitchingRoom;               // 当前是否在切换房间
+//    BOOL                                    _isSwitchingRoom;               // 当前是否在切换房间
 }
 
 @property (nonatomic, weak) id<TCAVRoomEngineDelegate> delegate;

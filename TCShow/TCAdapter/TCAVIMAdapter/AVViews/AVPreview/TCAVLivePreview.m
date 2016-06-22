@@ -65,6 +65,15 @@
     }
 }
 
+- (void)stopAndRemoveAllRender
+{
+    if (_imageView)
+    {
+        [_imageView stopDisplay];
+    }
+    [_imageView removeAllSubviewKeys];
+}
+
 - (void)removeRenderOf:(id<IMUserAble>)user
 {
     if (user)

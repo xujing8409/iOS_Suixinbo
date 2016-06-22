@@ -141,7 +141,6 @@
         DebugLog(@"开始从房间［%@, %d］切换房间［%@, %d］", [_roomInfo liveTitle], [_roomInfo liveAVRoomId], [_switchingToRoom liveTitle], [_switchingToRoom liveAVRoomId]);
         [[HUDHelper sharedInstance] syncLoading:TAVLocalizedError(ETCAVBaseRoomEngine_SwitchRoom_Tip)];
         [self enterLive:_switchingToRoom];
-        _switchingToRoom = nil;
     }
     else
     {
@@ -168,7 +167,10 @@
         return;
     }
     
-    _isRoomAlive = NO;
+    if (!_switchingToRoom)
+    {
+        _isRoomAlive = NO;
+    }
     
     if (!_avContext)
     {
@@ -264,17 +266,19 @@
     }
     else
     {
+            TCAVIMLog(@"切换房间失败: %d", result);
+            _switchingToRoom = nil;
+        
         TCAVIMLog(@"进入AV房间失败: %d, 开始StopContext", result);
 #if kIsUseAVSDKAsLiveScene
         [self onContextCloseComplete:QAV_OK];
 #else
-        // 不
         __weak TCAVBaseRoomEngine *ws = self;
         [_avContext stopContext:^(QAVResult result) {
             [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterAVRoom_Fail_Tip)];
         }];
 #endif
-        
+
         
     }
 }
@@ -536,16 +540,17 @@
     if ([room liveAVRoomId] == 0)
     {
         DebugLog(@"房间id为空");
-        if (_isSwitchingRoom)
+        if (_switchingToRoom)
         {
+            _switchingToRoom = nil;
             if ([_delegate respondsToSelector:@selector(onAVEngine:switchRoom:succ:tipInfo:)])
             {
-                [_delegate onAVEngine:self switchRoom:_roomInfo succ:NO tipInfo:@"房间信息不正确"];
+                [_delegate onAVEngine:self switchRoom:_roomInfo succ:NO tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_NotRightRoomInfo_Tip)];
             }
         }
         else
         {
-            [_delegate onAVEngine:self enterRoom:room succ:NO tipInfo:@"房间信息不正确"];
+            [_delegate onAVEngine:self enterRoom:room succ:NO tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_NotRightRoomInfo_Tip)];
         }
         return;
     }
@@ -655,12 +660,13 @@
     DebugLog(@"%@", tip);
 #endif
     
-    if (_isSwitchingRoom)
+    if (_switchingToRoom)
     {
         if ([_delegate respondsToSelector:@selector(onAVEngine:switchRoom:succ:tipInfo:)])
         {
             [_delegate onAVEngine:self switchRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_SwitchRoom_Succ_Tip)];
         }
+        _switchingToRoom = nil;
     }
     else
     {
@@ -678,7 +684,9 @@
     
     if (_switchingToRoom)
     {
-        [self onExitRoomCompleteToSwitchToLive];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self onExitRoomCompleteToSwitchToLive];
+        });
     }
     else
     {

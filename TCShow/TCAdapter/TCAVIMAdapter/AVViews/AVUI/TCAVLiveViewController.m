@@ -179,7 +179,8 @@
     if (succ)
     {
         // 界面停止渲染
-        [_livePreview stopPreview];
+        [_livePreview stopAndRemoveAllRender];
+        
     }
     return succ;
 }
@@ -296,7 +297,13 @@
     }
     else
     {
-        [_msgHandler switchToLiveRoom:_roomInfo];
+        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak id<AVRoomAble> wr = _roomInfo;
+        [_msgHandler exitLiveChatRoom:^{
+            [wav switchToLiveRoom:wr];
+        } fail:^(int code, NSString *msg) {
+            [wav switchToLiveRoom:wr];
+        }];
     }
 }
 

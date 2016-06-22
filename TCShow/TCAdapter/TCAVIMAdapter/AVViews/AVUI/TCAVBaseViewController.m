@@ -163,7 +163,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     [self addPhoneListener];
     
-    if (_isSwitchingRoom)
+    if (_switchingToRoom)
     {
         _roomInfo = _switchingToRoom;
         _isHost = [_currentUser isEqual:[_roomInfo liveHost]];
@@ -172,7 +172,6 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         [[HUDHelper sharedInstance] syncLoading:@"正在切换房间"];
         DebugLog(@"-----观众>>>>>观众开始进入直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
         [_roomEngine switchToLive:_roomInfo];
-        _switchingToRoom = nil;
     }
     else
     {
@@ -286,7 +285,6 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     if ([_roomEngine isRoomRunning] && !_isHost)
     {
-        _isSwitchingRoom = YES;
         _switchingToRoom = room;
         [self checkAndEnterAVRoom];
         return YES;
@@ -339,10 +337,13 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine switchRoom:(id<AVRoomAble>)room succ:(BOOL)succ tipInfo:(NSString *)tip
 {
+    if (!succ)
+    {
+        _switchingToRoom = nil;
+    }
     DebugLog(@"切换房间%@", succ ? @"成功" : @"失败");
-    _isSwitchingRoom = NO;
-    _switchingToRoom = nil;
     [self onEnterLiveSucc:succ tipInfo:tip];
+    _switchingToRoom = nil;
     
 }
 
@@ -582,7 +583,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 - (void)addAVSDKObservers
 {
-    if (_isSwitchingRoom)
+    if (_switchingToRoom)
     {
         return;
     }

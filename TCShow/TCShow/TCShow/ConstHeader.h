@@ -45,6 +45,11 @@
 #define kAppMiddleTextFont      [UIFont systemFontOfSize:14]
 #define kAppSmallTextFont       [UIFont systemFontOfSize:12]
 
+// 是否支持直播界面，上下swipe手势，切换直播间
+// 使用时，请确保列表中有两个可用的直播间信息
+#define kSupportSwitchRoom  1
+
+
 
 
 #endif /* ConstHeader_h */
