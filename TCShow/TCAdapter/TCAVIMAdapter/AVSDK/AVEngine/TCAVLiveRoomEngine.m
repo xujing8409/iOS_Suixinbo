@@ -1149,7 +1149,7 @@
                     }
                     if (ew)
                     {
-                        [self enableBeauty:[self defaultWhiteValue]];
+                        [self enableWhite:[self defaultWhiteValue]];
                     }
                 });
             }
