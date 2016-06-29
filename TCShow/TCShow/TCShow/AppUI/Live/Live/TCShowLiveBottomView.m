@@ -135,7 +135,7 @@
     
     [beautyView setFrameAndLayout:self.superview.bounds];
     
-    if (_showUser && _lastFloatBeauty == 0)
+    if (_lastFloatBeauty == 0)
     {
         // 说明只是当前自己
         _lastFloatBeauty = ([_roomEngine getBeauty] * 10)/100.0;
@@ -156,7 +156,7 @@
     
     [beautyView setFrameAndLayout:self.superview.bounds];
     
-    if (_showUser && _lastFloatWhite == 0)
+    if (_lastFloatWhite == 0)
     {
         // 说明只是当前自己
         _lastFloatWhite = ([_roomEngine getWhite] * 10)/100.0;
