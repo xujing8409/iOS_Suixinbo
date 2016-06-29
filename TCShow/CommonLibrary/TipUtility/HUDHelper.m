@@ -153,6 +153,13 @@ static HUDHelper *_instance = nil;
             });
         });
     }
+    else
+    {
+        if (completion)
+        {
+            completion();
+        }
+    }
     
 }
 

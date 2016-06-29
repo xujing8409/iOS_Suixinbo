@@ -26,6 +26,22 @@ static NSString *const kIMAPlatformCallViewController = @"kIMAPlatformCallViewCo
 
 - (void)onRecvCall:(AVIMCMD *)cmd conversation:(IMAConversation *)conv isFromChatting:(BOOL)isChatting
 {
+    // 说明正在通话中
+    if (self.callViewController)
+    {
+        int oldAVroomID = [self.callViewController.roomInfo liveAVRoomId];
+        int newAVRoomID = [cmd liveAVRoomId];
+        if (oldAVroomID != newAVRoomID)
+        {
+            // 回复占线
+            AVIMCMD *busycmd = [[AVIMCMD alloc] initWithCall:AVIMCMD_Call_LineBusy avRoomID:[cmd liveAVRoomId] group:[cmd liveIMChatRoomId] groupType:[cmd callGroupType] type:[cmd isVoiceCall] tip:nil];
+            [conv sendCallMsg:busycmd finish:nil];
+            return;
+        }
+    }
+
+    
+    
     switch (cmd.msgType)
     {
         case AVIMCMD_Call_Dialing:       // 正在呼叫
@@ -39,6 +55,8 @@ static NSString *const kIMAPlatformCallViewController = @"kIMAPlatformCallViewCo
             }
             else
             {
+                [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+                
                 // 没有通话，直接呼起
                 self.callViewController = [[IMAAppDelegate sharedAppDelegate] presentCommingCallViewControllerWith:cmd conversation:conv isFromChatting:isChatting];
             }
@@ -83,7 +101,21 @@ static NSString *const kIMAPlatformCallViewController = @"kIMAPlatformCallViewCo
         {
             DebugLog(@"======>>>>>>>>收到[%@]邀请消息", [cmd.sender imUserId]);
             // 邀请消息
+            // 当前的消息是原来的人发送的
+            if (self.callViewController)
+            {
             [self.callViewController onRecvInviteCall:cmd];
+        }
+            else
+            {
+                //
+                [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+                
+                // 没有通话，直接呼起
+                self.callViewController = [[IMAAppDelegate sharedAppDelegate] presentCommingCallViewControllerWith:cmd conversation:conv isFromChatting:isChatting];
+            }
+                
+            
         }
             
             break;

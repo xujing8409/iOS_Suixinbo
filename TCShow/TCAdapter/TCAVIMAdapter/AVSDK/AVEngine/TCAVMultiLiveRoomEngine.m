@@ -224,8 +224,7 @@
             [typeArray addObject:@(QAVVIDEO_SRC_TYPE_CAMERA)];
         }
         
-        
-        DebugLog(@"QAVEndpoint requestViewList : %@", idlist);
+        DebugLog(@"[%@][%@] 开始请求[%@]画面", [self class], [_IMUser imUserId] , idlist);
         __weak TCAVMultiLiveRoomEngine *ws = self;
         int res = [QAVEndpoint requestViewList:_avContext identifierList:idlist srcTypeList:typeArray ret:^(QAVResult result) {
             [ws onRequestViewListCallBack:result ];

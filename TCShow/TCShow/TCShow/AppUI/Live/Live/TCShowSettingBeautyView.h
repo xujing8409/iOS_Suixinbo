@@ -20,6 +20,7 @@ typedef void (^TCShowSettingBeautyChanged)(CGFloat beauty);
 }
 
 @property (nonatomic, readonly) UISlider *slider;
+@property (nonatomic, assign) BOOL isWhiteMode;
 
 
 @property (nonatomic, copy) TCShowSettingBeautyChanged changeCompletion;

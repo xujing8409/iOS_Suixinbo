@@ -15,23 +15,25 @@ typedef NS_ENUM(NSInteger, TCShowLiveFunctionType) {
     EFunc_MSG       = 0x01 << 1,      // 消息
     EFunc_Camera    = 0x01 << 2,      // 相机
     EFunc_Beauty    = 0x01 << 3,      // 美颜
-    EFunc_Mic       = 0x01 << 4,      // 麦克风
-    EFunc_Speaker   = 0x01 << 5,      // 扬声器
-    EFunc_Share     = 0x01 << 6,      // 分享
+    EFunc_White    = 0x01 << 4,      // 美白
+    EFunc_Mic       = 0x01 << 5,      // 麦克风
+    EFunc_Speaker   = 0x01 << 6,      // 扬声器
+    EFunc_Share     = 0x01 << 7,      // 分享
 
     
     // 操作互动观众的
-    EFunc_Multi_Camera = 0x01 << 7,            // 操作对方的camera
-    EFunc_Multi_Mic = 0x01 << 8,               // 操作对方的mic
-    EFunc_Multi_SwitchToMain = 0x01 << 9,      // 切换到全屏
-    EFunc_Multi_CancelInteract = 0x01 << 10,    // 取消互动
+    EFunc_Multi_Camera = 0x01 << 8,            // 操作对方的camera
+    EFunc_Multi_Mic = 0x01 << 9,               // 操作对方的mic
+    EFunc_Multi_SwitchToMain = 0x01 << 10,      // 切换到全屏
+    EFunc_Multi_CancelInteract = 0x01 << 11,    // 取消互动
     
-    EFunc_Pure      = 0x01 << 11,      // 纯净模式
-    EFunc_NonPure   = 0x01 << 12,      // 非纯净模式
-    EFunc_Praise    = 0x01 << 13,      // 点赞
+    EFunc_Pure      = 0x01 << 12,      // 纯净模式
+    EFunc_NonPure   = 0x01 << 13,      // 非纯净模式
+    EFunc_Praise    = 0x01 << 14,      // 点赞
+    
     
     // 本地操作
-    EFunc_LocalAll = EFunc_LED | EFunc_MSG | EFunc_Camera | EFunc_Beauty | EFunc_Mic | EFunc_Speaker | EFunc_Share | EFunc_Pure | EFunc_NonPure | EFunc_Praise,
+    EFunc_LocalAll = EFunc_LED | EFunc_MSG | EFunc_Camera | EFunc_Beauty | EFunc_White | EFunc_Mic | EFunc_Speaker | EFunc_Share | EFunc_Pure | EFunc_NonPure | EFunc_Praise,
     EFunc_MultiAll = EFunc_Multi_Mic | EFunc_Multi_Camera | EFunc_Multi_SwitchToMain | EFunc_Multi_CancelInteract,
     
 };
@@ -69,6 +71,7 @@ typedef NS_ENUM(NSInteger, TCShowLiveFunctionType) {
     NSInteger _lastFunc;
     
     CGFloat  _lastFloatBeauty;  // 主要为界面上重新条开时一致
+    CGFloat  _lastFloatWhite;  // 主要为界面上重新条开时一致
     
     CGRect   _heartRect;
     

@@ -81,8 +81,8 @@
         AVIMCMD *parse = [NSObject parse:[AVIMCMD class] jsonString:dataStr];
         if (parse.msgType > AVIMCMD_None)
         {
-            parse.callInfo = [parse.actionParam objectFromJSONString];
-            
+            NSDictionary *dic = [parse.actionParam objectFromJSONString];
+            parse.callInfo = [NSMutableDictionary dictionaryWithDictionary:dic];
             return parse;
         }
     }

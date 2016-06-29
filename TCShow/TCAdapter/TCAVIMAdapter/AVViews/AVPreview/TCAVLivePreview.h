@@ -16,7 +16,6 @@
     AVGLBaseView                *_imageView;            // 画面
     TCAVFrameDispatcher         *_frameDispatcher;      // 分发器
 @protected
-    UIView                      *_animationView;        // 开启泻染时，因开摄像头会有有闪，添加动画效果
 }
 
 @property (nonatomic, readonly) AVGLBaseView *imageView;

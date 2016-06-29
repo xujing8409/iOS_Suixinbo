@@ -349,7 +349,7 @@
             if (!ih)
             {
                 // 连主播的画面都没有
-                if ([_multiResource count] > 1)
+                if ([_multiResource count] >= 1)
                 {
                     ih = [_multiResource objectAtIndex:0];
                 }

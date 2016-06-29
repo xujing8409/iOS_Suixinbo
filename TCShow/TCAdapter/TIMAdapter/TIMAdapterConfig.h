@@ -69,6 +69,9 @@
 // NSString, 群号可为空
 #define kTCAVCall_IMGroupID         @"IMGroupID"
 
+// 群类型
+#define kTCAVCall_IMGroupType       @"IMGroupType"
+
 // NSString, 呼叫提示
 #define kTCAVCall_CallTip           @"CallTip"
 

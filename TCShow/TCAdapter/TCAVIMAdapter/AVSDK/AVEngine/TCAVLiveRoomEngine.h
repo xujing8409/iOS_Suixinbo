@@ -37,11 +37,19 @@ typedef cameraPos TCAVEngineCamera;
     // 启动时根据传入的avCtrlState & EAVCtrlState_Beauty 自动去判断是否在打开相机时开启美颜
     // 设置美颜时，画面会突然闪一下，属正常现象
     // 当前是否支持美颜
+    // 1.8.1.300后，美颜与美白同时使用该字段控制
     BOOL             _isSupportBeauty;
-    
     // 是否已开启美颜
     // 注意：1.8.1去掉setEnableBeauty接口，为保持逻辑，_isEnableBeauty 默认为YES
     BOOL             _isEnableBeauty;
+    
+@protected
+    // 添加美白支持(1.8.1.300后才支持美白接口)
+    // 是否已开启美白
+    BOOL             _isEnableWhite;
+    
+    
+@protected
     
     // 退后台前是否打开过相机
     BOOL            _hasEnableCameraBeforeEnterBackground;
@@ -111,9 +119,23 @@ typedef cameraPos TCAVEngineCamera;
 // 否则返回0
 - (NSInteger)getBeauty;
 
-// 支持美颜，并且已开启的情况下，设置美美颜值[0-9]
-// 支持美颜，未开启的情况下，先开启美颜，再设置美美颜值[0-9]
+// 支持美颜，并且已开启的情况下，设置美颜值[0-9]
+// 支持美颜，未开启的情况下，先开启美颜，再设置美颜值[0-9]
 - (void)setBeauty:(NSInteger)beauty;
+
+
+
+// 开启过相机后才能查询
+// 是否支持美白
+- (BOOL)isSupporWhite;
+
+// 支持美白的情况下，返回具体的值[0-9]
+// 否则返回0
+- (NSInteger)getWhite;
+
+// 支持美白，并且已开启的情况下，设置美白值[0-9]
+// 支持美白，未开启的情况下，先开启美白，再设置美白值[0-9]
+- (void)setWhite:(NSInteger)white;
 
 // 查控直播控件的状态，进入房间后才能查到，未进入房间时返回NO
 // Mic是否开启
@@ -138,6 +160,15 @@ typedef cameraPos TCAVEngineCamera;
 // 默认使用的美颜值
 // 返回[0, 9]
 - (NSInteger)defaultBeautyValue;
+
+// 默认使用的美白值
+// 返回[0, 9]
+- (NSInteger)defaultWhiteValue;
+
+// 退出时，是否需要退出直播间
+// 具体看场景
+// 直播场景下不退
+- (BOOL)needExitIMChatRoom;
 
 // enableMic最大重试次数
 - (NSInteger)enableMicMaxTryCount;

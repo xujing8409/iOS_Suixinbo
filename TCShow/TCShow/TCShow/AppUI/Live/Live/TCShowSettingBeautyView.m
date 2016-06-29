@@ -13,7 +13,7 @@
     UIImageView *_tipBg;
     UILabel     *_tip;
 }
-
+@property (nonatomic, assign) BOOL isWhiteMode;
 - (void)setBeauty:(CGFloat)beauty;
 
 @end
@@ -50,7 +50,14 @@
 
 - (void)setBeauty:(CGFloat)beauty
 {
-    _tip.text = [NSString stringWithFormat:@"美颜度 %d％", (int)(100 * beauty)];
+    if (!_isWhiteMode)
+    {
+        _tip.text = [NSString stringWithFormat:@"美颜度 %d％", (int)(100 * beauty)];
+    }
+    else
+    {
+        _tip.text = [NSString stringWithFormat:@"美白度 %d％", (int)(100 * beauty)];
+    }
 }
 @end
 
@@ -147,6 +154,12 @@
     {
         [self close];
     }
+}
+
+- (void)setIsWhiteMode:(BOOL)isWhiteMode
+{
+    _isWhiteMode = isWhiteMode;
+    _tipView.isWhiteMode = isWhiteMode;
 }
 
 - (void)close

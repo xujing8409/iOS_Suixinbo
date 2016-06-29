@@ -337,8 +337,7 @@
         DebugLog(@"开始首帧画面计时");
         _hasStatisticFirstFrame = YES;
         
-        _firstFrameTimer = [NSTimer scheduledTimerWithTimeInterval:[self maxWaitFirstFrameSec] target:self selector:@selector(onWaitFirstFrameTimeOut) userInfo:nil repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:_firstFrameTimer forMode:NSRunLoopCommonModes];
+        [self onStartFirstFrameTimer];
     }
 }
 
@@ -446,9 +445,7 @@
     if (!_hasShowLocalFirstFrame)
     {
         _hasShowLocalFirstFrame = YES;
-        NSDate *date = [NSDate date];
-        TCAVIMLog(@"%@ 从进房:%@ 到画面显示时间:%@ 整个流程完毕 总耗时 :%0.3f (s)", [self isHostLive] ? @"主播" : @"观众",  [kTCAVIMLogDateFormatter stringFromDate:_logStartDate], [kTCAVIMLogDateFormatter stringFromDate:date] , -[_logStartDate timeIntervalSinceDate:date]);
-        _logStartDate = nil;
+        [self logFirstFrameTime];
     }
 #endif
     [_delegate onAVEngine:self videoFrame:frameData];
@@ -480,9 +477,7 @@
         }
         
 #if kSupportTimeStatistics
-        NSDate *date = [NSDate date];
-        TCAVIMLog(@"%@ 从进房:%@ 画面(%@)到达时间:%@ 整个流程完毕 总耗时:%0.3f (s)", [self isHostLive] ? @"主播" : @"观众", [kTCAVIMLogDateFormatter stringFromDate:_logStartDate], frameData.identifier, [kTCAVIMLogDateFormatter stringFromDate:date] , -[_logStartDate timeIntervalSinceDate:date]);
-        _logStartDate = nil;
+        [self logFirstFrameTime];
 #endif
     }
     [_delegate onAVEngine:self videoFrame:frameData];
@@ -740,8 +735,14 @@
     DebugLog(@"开始首帧画面计时");
     _hasStatisticFirstFrame = YES;
     
+    [self onStartFirstFrameTimer];
+}
+
+- (void)onStartFirstFrameTimer
+{
     _firstFrameTimer = [NSTimer scheduledTimerWithTimeInterval:[self maxWaitFirstFrameSec] target:self selector:@selector(onWaitFirstFrameTimeOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_firstFrameTimer forMode:NSRunLoopCommonModes];
+
 }
 
 - (void)onWaitFirstFrameTimeOut
@@ -756,6 +757,15 @@
 - (NSInteger)maxWaitFirstFrameSec
 {
     return 10;
+}
+
+- (void)logFirstFrameTime
+{
+#if kSupportTimeStatistics
+    NSDate *date = [NSDate date];
+    TCAVIMLog(@"%@ 从进房:%@ 到画面显示时间:%@ 整个流程完毕 总耗时 :%0.3f (s)", [self isHostLive] ? @"主播" : @"观众",  [kTCAVIMLogDateFormatter stringFromDate:_logStartDate], [kTCAVIMLogDateFormatter stringFromDate:date] , -[_logStartDate timeIntervalSinceDate:date]);
+    _logStartDate = nil;
+#endif
 }
 // 停步首帧计时
 - (void)stopFirstFrameTimer

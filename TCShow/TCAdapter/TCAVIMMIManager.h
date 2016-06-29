@@ -59,6 +59,7 @@
     __weak MultiAVIMMsgHandler          *_msgHandler;               // IM消息处理者
     __weak TCAVMultiLiveRoomEngine      *_roomEngine;               // AVSDK
     __weak TCAVMultiLivePreview         *_preview;                  // 画面显示，render小窗口
+    __weak id<TCAVIMMIManagerDelegate>  _multiDelegate;
 }
 
 @property (nonatomic, weak) id<TCAVIMMIManagerDelegate> multiDelegate;

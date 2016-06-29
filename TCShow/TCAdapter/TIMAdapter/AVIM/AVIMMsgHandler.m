@@ -364,10 +364,10 @@
 - (void)onRecvGroupSender:(id<IMUserAble>)sender textMsg:(NSString *)msg
 {
     id<AVIMMsgAble> cachedMsg = [self cacheRecvGroupSender:sender textMsg:msg];
-    [self enCache:cachedMsg noCache:^{
-        if (cachedMsg)
+    [self enCache:cachedMsg noCache:^(id<AVIMMsgAble> msg){
+        if (msg)
         {
-            [self performSelectorOnMainThread:@selector(onRecvGroupMsgInMainThread:) withObject:cachedMsg waitUntilDone:YES];
+            [self performSelectorOnMainThread:@selector(onRecvGroupMsgInMainThread:) withObject:msg waitUntilDone:YES];
         }
     }];
 }
@@ -394,12 +394,12 @@
                 {
                     AVIMMsg *enterMsg = [self onRecvSenderEnterLiveRoom:sender];
                     
-                    [self enCache:enterMsg noCache:^{
+                    [self enCache:enterMsg noCache:^(id<AVIMMsgAble> msg){
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            DebugLog(@"收到消息：%@", enterMsg);
-                            if (enterMsg)
+                            DebugLog(@"收到消息：%@", msg);
+                            if (msg)
                             {
-                                [_roomIMListner onIMHandler:self recvGroupMsg:enterMsg];
+                                [_roomIMListner onIMHandler:self recvGroupMsg:msg];
                             }
                         });
                     }];
@@ -414,13 +414,13 @@
                 case AVIMCMD_ExitLive:
                 {
                     AVIMMsg *exitMsg = [self onRecvSenderExitLiveRoom:sender];
-                    [self enCache:exitMsg noCache:^{
+                    [self enCache:exitMsg noCache:^(id<AVIMMsgAble> msg){
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            DebugLog(@"收到消息：%@", exitMsg);
+                            DebugLog(@"收到消息：%@", msg);
                             
-                            if (exitMsg)
+                            if (msg)
                             {
-                                [_roomIMListner onIMHandler:self recvGroupMsg:exitMsg];
+                                [_roomIMListner onIMHandler:self recvGroupMsg:msg];
                             }
                         });
                     }];
@@ -450,9 +450,9 @@
         {
             __weak id<AVIMMsgListener> wrl = _roomIMListner;
             __weak AVIMMsgHandler *ws = self;
-            [self enCache:cachedMsg noCache:^{
+            [self enCache:cachedMsg noCache:^(id<AVIMMsgAble> msg){
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [wrl onIMHandler:ws recvCustomGroup:cachedMsg];
+                    [wrl onIMHandler:ws recvCustomGroup:msg];
                 });
             }];
         }
@@ -468,13 +468,13 @@
 - (void)onRecvC2CSender:(id<IMUserAble>)sender customMsg:(TIMCustomElem *)msg
 {
     id<AVIMMsgAble> cachedMsg =[self cacheRecvC2CSender:sender customMsg:msg];
-    [self enCache:cachedMsg noCache:^{
+    [self enCache:cachedMsg noCache:^(id<AVIMMsgAble> msg){
         dispatch_async(dispatch_get_main_queue(), ^{
             // Demo中此类不处理C2C消息
-            if (cachedMsg)
+            if (msg)
             {
-                DebugLog(@"收到消息：%@", cachedMsg);
-                [_roomIMListner onIMHandler:self recvCustomC2C:cachedMsg];
+                DebugLog(@"收到消息：%@", msg);
+                [_roomIMListner onIMHandler:self recvCustomC2C:msg];
             }
         });
     }];
@@ -558,13 +558,13 @@
     _msgCache = nil;
 }
 
-- (void)enCache:(id<AVIMMsgAble>)msg noCache:(CommonVoidBlock)noCacheblock;
+- (void)enCache:(id<AVIMMsgAble>)msg noCache:(AVIMCacheBlock)noCacheblock;
 {
     if (!_isCacheMode)
     {
         if (noCacheblock)
         {
-            noCacheblock();
+            noCacheblock(msg);
         }
     }
     else
@@ -581,7 +581,7 @@
             {
                 if (noCacheblock)
                 {
-                    noCacheblock();
+                    noCacheblock(msg);
                 }
             }
             OSSpinLockUnlock(&_msgCacheLock);

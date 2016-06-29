@@ -33,6 +33,7 @@
 #define kSdkAppId       @"1400001692"
 #define kSdkAccountType @"884"
 
+// 用户App(非随心播)改成0
 #define kIsTCShowSupportIMCustom 1
 //=========================================================
 

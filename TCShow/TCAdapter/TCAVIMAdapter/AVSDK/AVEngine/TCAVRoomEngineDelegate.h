@@ -48,8 +48,10 @@
 
 @optional
 
-// 用户User的直播过程中画面丢失
-// 后面计划处理
+//// 用户User的直播过程中画面丢失
+//// 后面计划处理
+//// user的画面是否lost(YES:没有上传, NO:连上)
+//
 //- (void)onAVEngine:(TCAVBaseRoomEngine *)engine user:(id<IMUserAble>)user disconnect:(BOOL)lost;
 
 // 用户首次请求画面（QAVEndpoint requestViewList）成功后，会开始计时，在［engine maxWaitFirstFrameSec］内画面未显示，则回调请求画面超时
@@ -65,8 +67,8 @@
 
 // 将原- (void)OnEndpointsUpdateInfo:(QAVUpdateEvent)eventID endpointlist:(NSArray *)endpoints 拆分
 // AVSDK成员变化通知，不创建IM聊天室情况下使用
-// 若创建了IM聊天室，建议使用IM聊天室来来处理直播成员变化（AVSDK 里面的房间，当人数达到一定数量时，AVSDK不保证这些通知会到达）
-// 本示例中主要侧重使用IM作直播房间监听
+// 若创建了IM聊天室，建议使用IM聊天室来来处理直播成员变化（AVSDK 里面的房间，当人数达到一定数量(>50)时，AVSDK不保证这些通知会到达）
+// 本次重构中主要侧重使用IM作直播房间监听
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users exitRoom:(id<AVRoomAble>)room;
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users enterRoom:(id<AVRoomAble>)room;
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users event:(QAVUpdateEvent)event;

@@ -159,8 +159,12 @@
 // 主要用于统计观众进入僵尸房间(主播异常退出，然后进入的观众requestviewlist成功，但会一直请求不到画面)，较长时间没有画面显示
 // 首帧画面计时，
 - (void)startFirstFrameTimer;
+// 直实开计时器方法
+- (void)onStartFirstFrameTimer;
 // 等待第一帧的时长，默认10s
 - (NSInteger)maxWaitFirstFrameSec;
+
+- (void)logFirstFrameTime;
 
 - (void)onWaitFirstFrameTimeOut;
 // 停步首帧计时

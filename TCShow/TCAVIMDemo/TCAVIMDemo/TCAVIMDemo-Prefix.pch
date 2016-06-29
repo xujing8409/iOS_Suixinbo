@@ -20,6 +20,8 @@
 #define kAppMiddleTextFont      [UIFont systemFontOfSize:14]
 #define kAppSmallTextFont       [UIFont systemFontOfSize:12]
 
+#define kAppBakgroundColor RGB(240, 240, 240)
+
 #import "CommonLibrary.h"
 
 #import "TCAdapterHeader.h"

@@ -44,11 +44,11 @@
 
 // 收到自定义C2C消息
 // 用户自行解析
-- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomC2C:(AVIMCMD *)msg;
+- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomC2C:(id<AVIMMsgAble>)msg;
 
 // 收到自定义的Group消息
 // 用户自行解析
-- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(AVIMCMD *)msg;
+- (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(id<AVIMMsgAble>)msg;
 
 @end
 
@@ -153,7 +153,7 @@
 @end
 
 
-
+typedef void (^AVIMCacheBlock)(id<AVIMMsgAble> msg);
 
 @interface AVIMMsgHandler (CacheMode)
 
@@ -164,7 +164,7 @@
 - (void)releaseMsgCache;
 
 // 如果cache不成功，会继续上报
-- (void)enCache:(id<AVIMMsgAble>)msg noCache:(CommonVoidBlock)noCacheblock;
+- (void)enCache:(id<AVIMMsgAble>)msg noCache:(AVIMCacheBlock)noCacheblock;
 
 
 - (NSDictionary *)getMsgCache;

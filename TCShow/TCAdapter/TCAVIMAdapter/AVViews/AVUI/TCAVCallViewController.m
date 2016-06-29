@@ -20,6 +20,20 @@
     return NO;
 }
 
+- (void)requestHostViewOnEnterLiveSucc
+{
+    _multiManager.roomEngine = (TCAVMultiLiveRoomEngine *)_roomEngine;
+}
+
+- (void)addLivePreview
+{
+    TCAVMultiLivePreview *preview = [[TCAVMultiLivePreview alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:preview];
+    _livePreview = preview;
+    
+    _multiManager.preview = preview;
+//    [_livePreview addRenderFor:[_roomInfo liveHost]];
+}
 
 
 - (NSInteger)defaultAVHostConfig
@@ -32,7 +46,14 @@
     }
     else
     {
+        if (_isCallSponsor)
+        {
         return EAVCtrlState_All;
+    }
+        else
+        {
+            return EAVCtrlState_Speaker | EAVCtrlState_Mic;
+        }
     }
 }
 

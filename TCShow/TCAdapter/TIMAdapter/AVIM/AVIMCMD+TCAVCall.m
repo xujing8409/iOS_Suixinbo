@@ -23,19 +23,20 @@ static NSString *const kAVIMCMDCallInfo = @"kAVIMCMDCallInfo";
     objc_setAssociatedObject(self, (__bridge const void *)kAVIMCMDCallInfo, callInfo, OBJC_ASSOCIATION_RETAIN);
 }
 
-
-- (instancetype)initWithCall:(NSInteger)command avRoomID:(int)roomid group:(NSString *)gid type:(BOOL)isVoiceCall
-{
-    return [self initWithCall:command avRoomID:roomid group:gid type:isVoiceCall tip:nil];
-}
-
-- (instancetype)initWithCall:(NSInteger)command avRoomID:(int)roomid group:(NSString *)gid type:(BOOL)isVoiceCall tip:(NSString *)tip
+- (instancetype)initWithCall:(NSInteger)command avRoomID:(int)roomid group:(NSString *)gid groupType:(NSString *)groupTpe type:(BOOL)isVoiceCall tip:(NSString *)tip
 {
     if (roomid < 0)
-    {
-        DebugLog(@"房间号能数不合法");
+{
+        DebugLog(@"房间号参数不合法");
+        return nil;
+}
+
+    if (!((gid.length > 0 && groupTpe.length > 0) || (groupTpe.length == 0 && groupTpe.length == 0)))
+{
+        DebugLog(@"群号参数不合法");
         return nil;
     }
+    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic addNumber:@(roomid) forKey:kTCAVCall_AVRoomID];
     [dic addNumber:@(isVoiceCall) forKey:kTCAVCall_CallType];
@@ -43,6 +44,11 @@ static NSString *const kAVIMCMDCallInfo = @"kAVIMCMDCallInfo";
     if (gid && gid.length)
     {
         [dic addString:gid forKey:kTCAVCall_IMGroupID];
+    }
+    
+    if (groupTpe && groupTpe.length )
+    {
+        [dic addString:groupTpe forKey:kTCAVCall_IMGroupType];
     }
     
     if (tip && tip.length)
@@ -71,6 +77,23 @@ static NSString *const kAVIMCMDCallInfo = @"kAVIMCMDCallInfo";
 - (BOOL)isVoiceCall
 {
     return [(NSNumber *)self.callInfo[kTCAVCall_CallType] boolValue];
+}
+
+- (BOOL)isGroupCall
+{
+    NSString *groupid = self.callInfo[kTCAVCall_IMGroupID];
+    return groupid.length > 0;
+}
+
+- (BOOL)isChatGroup
+{
+    NSString *groupType = self.callInfo[kTCAVCall_IMGroupType];
+    return [groupType isEqualToString:@"Private"];
+}
+
+- (NSString *)callGroupType
+{
+    return self.callInfo[kTCAVCall_IMGroupType];
 }
 
 - (BOOL)isTCAVCallCMD

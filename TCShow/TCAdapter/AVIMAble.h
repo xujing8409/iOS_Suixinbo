@@ -76,6 +76,9 @@ typedef NS_ENUM(NSInteger, AVCtrlState)
     // https://www.qcloud.com/doc/product/268/%E5%BD%95%E5%88%B6%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91
     EAVCtrlState_Record = 0x01 << 7,            // 录制功能
     
+    // AVSDK在 1.8.1.300才支持美白功能
+    EAVCtrlState_White = 0x01 << 8,             // 是否开启美白
+    
     
     // 主播进入房间时的推荐配置
     

@@ -15,25 +15,25 @@
 - (void)onRecvC2CSender:(id<IMUserAble>)sender customMsg:(TIMCustomElem *)msg
 {
     id<AVIMMsgAble> cachedMsg = [self cacheRecvC2CSender:sender customMsg:msg];
-    [self enCache:cachedMsg noCache:^{
+    [self enCache:cachedMsg noCache:^(id<AVIMMsgAble> msg){
     dispatch_async(dispatch_get_main_queue(), ^{
         // Demo中此类不处理C2C消息
-        if (cachedMsg)
+            if (msg)
         {
-            NSInteger type = [cachedMsg msgType];
+                NSInteger type = [msg msgType];
             if (type > AVIMCMD_Multi && type < AVIMCMD_Multi_Custom)
             {
-                DebugLog(@"收到消息：%@", cachedMsg);
+                    DebugLog(@"收到消息：%@", msg);
                 // 收到内部的自定义多人互动消
                 if ([_roomIMListner respondsToSelector:@selector(onIMHandler:recvCustomC2CMultiMsg:)])
                 {
-                    [(id<MultiAVIMMsgListener>)_roomIMListner onIMHandler:self recvCustomC2CMultiMsg:cachedMsg];
+                        [(id<MultiAVIMMsgListener>)_roomIMListner onIMHandler:self recvCustomC2CMultiMsg:msg];
                 }
             }
             else
             {
                 DebugLog(@"收到消息：%@", cachedMsg);
-                [_roomIMListner onIMHandler:self recvCustomC2C:cachedMsg];
+                    [_roomIMListner onIMHandler:self recvCustomC2C:msg];
             }
         }
     });
@@ -106,11 +106,11 @@
                     //处理取消互动逻辑
                 case AVIMCMD_Multi_CancelInteract:
                 {
-                    [self enCache:cachedMsg noCache:^{
+                    [self enCache:cachedMsg noCache:^(id<AVIMMsgAble> msg){
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if ([_roomIMListner respondsToSelector:@selector(onIMHandler:recvCustomGroupMultiMsg:)])
                         {
-                            [(id<MultiAVIMMsgListener>)_roomIMListner onIMHandler:self recvCustomGroupMultiMsg:cachedMsg];
+                                [(id<MultiAVIMMsgListener>)_roomIMListner onIMHandler:self recvCustomGroupMultiMsg:msg];
                         }
                     });
                     }];

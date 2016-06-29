@@ -113,6 +113,16 @@
     
     [_roomEngine setBeauty:be];
 }
+
+- (void)onWhiteChanged:(CGFloat)value
+{
+    _lastFloatWhite = value;
+    
+    NSInteger be = (NSInteger)((value + 0.05) * 10);
+    
+    [_roomEngine setWhite:be];
+}
+
 - (void)onSetBeauty
 {
     TCShowSettingBeautyView *beautyView = [[TCShowSettingBeautyView alloc] init];
@@ -134,6 +144,27 @@
     [beautyView setBeauty:_lastFloatBeauty];
 }
 
+- (void)onSetWhite
+{
+    TCShowSettingBeautyView *beautyView = [[TCShowSettingBeautyView alloc] init];
+    [self.superview addSubview:beautyView];
+    
+    __weak TCShowLiveBottomView *ws = self;
+    beautyView.changeCompletion = ^(CGFloat value){
+        [ws onWhiteChanged:value];
+    };
+    
+    [beautyView setFrameAndLayout:self.superview.bounds];
+    
+    if (_showUser && _lastFloatWhite == 0)
+    {
+        // 说明只是当前自己
+        _lastFloatWhite = ([_roomEngine getWhite] * 10)/100.0;
+    }
+    beautyView.isWhiteMode = YES;
+    [beautyView setBeauty:_lastFloatWhite];
+}
+
 
 - (void)setRoomEngine:(TCAVLiveRoomEngine *)roomEngine
 {
@@ -146,6 +177,7 @@
     NSInteger func =  _lastFunc;
     func = isHost ? func | EFunc_LED : func & ~EFunc_LED;
     func = [_roomEngine isSupporBeauty] ? func | EFunc_Beauty : func & ~EFunc_Beauty;
+    func = [_roomEngine isSupporWhite] ? func | EFunc_White : func & ~EFunc_White;
     func = [_roomEngine isMicEnable] ? func | EFunc_Mic : func & ~EFunc_Mic;
     func = [_roomEngine isCameraEnable] ? func |EFunc_Camera : func & ~EFunc_Camera;
     func = [_roomEngine isSpeakerEnable] ? func | EFunc_Speaker : func & ~EFunc_Speaker;
@@ -276,6 +308,14 @@
                 [ws onSetBeauty];
             }];
             [menuBtn setImage:[UIImage imageNamed:@"beauty_hover"] forState:UIControlStateHighlighted];
+        }
+            break;
+        case EFunc_White:
+        {
+            menuBtn = [[MenuButton alloc] initWithTitle:nil icon:[UIImage imageNamed:@"white"] action:^(MenuButton *menu) {
+                [ws onSetWhite];
+            }];
+            [menuBtn setImage:[UIImage imageNamed:@"white_hover"] forState:UIControlStateHighlighted];
         }
             break;
         case EFunc_Mic:
@@ -724,6 +764,7 @@
     NSInteger func =  EFunc_LocalAll & ~EFunc_NonPure & ~EFunc_Share;;
     func = [_roomEngine isHostLive] ? func | EFunc_LED : func & ~EFunc_LED;
     func = [_roomEngine isSupporBeauty] ? func | EFunc_Beauty : func & ~EFunc_Beauty;
+    func = [_roomEngine isSupporWhite] ? func | EFunc_White : func & ~EFunc_White;
     func = [_roomEngine isMicEnable] ? func | EFunc_Mic : func & ~EFunc_Mic;
     func = [_roomEngine isCameraEnable] ? func |EFunc_Camera : func & ~EFunc_Camera;
     func = [_roomEngine isSpeakerEnable] ? func | EFunc_Speaker : func & ~EFunc_Speaker;

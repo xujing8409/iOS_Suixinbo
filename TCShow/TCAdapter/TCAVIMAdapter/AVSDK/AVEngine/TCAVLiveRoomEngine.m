@@ -31,8 +31,10 @@
     BOOL        _isRequestingHostView;
     
     
-    // 主播是否开启过美：
+    // 主播最后开启的美颜值
     NSInteger   _lastBeautyValue;
+    // 主播最后开启的美白值
+    NSInteger   _lastWhiteValue;
 }
 
 @end
@@ -67,6 +69,7 @@
         _isRequestingHostView = NO;
         
         _lastBeautyValue = 0;
+        _lastWhiteValue = 0;
         
         _cameraId = CameraPosFront;
         _enableChat = YES;
@@ -638,6 +641,7 @@
     {
         __weak TCAVLiveRoomEngine *ws = self;
         NSString *hostId = [[_roomInfo liveHost] imUserId];
+        DebugLog(@"[%@][%@] 开始请求[%@]画面", [self class], [_IMUser imUserId] , hostId);
         int res = [QAVEndpoint requestViewList:_avContext identifierList:@[hostId] srcTypeList:@[@(QAVVIDEO_SRC_TYPE_CAMERA)] ret:^(QAVResult result) {
             if (QAV_OK == result)
             {
@@ -718,7 +722,10 @@
     [self onWillExitLive];
 #endif
     
+    if ([self needExitIMChatRoom])
+    {
     [[IMAPlatform sharedInstance] asyncExitAVChatRoom:_roomInfo succ:nil fail:nil];
+    }
     _enableChat = NO;
     
     [self onAsyncStopPushStreamOnExitRoom:^(BOOL succ, NSString *tip) {
@@ -816,6 +823,80 @@
     
 }
 
+
+// 是否支持美白
+- (BOOL)isSupporWhite
+{
+    return [self isSupporBeauty];
+}
+
+// 支持美颜的情况下，返回具体的值[0-9]
+// 否则返回0
+- (NSInteger)getWhite
+{
+    if (![self isSupporWhite])
+    {
+        return 0;
+    }
+    
+    return _lastWhiteValue;
+    
+}
+
+// 支持美颜的情况下才可以设置
+- (void)enableWhite:(NSInteger)white
+{
+    DebugLog(@"开始设置美颜");
+    // 此处有潜在问题
+    QAVVideoCtrl *videoCtrl = _avContext.videoCtrl;
+    if (videoCtrl)
+    {
+        _isEnableWhite = YES; //[videoCtrl enableBeauty:YES];
+        
+        if (_isEnableWhite)
+        {
+            _lastWhiteValue = white;
+            [videoCtrl inputWhiteningParam:_lastWhiteValue];
+            DebugLog(@"开启美白成功，并设置美白值为：%d", (int)_lastWhiteValue);
+            [self enableHostCtrlState:EAVCtrlState_White];
+        }
+        else
+        {
+            DebugLog(@"开启白失败");
+            [self disableHostCtrlState:EAVCtrlState_White];
+        }
+    }
+}
+
+
+// 支持美颜的情况下，设置美美颜值[0-9]
+- (void)setWhite:(NSInteger)white
+{
+    if (_lastWhiteValue == white)
+    {
+        // 已经是一致了，不需要得新设置
+        return;
+    }
+    
+    if (![self isSupporWhite])
+    {
+        
+        // do nothing
+        DebugLog(@"当前不支持美白功能");
+        return;
+    }
+    
+    if (!_isEnableWhite)
+    {
+        [self enableWhite:white];
+        return;
+    }
+    
+    
+    [self setWhiteOnEnable:white];
+    
+}
+
 // 在支持美颜的情况下设置
 - (void)setBeautyOnEnable:(NSInteger)beauty
 {
@@ -836,6 +917,29 @@
     else
     {
         DebugLog(@"_avContext 或 _avContext.videoCtrl 为空，无法设置美颜值");
+    }
+}
+
+// 在支持美颜的情况下设置
+- (void)setWhiteOnEnable:(NSInteger)white
+{
+    if (white > 9)
+    {
+        white = 9;
+    }
+    else if (white < 0)
+    {
+        white = 0;
+    }
+    
+    if (_avContext && _avContext.videoCtrl)
+    {
+        _lastWhiteValue = white;
+        [_avContext.videoCtrl inputWhiteningParam:white];
+    }
+    else
+    {
+        DebugLog(@"_avContext 或 _avContext.videoCtrl 为空，无法设置美白值");
     }
 }
 
@@ -897,6 +1001,15 @@
     return 5;
 }
 
+- (NSInteger)defaultWhiteValue
+{
+    return 5;
+}
+
+- (BOOL)needExitIMChatRoom
+{
+    return YES;
+}
 - (NSInteger)enableMicMaxTryCount
 {
     return 5;
@@ -956,11 +1069,13 @@
         }
         [self asyncEnableCamera:YES isEnterRoom:YES needNotify:YES completion:nil];
     }
+#if kSupportTimeStatistics
     else
     {
     // 不开相计时，不作首帧计时
         _hasShowLocalFirstFrame = YES;
     }
+#endif
     
     [self onEnterRoomCheckPush];
     
@@ -1019,12 +1134,25 @@
         id<AVUserAble> ah = (id<AVUserAble>) _IMUser;
         NSInteger state = [ah avCtrlState];
         
-        if (enable && _isSupportBeauty && videoCtrl && (state & EAVCtrlState_Beauty))
+        if (enable && _isSupportBeauty && videoCtrl)
         {
-            // 立即设置容易失效
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self enableBeauty:[self defaultBeautyValue]];
-            });
+            BOOL eb = ((state & EAVCtrlState_Beauty) == EAVCtrlState_Beauty);
+            BOOL ew = ((state & EAVCtrlState_White) == EAVCtrlState_White);
+            
+            if (eb || ew)
+            {
+                // 立即设置容易失效
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (eb)
+                    {
+                        [self enableBeauty:[self defaultBeautyValue]];
+                    }
+                    if (ew)
+                    {
+                        [self enableBeauty:[self defaultWhiteValue]];
+                    }
+                });
+            }
         }
         
         if (enable)
@@ -1065,7 +1193,7 @@
 
 - (void)onContextCloseComplete:(NSString *)tip
 {
-    if (_enableChat)
+    if (_enableChat &&  [self needExitIMChatRoom])
     {
         [[IMAPlatform sharedInstance] asyncExitAVChatRoom:_roomInfo succ:nil fail:nil];
     }
