@@ -462,17 +462,17 @@
     [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
     [_publishInteractBtn alignParentBottom];
 #else
-#if DEBUG
+//#if DEBUG
     [_publishBtn sizeWith:CGSizeMake((self.view.bounds.size.width - 3 * kDefaultMargin)/2, 44)];
     [_publishBtn alignParentBottomWithMargin:kDefaultMargin];
     [_publishBtn alignParentLeftWithMargin:kDefaultMargin];
     
     [_publishInteractBtn sameWith:_publishBtn];
     [_publishInteractBtn layoutToRightOf:_publishBtn margin:kDefaultMargin];
-#else
-    [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
-    [_publishInteractBtn alignParentBottom];
-#endif
+//#else
+//    [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
+//    [_publishInteractBtn alignParentBottom];
+//#endif
     
 #endif
     

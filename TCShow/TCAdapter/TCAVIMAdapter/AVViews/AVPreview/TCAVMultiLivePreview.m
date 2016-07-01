@@ -8,6 +8,29 @@
 
 #import "TCAVMultiLivePreview.h"
 
+@implementation TCAVMultiLeaveView
+
+- (void)addOwnViews
+{
+    _lostView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_miss"]];
+    [self addSubview:_lostView];
+    
+    _lostTip = [[UILabel alloc] init];
+    _lostTip.textAlignment = NSTextAlignmentCenter;
+    _lostTip.textColor = kWhiteColor;
+    _lostTip.font = kAppMiddleTextFont;
+    [self addSubview:_lostTip];
+}
+
+- (void)onUserLeave:(id<IMUserAble>)user
+{
+    _lostTip.text = [NSString stringWithFormat:@"%@离开了...精彩稍候呈现", [user imUserName]];
+    self.hidden = NO;
+}
+
+
+@end
+
 @implementation TCAVMultiLivePreview
 
 - (void)addRenderFor:(id<AVMultiUserAble>)user

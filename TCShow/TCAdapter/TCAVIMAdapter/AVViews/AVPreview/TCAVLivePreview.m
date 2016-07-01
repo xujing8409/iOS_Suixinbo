@@ -8,10 +8,52 @@
 
 #import "TCAVLivePreview.h"
 
+
+@implementation TCAVLeaveView
+
+- (void)addOwnViews
+{
+    self.backgroundColor = [kBlackColor colorWithAlphaComponent:0.5];
+    
+    _lostView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_miss"]];
+    [self addSubview:_lostView];
+    
+    _lostTip = [[UILabel alloc] init];
+    _lostTip.textAlignment = NSTextAlignmentCenter;
+    _lostTip.textColor = kWhiteColor;
+    _lostTip.font = kAppMiddleTextFont;
+    [self addSubview:_lostTip];
+}
+
+- (void)relayoutFrameOfSubViews
+{
+    CGRect rect = [self bounds];
+    CGSize imgSize = _lostView.image.size;
+    [_lostView sizeWith:imgSize];
+    [_lostView layoutParentCenter];
+    [_lostView move:CGPointMake(0, -(imgSize.height/2 + 15))];
+    
+    [_lostTip sizeWith:CGSizeMake(rect.size.width, 20)];
+    [_lostTip layoutBelow:_lostView margin:15];
+}
+
+- (void)onUserLeave:(id<IMUserAble>)user
+{
+    _lostTip.text = [NSString stringWithFormat:@"[%@]离开了...精彩稍候呈现", [user imUserName]];
+    self.hidden = NO;
+}
+- (void)onUserBack:(id<IMUserAble>)user
+{
+    self.hidden = YES;
+}
+
+@end
+
 @implementation TCAVLivePreview
 
 - (void)dealloc
 {
+    DebugLog(@"[%@] : %p 释放成功", [self class], self);
     [self stopPreview];
     [_imageView destroyOpenGL];
     _imageView = nil;
@@ -46,6 +88,41 @@
         }
     }
     return self;
+}
+
+- (void)registLeaveView:(Class)leaveViewClass
+{
+    if (![leaveViewClass conformsToProtocol:@protocol(TCAVLeaveAbleView)])
+    {
+        DebugLog(@"消失界面的类型[%@]不对", leaveViewClass);
+        return;
+    }
+    
+    _leaveView = [[leaveViewClass alloc] init];
+    _leaveView.hidden = YES;
+    [self addSubview:_leaveView];
+    _leaveView.frame = self.bounds;
+    
+}
+
+- (void)onUserBack:(id<IMUserAble>)user
+{
+    [_leaveView onUserBack:user];
+}
+
+- (BOOL)isRenderUserLeave
+{
+    return !_leaveView.hidden;
+}
+
+- (void)hiddenLeaveView
+{
+    _leaveView.hidden = YES;
+}
+
+- (void)onUserLeave:(id<IMUserAble>)user
+{
+    [_leaveView onUserLeave:user];
 }
 
 - (void)startPreview
@@ -144,6 +221,7 @@
 - (void)relayoutFrameOfSubViews
 {
     _imageView.frame = self.bounds;
+    [_leaveView setFrameAndLayout:self.bounds];
 }
 
 @end

@@ -29,7 +29,7 @@
 @property (nonatomic, weak) id<TCShowMultiViewDelegate> delegate;
 
 
-- (TCShowMultiSubView *)overlayOf:(id<AVMultiUserAble>)user;
+- (TCShowMultiSubView *)overlayOf:(id<IMUserAble>)user;
 
 
 // 发起者调用
@@ -45,7 +45,7 @@
 
 - (void)replaceViewOf:(id<AVMultiUserAble>)user with:(id<AVMultiUserAble>)main;
 
-
-// 被拒移除
+- (void)onUserLeave:(NSArray *)users;
+- (void)onUserBack:(NSArray *)users;
 
 @end

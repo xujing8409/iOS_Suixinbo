@@ -35,6 +35,7 @@
 
 @property (nonatomic, readonly) NSMutableArray *multiUser;
 @property (nonatomic, weak) id<TCAVMLRERequestViewDelegate> requestViewDelegate;
+@property (nonatomic, assign) BOOL hasEnabelCamera;
 
 // 还可以请求画面的数量
 - (NSInteger)canRequestMore;

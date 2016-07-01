@@ -156,23 +156,12 @@
 {
     if (tap.state == UIGestureRecognizerStateEnded)
     {    
-    if ([_delegate respondsToSelector:@selector(onMultiSubViewClick:)])
-    {
-        [_delegate onMultiSubViewClick:self];
+        if ([_delegate respondsToSelector:@selector(onMultiSubViewClick:)])
+        {
+            [_delegate onMultiSubViewClick:self];
+        }
     }
 }
-}
-
-//// 对应因视频中断，导致没有画面过来
-//- (void)onVideoLost
-//{
-//    [_interactUser setAvMultiUserState:AVMultiUser_Interact_Losting];
-//    
-//    _headMask.hidden = NO;
-//    _stateTip.hidden = NO;
-//    
-//    _stateTip.text = @"用户离线";
-//}
 
 - (void)layoutSubviews
 {
@@ -180,6 +169,7 @@
     
     _receiverHeadIcon.frame = self.bounds;
     _stateTip.frame = self.bounds;
+    _leavingView.frame = self.bounds;
     
     if (_hangUp)
     {
@@ -191,6 +181,32 @@
     }
 }
 
+- (BOOL)isUserLeave
+{
+    return _leavingView && !_leavingView.hidden;
+}
 
+- (void)onUserLeave:(id<IMUserAble>)user
+{
+    if ([[_interactUser imUserId] isEqualToString:[user imUserId]])
+    {
+        if (!_leavingView)
+        {
+            _leavingView = [[UIImageView alloc] init];
+            _leavingView.contentMode = UIViewContentModeCenter;
+            _leavingView.backgroundColor = [kBlackColor colorWithAlphaComponent:0.5];
+            _leavingView.image = [UIImage imageNamed:@"img_miss_small"];
+            [self addSubview:_leavingView];
+            _leavingView.frame = self.bounds;
+        }
+        _leavingView.hidden = NO;
+//        self.userInteractionEnabled = NO;
+    }
+}
+- (void)onUserBack:(id<IMUserAble>)user
+{
+    _leavingView.hidden = YES;
+//    self.userInteractionEnabled = YES;
+}
 
 @end

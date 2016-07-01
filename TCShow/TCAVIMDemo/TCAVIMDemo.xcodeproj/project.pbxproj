@@ -672,6 +672,7 @@
 		92553E711D006B7E00BE2D6C /* CommonLibraryMacroConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonLibraryMacroConfig.h; sourceTree = "<group>"; };
 		92553E721D006B9000BE2D6C /* TCAdapterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAdapterConfig.h; sourceTree = "<group>"; };
 		92553E731D006B9800BE2D6C /* TIMAdapterConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIMAdapterConfig.h; sourceTree = "<group>"; };
+		926395111D268D610098E296 /* TCAVLeaveAbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVLeaveAbleView.h; sourceTree = "<group>"; };
 		9267103E1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeLivePreviewFrameViewController.h; sourceTree = "<group>"; };
 		9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeLivePreviewFrameViewController.m; sourceTree = "<group>"; };
 		926DEC901CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+PushStream.h"; sourceTree = "<group>"; };
@@ -1497,6 +1498,7 @@
 		92377C391CEA0B31007AD22B /* AVPreview */ = {
 			isa = PBXGroup;
 			children = (
+				926395111D268D610098E296 /* TCAVLeaveAbleView.h */,
 				92377C3A1CEA0B31007AD22B /* TCAVFrameDispatcher.h */,
 				92377C3B1CEA0B31007AD22B /* TCAVFrameDispatcher.m */,
 				92377C3C1CEA0B31007AD22B /* TCAVLivePreview.h */,

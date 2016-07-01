@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+
+@interface TCAVLeaveView : UIView<TCAVLeaveAbleView>
+{
+@protected
+    UIImageView     *_lostView;
+    UILabel         *_lostTip;
+}
+
+@end
+
+
 // 主播端的渲染
 // TCAVLivePreview 处理一路画面显示的问题
 @interface TCAVLivePreview : UIView
@@ -16,10 +27,12 @@
     AVGLBaseView                *_imageView;            // 画面
     TCAVFrameDispatcher         *_frameDispatcher;      // 分发器
 @protected
+    UIView<TCAVLeaveAbleView>   *_leaveView;
 }
 
 @property (nonatomic, readonly) AVGLBaseView *imageView;
 
+- (void)registLeaveView:(Class)leaveViewClass;
 // user为该画面对应的对象
 // 默认全屏显示, 本地只有路画面
 - (void)addRenderFor:(id<IMUserAble>)user;
@@ -36,6 +49,13 @@
 - (void)stopPreview;
 
 - (void)stopAndRemoveAllRender;
+
+- (BOOL)isRenderUserLeave;
+
+- (void)hiddenLeaveView;
+
+- (void)onUserLeave:(id<IMUserAble>)user;
+- (void)onUserBack:(id<IMUserAble>)user;
 
 
 @end

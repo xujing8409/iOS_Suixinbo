@@ -29,7 +29,7 @@
 {
     [TCAVMultiLiveViewController checkInitParam:info user:user];
     if (self = [super initWith:info user:user])
-    {        
+    {
         [self addMultiManager];
     }
     return self;
@@ -44,6 +44,7 @@
     {
         _msgHandler = [[MultiAVIMMsgHandler alloc] initWith:_roomInfo];
         _multiManager.msgHandler = (MultiAVIMMsgHandler *)_msgHandler;
+        [_msgHandler enterLiveChatRoom:nil fail:nil];
     }
     else
     {
@@ -51,8 +52,10 @@
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         } fail:^(int code, NSString *msg) {
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         }];
     }
 }
@@ -61,12 +64,12 @@
 {
     if (!_roomEngine)
     {
-    id<AVMultiUserAble> ah = (id<AVMultiUserAble>)_currentUser;
-    [ah setAvMultiUserState:_isHost ? AVMultiUser_Host : AVMultiUser_Guest];
-    [ah setAvCtrlState:[self defaultAVHostConfig]];
-    _roomEngine = [[TCAVMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVMultiUserAble>)_currentUser enableChat:_enableIM];
-    _roomEngine.delegate = self;
-}
+        id<AVMultiUserAble> ah = (id<AVMultiUserAble>)_currentUser;
+        [ah setAvMultiUserState:_isHost ? AVMultiUser_Host : AVMultiUser_Guest];
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        _roomEngine = [[TCAVMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVMultiUserAble>)_currentUser enableChat:_enableIM];
+        _roomEngine.delegate = self;
+    }
 }
 
 // 外部分配user窗口位置，此处可在界面显示相应的小窗口
@@ -124,6 +127,7 @@
     TCAVMultiLivePreview *preview = [[TCAVMultiLivePreview alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:preview];
     _livePreview = preview;
+    [_livePreview registLeaveView:[TCAVMultiLeaveView class]];
     
     _multiManager.preview = preview;
     [_livePreview addRenderFor:[_roomInfo liveHost]];
@@ -187,57 +191,99 @@
     }
 }
 
-- (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users event:(QAVUpdateEvent)event
+- (void)onHasCameraUserBack:(NSArray *)users
 {
-    NSString *roomHostId = [[[engine getRoomInfo] liveHost] imUserId];
-    // 是否是主播收到的
-    
+    NSString *roomHostId = [[[_roomEngine getRoomInfo] liveHost] imUserId];
     NSMutableArray *hasCamera = [NSMutableArray array];
+    NSMutableArray *hasCameraUser = [NSMutableArray array];
+    BOOL mainBack = NO;
     for (id<AVMultiUserAble> iu in users)
     {
         NSString *iuid = [iu imUserId];
+        TCAVIMEndpoint *p = [[TCAVIMEndpoint alloc] initWith:(QAVEndpoint *)iu];
         if (![iuid isEqualToString:roomHostId])
         {
-            // 检查是否是互动观众退出了
-            switch (event)
-            {
-                case QAV_EVENT_ID_ENDPOINT_HAS_CAMERA_VIDEO:
-                {
-                    
-                    TCAVIMEndpoint *p = [[TCAVIMEndpoint alloc] initWith:(QAVEndpoint *)iu];
-                    [hasCamera addObject:p];
-                    [_multiManager enableInteractUser:iu ctrlState:EAVCtrlState_Camera];
-                }
-                    
-                    break;
-                case QAV_EVENT_ID_ENDPOINT_NO_CAMERA_VIDEO:
-                {
-                    [_multiManager disableInteractUser:iu ctrlState:EAVCtrlState_Camera];
-                }
-                    break;
-                case QAV_EVENT_ID_ENDPOINT_HAS_AUDIO:
-                {
-                    [_multiManager enableInteractUser:iu ctrlState:EAVCtrlState_Mic];
-                }
-                    break;
-                case QAV_EVENT_ID_ENDPOINT_NO_AUDIO:
-                {
-                    [_multiManager disableInteractUser:iu ctrlState:EAVCtrlState_Mic];
-                }
-                    break;
-                default:
-                    break;
-            }
+            [hasCamera addObject:p];
         }
+        [hasCameraUser addObject:p];
+        [_multiManager enableInteractUser:iu ctrlState:EAVCtrlState_Camera];
         
+        if ([[_multiManager.mainUser imUserId] isEqualToString:[p imUserId]])
+        {
+            mainBack = YES;
+        }
     }
-    
-    
     if (hasCamera.count)
     {
         DebugLog(@"%@", hasCamera);
         // 改成请求多人的
         [_multiManager requestMultipleViewOf:hasCamera];
+    }
+    if (mainBack)
+    {
+        [_livePreview onUserBack:_multiManager.mainUser];
+    }
+
+}
+- (void)onNoCameraUserLeave:(NSArray *)users
+{
+    NSMutableArray *noCameraUser = [NSMutableArray array];
+    BOOL mainLeave = NO;
+    for (id<AVMultiUserAble> iu in users)
+    {
+        TCAVIMEndpoint *p = [[TCAVIMEndpoint alloc] initWith:(QAVEndpoint *)iu];
+        [_multiManager disableInteractUser:p ctrlState:EAVCtrlState_Camera];
+        [noCameraUser addObject:p];
+        
+        if ([[_multiManager.mainUser imUserId] isEqualToString:[p imUserId]])
+        {
+            mainLeave = YES;
+        }
+        
+    }
+    
+    if (mainLeave)
+    {
+        [_livePreview onUserLeave:_multiManager.mainUser];
+    }
+}
+
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users event:(QAVUpdateEvent)event
+{
+    
+    // 是否是主播收到的
+    // 检查是否是互动观众退出了
+    switch (event)
+    {
+        case QAV_EVENT_ID_ENDPOINT_HAS_CAMERA_VIDEO:
+        {
+            [self onHasCameraUserBack:users];
+        }
+            
+            break;
+        case QAV_EVENT_ID_ENDPOINT_NO_CAMERA_VIDEO:
+        {
+            [self onNoCameraUserLeave:users];
+        }
+            break;
+        case QAV_EVENT_ID_ENDPOINT_HAS_AUDIO:
+        {
+            for (id<AVMultiUserAble> iu in users)
+            {
+                [_multiManager enableInteractUser:iu ctrlState:EAVCtrlState_Mic];
+            }
+        }
+            break;
+        case QAV_EVENT_ID_ENDPOINT_NO_AUDIO:
+        {
+            for (id<AVMultiUserAble> iu in users)
+            {
+                [_multiManager disableInteractUser:iu ctrlState:EAVCtrlState_Mic];
+            }
+        }
+            break;
+        default:
+            break;
     }
 }
 
@@ -255,6 +301,7 @@
     [_multiManager addInteractUserOnRecvSemiAutoVideo:hasCamera];
 }
 
+
 // 切换直播间
 - (BOOL)switchToLive:(id<AVRoomAble>)room
 {
@@ -269,6 +316,39 @@
 }
 
 
+// iOS在App运行中，修改Mic以及相机权限，App会退出
+// 检查Camera权限，没有权限时，执行noauthBlock
+- (NSString *)cameraAuthorizationTip;
+{
+    return _isHost ? @"没有权限访问您的相机，无法进行直播，请在“设置－隐私－相机”中允许使用。" : @"没有权限访问您的相机，无法与主播进行互动，请在“设置－隐私－相机”中允许使用。";
+}
 
+// 无麦克风权限时的提示语
+- (NSString *)micPermissionTip
+{
+    return _isHost ? @"没有权限访问您的麦克风，无法进行直播，请在“设置-隐私-麦克风”中允许访问麦克风。" : @"没有权限访问您的麦克风，无法与主播进行互动，请在“设置-隐私-麦克风”中允许访问麦克风。";
+}
+
+// 主播离开直播间
+- (void)onHostLeaveLiveRoom
+{
+    if ([_multiManager isInteractUser:_currentUser])
+    {
+        AVIMCMD *lc = [[AVIMCMD alloc] initWith:AVIMCMD_Host_Leave];
+        [_msgHandler sendCustomGroupMsg:lc succ:nil fail:nil];
+    }
+    
+}
+
+// 主播返回直播间
+- (void)onHostBackLiveRoom
+{
+    if ([_multiManager isInteractUser:_currentUser])
+    {
+        AVIMCMD *lc = [[AVIMCMD alloc] initWith:AVIMCMD_Host_Back];
+        [_msgHandler sendCustomGroupMsg:lc succ:nil fail:nil];
+    }
+    
+}
 
 @end

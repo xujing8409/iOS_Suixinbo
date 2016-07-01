@@ -10,6 +10,7 @@
 #define AVViewHeader_h
 
 #import "TCAVFrameDispatcher.h"
+#import "TCAVLeaveAbleView.h"
 #import "TCAVLivePreview.h"
 #import "TCAVMultiLivePreview.h"
 

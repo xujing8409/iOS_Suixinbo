@@ -8,6 +8,10 @@
 
 #import "TCAVLivePreview.h"
 
+@interface TCAVMultiLeaveView : TCAVLeaveView
+
+@end
+
 @interface TCAVMultiLivePreview : TCAVLivePreview
 
 

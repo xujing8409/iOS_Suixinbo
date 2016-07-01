@@ -96,7 +96,7 @@
     }
 }
 
-- (TCShowMultiSubView *)overlayOf:(id<AVMultiUserAble>)user
+- (TCShowMultiSubView *)overlayOf:(id<IMUserAble>)user
 {
     if (!user)
     {
@@ -263,6 +263,24 @@
 {
     TCShowMultiSubView *sub = [self overlayOf:user];
     sub.interactUser = main;
+}
+
+- (void)onUserLeave:(NSArray *)users
+{
+    for (id<IMUserAble> iu in users)
+    {
+        TCShowMultiSubView *renderView = [self overlayOf:iu];
+        [renderView onUserLeave:iu];
+    }
+}
+- (void)onUserBack:(NSArray *)users
+{
+    for (id<IMUserAble> iu in users)
+    {
+        TCShowMultiSubView *renderView = [self overlayOf:iu];
+        [renderView onUserBack:iu];
+    }
+
 }
 
 @end

@@ -139,7 +139,10 @@
 - (void)onRecvC2CSender:(id<IMUserAble>)sender customMsg:(TIMCustomElem *)msg;
 
 // sender进入直播间
+- (id<AVIMMsgAble>)onRecvSender:(id<IMUserAble>)sender tipMessage:(NSString *)msg;
 - (id<AVIMMsgAble>)onRecvSenderEnterLiveRoom:(id<IMUserAble>)sender;
+- (id<AVIMMsgAble>)onRecvSenderLeaveLiveRoom:(id<IMUserAble>)sender;
+- (id<AVIMMsgAble>)onRecvSenderBackLiveRoom:(id<IMUserAble>)sender;
 - (id<AVIMMsgAble>)onRecvSenderExitLiveRoom:(id<IMUserAble>)sender;
 
 // 如果delayDisplay这YES时，重写以下方法

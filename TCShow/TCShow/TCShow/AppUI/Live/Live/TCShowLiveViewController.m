@@ -345,17 +345,17 @@
 
 - (void)onTopView:(TCShowLiveTopView *)topView clickPAR:(UIButton *)par
 {
-    par.selected = !par.selected;
-    [_liveView showPar:par.selected];
+   
+    [_liveView showPar:par];
 }
 
 - (void)onTopView:(TCShowLiveTopView *)topView clickPush:(UIButton *)par
 {
     if (par.selected)
     {
-       [(TCAVLiveRoomEngine *)_roomEngine asyncStopAllPushStreamCompletion:^(BOOL succ, NSString *tip) {
-          par.selected = !par.selected;
-       }];
+        [(TCAVLiveRoomEngine *)_roomEngine asyncStopAllPushStreamCompletion:^(BOOL succ, NSString *tip) {
+            par.selected = !par.selected;
+        }];
     }
     else
     {
@@ -440,6 +440,36 @@
     [_liveView.msgView insertMsg:msg];
 }
 
+
+- (void)onRecvCustomLeave:(id<AVIMMsgAble>)msg
+{
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    DebugLog(@"主播离开");
+    TCAVLiveViewController *lvc = (TCAVLiveViewController *)_liveController;
+    
+    id<IMUserAble> sender = [cmd sender];
+    NSArray *array = @[sender];
+    [lvc.livePreview onUserLeave:sender];
+    [_liveView onUserLeave:array];
+    
+}
+
+- (void)onRecvCustomBack:(id<AVIMMsgAble>)msg
+{
+    DebugLog(@"主播回来了");
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    TCAVLiveViewController *lvc = (TCAVLiveViewController *)_liveController;
+    
+    id<IMUserAble> sender = [cmd sender];
+    NSArray *array = @[sender];
+    [lvc.livePreview onUserBack:sender];
+    [_liveView onUserBack:array];
+    
+    [(TCAVLiveRoomEngine *)_roomEngine asyncRequestHostView];
+    
+    
+}
+
 - (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(id<AVIMMsgAble>)msg
 {
     switch ([msg msgType])
@@ -450,12 +480,20 @@
             
         }
             break;
+        case AVIMCMD_Host_Leave:
+        {
+            [self onRecvCustomLeave:msg];
+        }
+            break;
+        case AVIMCMD_Host_Back:
+        {
+            [self onRecvCustomBack:msg];
             
+        }
+            break;
         default:
             break;
     }
-    
-    
 }
 
 // 有新用户进入
@@ -495,18 +533,18 @@
     if (!_roomEngine)
     {
     
-    id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
-    [ah setAvCtrlState:[self defaultAVHostConfig]];
-    TCShowLiveRoomEngine *roomEngine = [[TCShowLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
-    // 测试默认开启后置摄像头
-    // roomEngine.cameraId = CameraPosBack;
-    roomEngine.delegate = self;
-    _roomEngine = roomEngine;
-    
-    if (!_isHost)
-    {
-        [_liveView setRoomEngine:_roomEngine];
-    }
+        id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        TCShowLiveRoomEngine *roomEngine = [[TCShowLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
+        // 测试默认开启后置摄像头
+        // roomEngine.cameraId = CameraPosBack;
+        roomEngine.delegate = self;
+        _roomEngine = roomEngine;
+        
+        if (!_isHost)
+        {
+            [_liveView setRoomEngine:_roomEngine];
+        }
     }    
 }
 
@@ -554,6 +592,7 @@
     {
         _msgHandler = [[TCShowAVIMHandler alloc] initWith:_roomInfo];
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
+        [_msgHandler enterLiveChatRoom:nil fail:nil];
     }
     else
     {
@@ -561,8 +600,10 @@
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         } fail:^(int code, NSString *msg) {
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         }];
     }
 }
@@ -614,7 +655,7 @@
     [_liveView setMsgHandler:nil];
     
     TCShowLiveUIViewController *vc = (TCShowLiveUIViewController *)_liveView;
-
+    
     
     if (_isHost)
     {

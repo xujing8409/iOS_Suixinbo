@@ -59,11 +59,48 @@
     
 }
 
+- (void)onRecvCustomLeave:(id<AVIMMsgAble>)msg
+{
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    DebugLog(@"主播离开");
+    TCAVLiveViewController *lvc = (TCAVLiveViewController *)_liveController;
+    [lvc.livePreview onUserLeave:[cmd sender]];
+}
+
+- (void)onRecvCustomBack:(id<AVIMMsgAble>)msg
+{
+    DebugLog(@"主播回来了");
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    TCAVLiveViewController *lvc = (TCAVLiveViewController *)_liveController;
+    [lvc.livePreview onUserBack:[cmd sender]];
+    
+    [(TCAVLiveRoomEngine *)_roomEngine asyncRequestHostView];
+}
+
 // 收到群自定义消息
 - (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomGroup:(id<AVIMMsgAble>)msg
 {
     // do nothing
     // overwrite by the subclass
+    switch ([msg msgType])
+    {
+        case AVIMCMD_Host_Leave:
+        {
+            [self onRecvCustomLeave:msg];
+        }
+            break;
+        case AVIMCMD_Host_Back:
+        {
+            
+            [self onRecvCustomBack:msg];
+        }
+            break;
+            
+        default:
+            
+            
+            break;
+    }
     
 }
 
@@ -149,7 +186,7 @@
 
 - (void)layoutOnIPhone
 {
-    _livePreview.frame = self.view.bounds;
+    [_livePreview setFrameAndLayout:self.view.bounds];
     [self layoutLiveView];
 }
 
@@ -209,7 +246,7 @@
 
 //- (void)onAVEngine:(TCAVBaseRoomEngine *)engine preProcessLocaVideoFrame:(QAVVideoFrame *)frame
 //{
-//    
+//
 //    if ([engine isFrontCamera])
 //    {
 //        // 接收者通过判断是 frame.frameDesc.rotate / 4 != 0判断画面前前置摄像头取到的
@@ -236,6 +273,8 @@
     [super onAppEnterForeground];
     [_livePreview startPreview];
     [_liveView onEnterForeground];
+    
+    [self onHostBackLiveRoom];
 }
 
 - (void)onAppEnterBackground
@@ -243,7 +282,71 @@
     [super onAppEnterBackground];
     [_livePreview stopPreview];
     [_liveView onEnterBackground];
+    
+    [self onHostLeaveLiveRoom];
 }
+
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users event:(QAVUpdateEvent)event
+{
+    
+    // 检查是否是互动观众退出了
+    switch (event)
+    {
+        case QAV_EVENT_ID_ENDPOINT_HAS_CAMERA_VIDEO:
+        {
+            [self onHasCameraUserBack:users];
+        }
+            
+            break;
+        case QAV_EVENT_ID_ENDPOINT_NO_CAMERA_VIDEO:
+        {
+            [self onNoCameraUserLeave:users];
+        }
+            break;
+        default:
+            break;
+    }    
+}
+
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine requestViewOf:(id<IMUserAble>)user succ:(BOOL)succ tipInfo:(NSString *)tip
+{
+    if (!succ)
+    {
+        UIAlertView *aler = [UIAlertView bk_showAlertViewWithTitle:nil message:@"请求主播画面超时，主播可能已经离开" cancelButtonTitle:@"退出" otherButtonTitles:@[@"继续等待"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 0)
+            {
+                [self exitLive];
+            }
+            else
+            {
+                [_livePreview onUserLeave:user];
+            }
+        }];
+        [aler show];
+    }
+}
+
+
+- (void)onAVEngineWaitFirstRemoteFrameTimeOut:(TCAVBaseRoomEngine *)engine
+{
+//    // do nothing
+//    [self tipMessage:@"请求画面超时" delay:1 completion:^{
+//        [self exitLive];
+//    }];
+    
+    UIAlertView *aler = [UIAlertView bk_showAlertViewWithTitle:nil message:@"请求主播画面超时，主播可能已经离开" cancelButtonTitle:@"退出" otherButtonTitles:@[@"继续等待"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 0)
+        {
+            [self exitLive];
+        }
+        else
+        {
+            [_livePreview onUserLeave:[_roomInfo liveHost]];
+        }
+    }];
+    [aler show];
+}
+
 
 @end
 
@@ -255,6 +358,7 @@
 {
     _livePreview = [[TCAVLivePreview alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_livePreview];
+    [_livePreview registLeaveView:[TCAVLeaveView class]];
     
     [_livePreview addRenderFor:[_roomInfo liveHost]];
 }
@@ -294,6 +398,7 @@
     if (!_msgHandler)
     {
         _msgHandler = [[AVIMMsgHandler alloc] initWith:_roomInfo];
+        [_msgHandler enterLiveChatRoom:nil fail:nil];
     }
     else
     {
@@ -301,8 +406,10 @@
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         } fail:^(int code, NSString *msg) {
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         }];
     }
 }
@@ -317,14 +424,14 @@
 {
     if (!_roomEngine)
     {
-    id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
-    [ah setAvCtrlState:[self defaultAVHostConfig]];
-    _roomEngine = [[TCAVLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
-    _roomEngine.delegate = self;
-    if (!_isHost)
-    {
-        [_liveView setRoomEngine:_roomEngine];
-    }
+        id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        _roomEngine = [[TCAVLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
+        _roomEngine.delegate = self;
+        if (!_isHost)
+        {
+            [_liveView setRoomEngine:_roomEngine];
+        }
     }
 }
 
@@ -361,10 +468,6 @@
         }
         
         [self requestHostViewOnEnterLiveSucc];
-        
-        // TODO:改成调后台接口成功后调用
-        [_msgHandler enterLiveChatRoom:nil fail:nil];
-        
     }
 }
 
@@ -380,10 +483,44 @@
 
 - (NSString *)cameraAuthorizationTip
 {
-    return _isHost ? @"没有权限访问您的相机，无法进行直播，请在“设置－隐私－相机”中允许使用" : @"没有权限访问您的相机，无法观看直播，请在“设置－隐私－相机”中允许使用";
+    return @"没有权限访问您的相机，无法进行直播，请在“设置－隐私－相机”中允许使用。";
+}
+
+- (void)checkPermission:(CommonVoidBlock)noBlock permissed:(CommonVoidBlock)hasBlock
+{
+    BOOL hasCamAuth = [self checkCameraAuth:noBlock];
+    
+    if (hasCamAuth)
+    {
+        [self checkMicPermission:noBlock permissed:hasBlock];
+    }
+    else
+    {
+        // 无相机权限时，进入到noBlock
+    }
+    
 }
 
 - (void)checkAndEnterAVRoom
+{
+    if (_isHost)
+    {
+        __weak TCAVLiveViewController *ws = self;
+        [self checkPermission:^{
+            [ws exitOnNotPermitted];
+        } permissed:^{
+            [super checkAndEnterAVRoom];
+        }];
+    }
+    else
+    {
+        [super checkAndEnterAVRoom];
+    }
+}
+
+// iOS在App运行中，修改Mic以及相机权限，App会退出
+// 检查Camera权限，没有权限时，执行noauthBlock
+- (BOOL)checkCameraAuth:(CommonVoidBlock)noauthBlock
 {
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     
@@ -392,40 +529,105 @@
         // 没有权限，到设置中打开权限
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             UIAlertView *alterView = [UIAlertView bk_showAlertViewWithTitle:@"相机授权" message:[self cameraAuthorizationTip] cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                [self exitOnNotPermitted];
+                if (noauthBlock)
+                {
+                    noauthBlock();
+                }
             }];
             [alterView show];
         });
-
-        return;
+        
+        return NO;
     }
-    else
-    {
-        
-        // 获取麦克风权限
-        AVAudioSession *avSession = [AVAudioSession sharedInstance];
-        if ([avSession respondsToSelector:@selector(requestRecordPermission:)])
-        {
-            [avSession requestRecordPermission:^(BOOL available) {
-                if (!available)
-                {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        UIAlertView *alterView = [UIAlertView bk_showAlertViewWithTitle:@"录音授权" message:@"请在“设置-隐私-麦克风”中允许访问麦克风。" cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                            [self exitOnNotPermitted];
-                        }];
-                        [alterView show];
-                    });
-                }
-                else
-                {
-                    [super checkAndEnterAVRoom];
-                }
-            }];
-        }
+    
+    return YES;
+    
+}
 
-        
+- (NSString *)micPermissionTip
+{
+    return  @"没有权限访问您的麦克风，无法进行直播，请在“设置-隐私-麦克风”中允许访问麦克风。";
+}
+
+// 检查Mic权限权限，没有权限时，执行noauthBlock
+- (void)checkMicPermission:(CommonVoidBlock)noPermissionBlock permissed:(CommonVoidBlock)permissedBlock
+{
+    // 获取麦克风权限
+    AVAudioSession *avSession = [AVAudioSession sharedInstance];
+    if ([avSession respondsToSelector:@selector(requestRecordPermission:)])
+    {
+        [avSession requestRecordPermission:^(BOOL available) {
+            if (!available)
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    UIAlertView *alterView = [UIAlertView bk_showAlertViewWithTitle:@"录音授权" message:[self micPermissionTip] cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        if (noPermissionBlock)
+                        {
+                            noPermissionBlock();
+                        }
+                    }];
+                    [alterView show];
+                });
+            }
+            else
+            {
+                if (permissedBlock)
+                {
+                    
+                    permissedBlock();
+                }
+            }
+        }];
     }
 }
 
+// 主播离开直播间
+- (void)onHostLeaveLiveRoom
+{
+    if ([_roomEngine isHostLive])
+    {
+        AVIMCMD *lc = [[AVIMCMD alloc] initWith:AVIMCMD_Host_Leave];
+        [_msgHandler sendCustomGroupMsg:lc succ:nil fail:nil];
+    }
+    
+}
+
+// 主播返回直播间
+- (void)onHostBackLiveRoom
+{
+    if ([_roomEngine isHostLive])
+    {
+        AVIMCMD *lc = [[AVIMCMD alloc] initWith:AVIMCMD_Host_Back];
+        [_msgHandler sendCustomGroupMsg:lc succ:nil fail:nil];
+    }
+    
+}
+
+- (void)onHasCameraUserBack:(NSArray *)users
+{
+    NSString *hid = [[_roomInfo liveHost] imUserId];
+    for (id<AVMultiUserAble> iu in users)
+    {
+        if ([hid isEqualToString:[iu imUserId]])
+        {
+            [_livePreview onUserBack:[_roomInfo liveHost]];
+            break;
+        }
+    }
+    
+    [(TCAVLiveRoomEngine *)_roomEngine asyncRequestHostView];
+}
+- (void)onNoCameraUserLeave:(NSArray *)users
+{
+    NSString *hid = [[_roomInfo liveHost] imUserId];
+    for (id<AVMultiUserAble> iu in users)
+    {
+        if ([hid isEqualToString:[iu imUserId]])
+        {
+            [_livePreview onUserLeave:[_roomInfo liveHost]];
+            break;
+        }
+    }
+}
 
 @end

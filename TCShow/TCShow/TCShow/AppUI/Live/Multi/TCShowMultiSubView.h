@@ -43,6 +43,9 @@
     
 @protected
     __weak id<AVMultiUserAble> _interactUser;
+    
+@protected
+    UIImageView     *_leavingView;
 }
 
 @property (nonatomic, weak) id<TCShowMultiSubViewDelegate> delegate;
@@ -67,7 +70,8 @@
 // 请求成功
 - (void)onConnectSucc;
 
-//// 对应因视频中断，导致没有画面过来
-//- (void)onVideoLost;
+- (BOOL)isUserLeave;
+- (void)onUserLeave:(id<IMUserAble>)user;
+- (void)onUserBack:(id<IMUserAble>)user;
 
 @end

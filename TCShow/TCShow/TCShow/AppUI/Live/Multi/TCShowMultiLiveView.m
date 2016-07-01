@@ -98,4 +98,15 @@
     [_parTextView scaleToAboveOf:_bottomView margin:kDefaultMargin];
 }
 
+- (void)onUserLeave:(NSArray *)users
+{
+    // 直播场景下，不做处理
+    [_multiView onUserLeave:users];
+}
+- (void)onUserBack:(NSArray *)users
+{
+    // 直播场景下，不做处理
+    [_multiView onUserBack:users];
+}
+
 @end

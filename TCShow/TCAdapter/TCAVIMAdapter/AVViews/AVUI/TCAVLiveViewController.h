@@ -47,6 +47,11 @@
 - (void)onEnterBackground;
 - (void)onEnterForeground;
 
+// 收到开视频的用户的离开消息
+- (void)onRecvCustomLeave:(id<AVIMMsgAble>)msg;
+// 收到开视频的用户的回来消息
+- (void)onRecvCustomBack:(id<AVIMMsgAble>)msg;
+
 @end
 
 //===========================================================================
@@ -89,12 +94,34 @@
 
 - (NSInteger)defaultAVHostConfig;
 
-- (NSString *)cameraAuthorizationTip;
-
 - (void)prepareIMMsgHandler;
 
 - (void)releaseIMMsgHandler;
 
 - (void)onAVLiveEnterLiveSucc:(BOOL)succ tipInfo:(NSString *)tip;
+
+// iOS在App运行中，修改Mic以及相机权限，App会退出
+
+// 检查Mic以及摄像头头权限
+- (void)checkPermission:(CommonVoidBlock)noBlock permissed:(CommonVoidBlock)hasBlock;
+// 无摄像头权限时的提示语
+- (NSString *)cameraAuthorizationTip;
+// 检查Camera权限，没有权限时，执行noauthBlock
+- (BOOL)checkCameraAuth:(CommonVoidBlock)noauthBlock;
+
+// 无麦克风权限时的提示语
+- (NSString *)micPermissionTip;
+// 检查Mic权限权限，没有权限时，执行noauthBlock，有时执行permissedBlock
+- (void)checkMicPermission:(CommonVoidBlock)noPermissionBlock permissed:(CommonVoidBlock)permissedBlock;
+
+// 主播离开直播间
+- (void)onHostLeaveLiveRoom;
+
+// 主播返回直播间
+- (void)onHostBackLiveRoom;
+
+
+- (void)onHasCameraUserBack:(NSArray *)qpoints;
+- (void)onNoCameraUserLeave:(NSArray *)qpoints;
 
 @end

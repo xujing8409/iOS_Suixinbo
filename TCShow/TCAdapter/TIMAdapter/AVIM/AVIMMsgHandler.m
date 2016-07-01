@@ -439,7 +439,41 @@
                     });
                 }
                     break;
+                case AVIMCMD_Host_Leave:
+                {
+                    AVIMMsg *leaveMsg = [self onRecvSenderLeaveLiveRoom:sender];
                     
+                    [self enCache:leaveMsg noCache:^(id<AVIMMsgAble> msg){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            DebugLog(@"收到消息：%@", msg);
+                            if (msg)
+                            {
+                                [_roomIMListner onIMHandler:self recvGroupMsg:msg];
+                            }
+                        });
+                    }];
+                    
+                    hasHandle = NO;
+                    
+                }
+                    break;
+                case AVIMCMD_Host_Back:
+                {
+                    AVIMMsg *leaveMsg = [self onRecvSenderBackLiveRoom:sender];
+                    
+                    [self enCache:leaveMsg noCache:^(id<AVIMMsgAble> msg){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            DebugLog(@"收到消息：%@", msg);
+                            if (msg)
+                            {
+                                [_roomIMListner onIMHandler:self recvGroupMsg:msg];
+                            }
+                        });
+                    }];
+                    
+                    hasHandle = NO;
+                }
+                    break;
                 default:
                     hasHandle = [self onHandleRecvMultiGroupSender:sender customMsg:cachedMsg];
                     break;
@@ -493,21 +527,31 @@
 
 - (id<AVIMMsgAble>)onRecvSenderEnterLiveRoom:(id<IMUserAble>)sender
 {
-    AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:@"进来了"];
+    return [self onRecvSender:sender tipMessage:@"进来了"];
+}
+
+- (id<AVIMMsgAble>)onRecvSender:(id<IMUserAble>)sender tipMessage:(NSString *)msg
+{
+    AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:msg];
     if (!_isPureMode)
     {
         [amsg prepareForRender];
     }
     return amsg;
 }
+
+- (id<AVIMMsgAble>)onRecvSenderLeaveLiveRoom:(id<IMUserAble>)sender
+{
+    return [self onRecvSender:sender tipMessage:@"暂时离开了"];
+}
+- (id<AVIMMsgAble>)onRecvSenderBackLiveRoom:(id<IMUserAble>)sender
+{
+    return [self onRecvSender:sender tipMessage:@"回来了"];
+}
+
 - (id<AVIMMsgAble>)onRecvSenderExitLiveRoom:(id<IMUserAble>)sender
 {
-    AVIMMsg *amsg = [[AVIMMsg alloc] initWith:sender message:@"离开了"];
-    if (!_isPureMode)
-    {
-        [amsg prepareForRender];
-    }
-    return amsg;
+    return [self onRecvSender:sender tipMessage:@"离开了"];
 }
 
 - (id<AVIMMsgAble>)cacheRecvGroupSender:(id<IMUserAble>)sender customMsg:(TIMCustomElem *)msg

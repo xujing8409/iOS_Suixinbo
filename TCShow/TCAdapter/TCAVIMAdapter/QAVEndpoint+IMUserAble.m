@@ -104,7 +104,7 @@ static NSString *const kQAVEndpointAVCtrlState = @"kQAVEndpointAVCtrlState";
 
 - (NSString *)imUserName
 {
-    return nil;
+    return self.identifier;
 }
 
 - (NSString *)description

@@ -282,6 +282,7 @@
 		922C36811CDC3253008518F5 /* TCAVIMMIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVIMMIManager.m; sourceTree = "<group>"; };
 		9235FD311CD065B800AADB2A /* TCAVFrameDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVFrameDispatcher.h; sourceTree = "<group>"; };
 		9235FD321CD065B800AADB2A /* TCAVFrameDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVFrameDispatcher.m; sourceTree = "<group>"; };
+		924C3D5F1D2501CD00EA4496 /* TCAVLeaveAbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVLeaveAbleView.h; sourceTree = "<group>"; };
 		92553E6B1D00529700BE2D6C /* CommonLibraryMacroConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonLibraryMacroConfig.h; sourceTree = "<group>"; };
 		92553E6C1D005FDC00BE2D6C /* TCAdapterConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCAdapterConfig.h; sourceTree = "<group>"; };
 		92553E6D1D00658400BE2D6C /* TIMAdapterConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TIMAdapterConfig.h; sourceTree = "<group>"; };
@@ -1618,6 +1619,7 @@
 				92D2CB381CC4E4D200501760 /* TCAVMultiLivePreview.m */,
 				9235FD311CD065B800AADB2A /* TCAVFrameDispatcher.h */,
 				9235FD321CD065B800AADB2A /* TCAVFrameDispatcher.m */,
+				924C3D5F1D2501CD00EA4496 /* TCAVLeaveAbleView.h */,
 			);
 			path = AVPreview;
 			sourceTree = "<group>";

@@ -49,6 +49,9 @@
 // 警告退出
 - (void)alertExitLive;
 
+// 强制警告并退出
+- (void)forceAlertExitLive:(NSString *)forceTip;
+
 // 实际退出
 - (void)exitLive;
 

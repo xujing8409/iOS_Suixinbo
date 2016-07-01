@@ -62,7 +62,7 @@
     NSString *tip = @"邀请互动连线";
     NSString *t = [NSString stringWithFormat:@"%@(最多可与三个观众进行互动直播)", tip];
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:t];
-
+    
     [text addAttribute:NSFontAttributeName value:kAppMiddleTextFont range:NSMakeRange(0, tip.length)];
     [text addAttribute:NSForegroundColorAttributeName value:kBlackColor range:NSMakeRange(0, tip.length)];
     [text addAttribute:NSFontAttributeName value:kAppMiddleTextFont range:NSMakeRange(tip.length, t.length - tip.length)];
@@ -106,7 +106,7 @@
 
 - (void)hide
 {
-    #if kSupportFTAnimation
+#if kSupportFTAnimation
     [self animation:^(id selfPtr) {
         [_tipLabel slideOutTo:kFTAnimationTop duration:0.25 delegate:nil];
         [_tableView slideOutTo:kFTAnimationTop duration:0.25 delegate:nil];
@@ -148,7 +148,7 @@
         cell = [[TCShowMultiUserListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MultiUserCell"];
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 65, 20)];
-
+        
         btn.tag = 1000 + indexPath.row;
         [btn addTarget:self action:@selector(onClickConnect:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = btn;
@@ -275,33 +275,37 @@ static BOOL kRectHostCancelInteract = NO;
 - (void)onRecvHostInteractChangeAuthAndRole:(id<IMUserAble>)sender
 {
     // 本地先修改权限
-    //                controller.multiManager ;
-    
+    //  controller.multiManager ;
     // 然后修改role
     // 再打开相机
-    
     __weak TCShowMultiUILiveViewController *ws = self;
     __weak MultiAVIMMsgHandler *wm = (MultiAVIMMsgHandler *)_msgHandler;
     TCAVMultiLiveViewController *controller = (TCAVMultiLiveViewController *)_liveController;
-    [controller.multiManager changeToInteractAuthAndRole:^(TCAVMultiLiveRoomEngine *engine, BOOL isFinished) {
-        if (isFinished)
-        {
-            // 同意
-            [wm sendC2CAction:AVIMCMD_Multi_Interact_Join to:sender succ:^{
-                // 进行连麦操作
-                [ws showSelfVideoToOther];
-            } fail:^(int code, NSString *msg) {
+    
+    // 检查本地硬件(Mic与相机权限)
+    [controller checkPermission:^{
+        // 本地没有权限，回复拒绝
+        [wm sendC2CAction:AVIMCMD_Multi_Interact_Refuse to:sender succ:nil fail:nil];
+    } permissed:^{
+        // 有权限
+        [controller.multiManager changeToInteractAuthAndRole:^(TCAVMultiLiveRoomEngine *engine, BOOL isFinished) {
+            if (isFinished)
+            {
+                // 同意
+                [wm sendC2CAction:AVIMCMD_Multi_Interact_Join to:sender succ:^{
+                    // 进行连麦操作
+                    [ws showSelfVideoToOther];
+                } fail:^(int code, NSString *msg) {
+                    [wm sendC2CAction:AVIMCMD_Multi_Interact_Refuse to:sender succ:nil fail:nil];
+                    DebugLog(@"code = %d, msg = %@", code, msg);
+                }];
+            }
+            else
+            {
                 [wm sendC2CAction:AVIMCMD_Multi_Interact_Refuse to:sender succ:nil fail:nil];
-                DebugLog(@"code = %d, msg = %@", code, msg);
-            }];
-        }
-        else
-        {
-            [wm sendC2CAction:AVIMCMD_Multi_Interact_Refuse to:sender succ:nil fail:nil];
-        }
+            }
+        }];
     }];
-    
-    
 }
 
 - (void)onRecvHostCancelInteract
@@ -344,6 +348,12 @@ static BOOL kRectHostCancelInteract = NO;
     TCAVIMMIManager *mgr = mvc.multiManager;
     
     id<AVMultiUserAble> user = [mgr interactUserOfID:operUserId];
+    
+    if ([mgr isMainUserByID:operUserId])
+    {
+        // 主屏用户时，检查是显示leave界面
+        [mvc.livePreview hiddenLeaveView];
+    }
     
     if (user)
     {
@@ -477,6 +487,41 @@ static BOOL kRectHostCancelInteract = NO;
         default:
             break;
     }
+}
+
+- (void)onRecvCustomLeave:(id<AVIMMsgAble>)msg
+{
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    DebugLog(@"主播离开");
+    TCAVMultiLiveViewController *lvc = (TCAVMultiLiveViewController *)_liveController;
+    
+    id<IMUserAble> sender = [cmd sender];
+    NSArray *array = @[sender];
+    
+    if ([[lvc.multiManager.mainUser imUserId] isEqualToString:[sender imUserId]])
+    {
+        [lvc.livePreview onUserLeave:lvc.multiManager.mainUser];
+    }
+    [_liveView onUserLeave:array];
+    
+}
+
+- (void)onRecvCustomBack:(id<AVIMMsgAble>)msg
+{
+    DebugLog(@"主播回来了");
+    AVIMCMD *cmd = (AVIMCMD *)msg;
+    TCAVMultiLiveViewController *lvc = (TCAVMultiLiveViewController *)_liveController;
+    
+    id<IMUserAble> sender = [cmd sender];
+    NSArray *array = @[[cmd sender]];
+    
+    if ([[lvc.multiManager.mainUser imUserId] isEqualToString:[sender imUserId]])
+    {
+        [lvc.livePreview onUserBack:lvc.multiManager.mainUser];
+    }
+    [_liveView onUserBack:array];
+    
+    [lvc.multiManager requestMultipleViewOf:array];
 }
 
 - (void)onIMHandler:(AVIMMsgHandler *)receiver recvCustomC2CMultiMsg:(AVIMCMD *)msg
@@ -642,12 +687,35 @@ static BOOL kRectHostCancelInteract = NO;
     
     __weak TCShowMultiView *wm = [(TCShowMultiLiveView *)_liveView multiView];
     __weak TCShowLiveView *wl = _liveView;
+    
+    // 切换前主屏是否离开
+    BOOL isMainLeaveBeforeSwitch = [controller.livePreview isRenderUserLeave];
+    BOOL isClickLeave = [[render overlayOf:user] isUserLeave];
+    
     [controller switchToMainInPreview:user completion:^(BOOL succ, NSString *tip) {
         if (succ)
         {
             // 交换TCShowMultiView上的资源信息
             id<AVMultiUserAble> main = [controller.multiManager mainUser];
             [wm replaceViewOf:user with:main];
+            
+            if (isMainLeaveBeforeSwitch && main)
+            {
+                [wl onUserLeave:@[main]];
+            }
+            else
+            {
+                [wl onUserBack:@[main]];
+            }
+            
+            if (isClickLeave)
+            {
+                [controller.livePreview onUserLeave:user];
+            }
+            else
+            {
+                [controller.livePreview onUserBack:user];
+            }
             
             [wl onClickSub:user];
         }
@@ -726,7 +794,15 @@ static BOOL kRectHostCancelInteract = NO;
 - (void)onBottomView:(TCShowLiveBottomView *)bottomView cancelInteractWith:(id<AVMultiUserAble>)user fromButton:(UIButton *)button
 {
     TCAVMultiLiveViewController *controller = (TCAVMultiLiveViewController *)_liveController;
+     BOOL isClickLeave = [controller.livePreview isRenderUserLeave];
+    if (isClickLeave)
+    {
+        DebugLog(@"只是隐藏掉，并不是真正意义上的回来了");
+        [controller.livePreview onUserBack:user];
+    }
+    
     [controller.multiManager initiativeCancelInteractUser:user];
+    
 }
 
 
@@ -739,15 +815,15 @@ static BOOL kRectHostCancelInteract = NO;
 {
     if (!_roomEngine)
     {
-    id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
-    [ah setAvCtrlState:[self defaultAVHostConfig]];
-    _roomEngine = [[TCShowMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
-    _roomEngine.delegate = self;
-    
-    if (!_isHost)
-    {
-        [_liveView setRoomEngine:_roomEngine];
-    }
+        id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
+        [ah setAvCtrlState:[self defaultAVHostConfig]];
+        _roomEngine = [[TCShowMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
+        _roomEngine.delegate = self;
+        
+        if (!_isHost)
+        {
+            [_liveView setRoomEngine:_roomEngine];
+        }
     }
 }
 
@@ -772,6 +848,8 @@ static BOOL kRectHostCancelInteract = NO;
         _msgHandler = [[TCShowAVIMMultiHandler alloc] initWith:_roomInfo];
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
         _multiManager.msgHandler = (MultiAVIMMsgHandler *)_msgHandler;
+        [_msgHandler enterLiveChatRoom:nil fail:nil];
+        
     }
     else
     {
@@ -779,8 +857,10 @@ static BOOL kRectHostCancelInteract = NO;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         } fail:^(int code, NSString *msg) {
             [wav switchToLiveRoom:wr];
+            [wav enterLiveChatRoom:nil fail:nil];
         }];
     }
 }

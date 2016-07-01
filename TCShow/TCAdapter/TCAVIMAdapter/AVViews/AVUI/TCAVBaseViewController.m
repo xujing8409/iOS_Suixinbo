@@ -106,13 +106,13 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     
     if ([self isImmediatelyEnterLive])
     {
-    [self checkNetWorkBeforeLive];
+        [self checkNetWorkBeforeLive];
     }
     
 }
 
 
-- (void)onAudioInterruption:(NSNotification*)notification
+- (void)onAudioInterruption:(NSNotification *)notification
 {
     //DDLogInfo(@"audioInterruption%@",notification.userInfo);
     NSDictionary *interuptionDict = notification.userInfo;
@@ -129,7 +129,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     }
 }
 
--(BOOL)isOtherAudioPlaying
+- (BOOL)isOtherAudioPlaying
 {
     UInt32 otherAudioIsPlaying;
     UInt32 propertySize = sizeof (otherAudioIsPlaying);
@@ -141,7 +141,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 }
 
 
-- (void)onAppBecomeActive:(NSNotification*)notification
+- (void)onAppBecomeActive:(NSNotification *)notification
 {
     if (![self isOtherAudioPlaying])
     {
@@ -175,25 +175,25 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     }
     else
     {
-    if (_isHost)
-    {
-        // 主播
-        [[HUDHelper sharedInstance] syncLoading:@"正在创建房间"];
-        DebugLog(@"-----主播>>>>>主播开始直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
-        [_roomEngine enterLive:_roomInfo];
+        if (_isHost)
+        {
+            // 主播
+            [[HUDHelper sharedInstance] syncLoading:@"正在创建房间"];
+            DebugLog(@"-----主播>>>>>主播开始直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
+            [_roomEngine enterLive:_roomInfo];
             
-    }
-    else
-    {
-        // 观众
-        [[HUDHelper sharedInstance] syncLoading:@"正在加入房间"];
+        }
+        else
+        {
+            // 观众
+            [[HUDHelper sharedInstance] syncLoading:@"正在加入房间"];
             
-        DebugLog(@"-----观众>>>>>观众开始进入直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
-        [_roomEngine enterLive:_roomInfo];
+            DebugLog(@"-----观众>>>>>观众开始进入直播: 主播ID:%@", [[_roomInfo liveHost] imUserId]);
+            [_roomEngine enterLive:_roomInfo];
+        }
     }
-}
-
-
+    
+    
 }
 
 
@@ -270,6 +270,21 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     }
 }
 
+- (void)forceAlertExitLive:(NSString *)forceTip
+{
+    if (_isExiting)
+    {
+        return;
+    }
+    _isExiting = YES;
+   
+    UIAlertView *alert =  [UIAlertView bk_showAlertViewWithTitle:nil message:forceTip cancelButtonTitle:@"确定"otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [self exitLive];
+    }];
+    [alert show];
+    
+}
+
 - (BOOL)isExiting
 {
     return _isExiting;
@@ -316,7 +331,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 #else
     if (_roomEngine)
     {
-    [_roomEngine exitLive];
+        [_roomEngine exitLive];
     }
     else
     {
@@ -330,7 +345,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     if (succ)
     {
-    [self addNetwokChangeListner];
+        [self addNetwokChangeListner];
     }
     [self onEnterLiveSucc:succ tipInfo:tip];
 }
@@ -445,13 +460,13 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     if (!_callCenter)
     {
-    _callCenter = [[CTCallCenter alloc] init];
-    __weak TCAVBaseViewController *ws = self;
-    _callCenter.callEventHandler = ^(CTCall *call) {
-        // 需要在主线程执行
-        [ws performSelectorOnMainThread:@selector(handlePhostEvent:) withObject:call waitUntilDone:YES];
-    };
-}
+        _callCenter = [[CTCallCenter alloc] init];
+        __weak TCAVBaseViewController *ws = self;
+        _callCenter.callEventHandler = ^(CTCall *call) {
+            // 需要在主线程执行
+            [ws performSelectorOnMainThread:@selector(handlePhostEvent:) withObject:call waitUntilDone:YES];
+        };
+    }
 }
 
 - (void)handlePhostEvent:(CTCall *)call
@@ -508,9 +523,9 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     if (!_roomEngine)
     {
-    _roomEngine = [[TCAVBaseRoomEngine alloc] initWith:_currentUser];
-    _roomEngine.delegate = self;
-}
+        _roomEngine = [[TCAVBaseRoomEngine alloc] initWith:_currentUser];
+        _roomEngine.delegate = self;
+    }
 }
 
 
@@ -569,7 +584,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
             DebugLog(@"-----观众>>>>>观众进入直播间失败");
         }
         [[HUDHelper sharedInstance] syncStopLoadingMessage:tip delay:0.5 completion:^{
-            [self alertExitLive];
+            [self forceAlertExitLive:tip];
         }];
     }
 }
@@ -588,13 +603,13 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         return;
     }
     
-    NSError* error=nil;
+    NSError *error = nil;
     AVAudioSession *aSession = [AVAudioSession sharedInstance];
     
     _audioSesstionCategory = [aSession category];
     _audioSesstionMode = [aSession mode];
     _audioSesstionCategoryOptions = [aSession categoryOptions];
-
+    
     
     
     [aSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error];
