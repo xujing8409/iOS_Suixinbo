@@ -38,7 +38,7 @@
         _isAtForeground = YES;
         
 #if kIsUseAVSDKAsLiveScene
-        // 
+        //
         QAVContext *context = [TCAVSharedContext sharedContext];
         DebugLog(@"=====>>>>>使用的QAVContext = %p", context);
         if (context)
@@ -60,7 +60,7 @@
             _avContext = [QAVContext CreateContext:config];
         }
         
-       
+        
         
         _IMUser = host;
         
@@ -114,6 +114,7 @@
         return NO;
     }
     
+    [self stopFirstFrameTimer];
     _switchingToRoom = room;
     [self exitLive];
     return YES;
@@ -128,7 +129,7 @@
         _hasRecvSemiAutoCamera = NO;
         [self stopFirstFrameTimer];
         _hasStatisticFirstFrame = NO;
-
+        
         
 #if kSupportTimeStatistics
         // 用于进出房间时间统计
@@ -161,7 +162,7 @@
         }
         else
         {
-        // 都没进房间过，直接返回退出成功
+            // 都没进房间过，直接返回退出成功
             [_delegate onAVEngine:self exitRoom:_roomInfo succ:YES tipInfo:TAVLocalizedError(ETCAVBaseRoomEngine_ExitRoom_Succ_Tip)];
         }
         return;
@@ -262,21 +263,21 @@
     {
         TCAVIMLog(@"进入AV房间成功");
         [self onEnterAVRoomSucc];
-    
+        
     }
     else
     {
             TCAVIMLog(@"切换房间失败: %d", result);
             _switchingToRoom = nil;
         
-        TCAVIMLog(@"进入AV房间失败: %d, 开始StopContext", result);
+            TCAVIMLog(@"进入AV房间失败: %d, 开始StopContext", result);
 #if kIsUseAVSDKAsLiveScene
-        [self onContextCloseComplete:QAV_OK];
+            [self onContextCloseComplete:QAV_OK];
 #else
-        __weak TCAVBaseRoomEngine *ws = self;
-        [_avContext stopContext:^(QAVResult result) {
-            [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterAVRoom_Fail_Tip)];
-        }];
+            __weak TCAVBaseRoomEngine *ws = self;
+            [_avContext stopContext:^(QAVResult result) {
+                [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterAVRoom_Fail_Tip)];
+            }];
 #endif
 
         
@@ -740,6 +741,8 @@
 
 - (void)onStartFirstFrameTimer
 {
+    [_firstFrameTimer invalidate];
+    _firstFrameTimer = nil;
     _firstFrameTimer = [NSTimer scheduledTimerWithTimeInterval:[self maxWaitFirstFrameSec] target:self selector:@selector(onWaitFirstFrameTimeOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:_firstFrameTimer forMode:NSRunLoopCommonModes];
 
@@ -771,7 +774,7 @@
 - (void)stopFirstFrameTimer
 {
     if (_firstFrameTimer)
-    {    
+    {
         [_firstFrameTimer invalidate];
         _firstFrameTimer = nil;
     }
