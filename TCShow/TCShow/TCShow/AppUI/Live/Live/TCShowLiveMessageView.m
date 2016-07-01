@@ -221,31 +221,31 @@
     }
     else
     {
-    @synchronized(_liveMessages)
-    {
-        CGFloat scrolloff = 0;
-        [_tableView beginUpdates];
-        
-        if (_liveMessages.count >= kMaxMsgCount)
+        @synchronized(_liveMessages)
         {
-            TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
-            scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
-            NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
-            [_tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationTop];
-            [_liveMessages removeObjectAtIndex:0];
+            CGFloat scrolloff = 0;
+            [_tableView beginUpdates];
+            
+            if (_liveMessages.count >= kMaxMsgCount)
+            {
+                TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
+                scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+                NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
+                [_tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationTop];
+                [_liveMessages removeObjectAtIndex:0];
+            }
+            
+            NSIndexPath *index = [NSIndexPath indexPathForRow:_liveMessages.count inSection:0];
+            [_tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationBottom];
+            [_liveMessages addObject:item];
+            
+            [_tableView endUpdates];
+            
+            CGFloat heigt = [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+            scrolloff += heigt;
+            
+            [self updateTableViewFrame:heigt offsert:scrolloff];
         }
-        
-        NSIndexPath *index = [NSIndexPath indexPathForRow:_liveMessages.count inSection:0];
-        [_tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationBottom];
-        [_liveMessages addObject:item];
-        
-        [_tableView endUpdates];
-        
-        CGFloat heigt = [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
-        scrolloff += heigt;
-        
-        [self updateTableViewFrame:heigt offsert:scrolloff];
-    }
     }
     
 }
@@ -275,31 +275,31 @@
     }
     else
     {
-    @synchronized(_liveMessages)
-    {
-        CGFloat scrolloff = 0;
-        [_tableView beginUpdates];
-        
-        if (_liveMessages.count >= kMaxMsgCount)
+        @synchronized(_liveMessages)
         {
-            TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
-            scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
-            NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
-            [_tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationTop];
-            [_liveMessages removeObjectAtIndex:0];
+            CGFloat scrolloff = 0;
+            [_tableView beginUpdates];
+            
+            if (_liveMessages.count >= kMaxMsgCount)
+            {
+                TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
+                scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+                NSIndexPath *index = [NSIndexPath indexPathForRow:0 inSection:0];
+                [_tableView deleteRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationTop];
+                [_liveMessages removeObjectAtIndex:0];
+            }
+            
+            NSIndexPath *index = [NSIndexPath indexPathForRow:_liveMessages.count inSection:0];
+            [_tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationBottom];
+            [_liveMessages addObject:item];
+            
+            [_tableView endUpdates];
+            
+            CGFloat heigt = [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+            scrolloff += heigt;
+            
+            [self updateTableViewFrame:heigt offsert:scrolloff];
         }
-        
-        NSIndexPath *index = [NSIndexPath indexPathForRow:_liveMessages.count inSection:0];
-        [_tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationBottom];
-        [_liveMessages addObject:item];
-        
-        [_tableView endUpdates];
-        
-        CGFloat heigt = [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
-        scrolloff += heigt;
-        
-        [self updateTableViewFrame:heigt offsert:scrolloff];
-    }
     }
     
     
@@ -320,8 +320,8 @@
     if (_isPureMode)
     {
         
-    
-    NSMutableArray *items = [NSMutableArray array];
+        
+        NSMutableArray *items = [NSMutableArray array];
         while (msgCache.count > 0)
         {
             TCShowLiveMsg *item = [msgCache deCache];
@@ -346,7 +346,7 @@
                     count--;
                 }
             }
-    
+        
             for (NSInteger i = 0; i < items.count; i++)
             {
                 [_liveMessages addObject:items[i]];
@@ -357,66 +357,66 @@
     else
     {
         CGFloat heigt = 0;
-    
+        
         NSMutableArray *items = [NSMutableArray array];
-    while (msgCache.count > 0)
-    {
-        TCShowLiveMsg *item = [msgCache deCache];
-        if (item)
-        {        
-            [items addObject:item];
-            heigt += [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
-        }
-    }
-    
-    
-    @synchronized(_liveMessages)
-    {
-        CGFloat scrolloff = 0;
-        if (_liveMessages.count + items.count > kMaxMsgCount)
+        while (msgCache.count > 0)
         {
-           
-            NSMutableArray *idxs = [NSMutableArray array];
-            NSInteger count = _liveMessages.count + items.count - kMaxMsgCount;
-            NSInteger i = 0;
-            while (count > 0 && _liveMessages.count)
+            TCShowLiveMsg *item = [msgCache deCache];
+            if (item)
             {
-            
-                TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
-                scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+                [items addObject:item];
+                heigt += [TCShowLiveMsg defaultShowHeightOf:item inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+            }
+        }
+        
+        
+        @synchronized(_liveMessages)
+        {
+            CGFloat scrolloff = 0;
+            if (_liveMessages.count + items.count > kMaxMsgCount)
+            {
                 
-                [_liveMessages removeObjectAtIndex:0];
-                [idxs addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-                i++;
-                count--;
+                NSMutableArray *idxs = [NSMutableArray array];
+                NSInteger count = _liveMessages.count + items.count - kMaxMsgCount;
+                NSInteger i = 0;
+                while (count > 0 && _liveMessages.count)
+                {
+                    
+                    TCShowLiveMsg *msg = [_liveMessages objectAtIndex:0];
+                    scrolloff -= [TCShowLiveMsg defaultShowHeightOf:msg inSize:CGSizeMake(self.bounds.size.width, HUGE_VALF)];
+                    
+                    [_liveMessages removeObjectAtIndex:0];
+                    [idxs addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+                    i++;
+                    count--;
+                }
+                
+                if (idxs.count)
+                {
+                    [_tableView beginUpdates];
+                    [_tableView deleteRowsAtIndexPaths:idxs withRowAnimation:UITableViewRowAnimationTop];
+                    [_tableView endUpdates];
+                }
             }
             
-            if (idxs.count)
+            [_tableView beginUpdates];
+            
+            NSInteger count = _liveMessages.count;
+            NSMutableArray *idxs = [NSMutableArray array];
+            for (NSInteger i = 0; i < items.count; i++)
             {
-                [_tableView beginUpdates];
-                [_tableView deleteRowsAtIndexPaths:idxs withRowAnimation:UITableViewRowAnimationTop];
-                [_tableView endUpdates];
+                [_liveMessages addObject:items[i]];
+                NSIndexPath *index = [NSIndexPath indexPathForRow:i+count inSection:0];
+                [idxs addObject:index];
             }
+            [_tableView insertRowsAtIndexPaths:idxs withRowAnimation:UITableViewRowAnimationBottom];
+            [_tableView endUpdates];
+            
+            
+            scrolloff += heigt;
+            
+            [self updateTableViewFrame:heigt offsert:scrolloff];
         }
-        
-        [_tableView beginUpdates];
-        
-        NSInteger count = _liveMessages.count;
-        NSMutableArray *idxs = [NSMutableArray array];
-        for (NSInteger i = 0; i < items.count; i++)
-        {
-            [_liveMessages addObject:items[i]];
-            NSIndexPath *index = [NSIndexPath indexPathForRow:i+count inSection:0];
-            [idxs addObject:index];
-        }
-        [_tableView insertRowsAtIndexPaths:idxs withRowAnimation:UITableViewRowAnimationBottom];
-        [_tableView endUpdates];
-        
-        
-        scrolloff += heigt;
-        
-        [self updateTableViewFrame:heigt offsert:scrolloff];
-    }
     }
     
     

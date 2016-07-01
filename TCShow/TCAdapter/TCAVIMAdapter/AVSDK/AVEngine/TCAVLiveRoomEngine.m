@@ -95,23 +95,23 @@
 }
 
 - (void)completion:(TCAVCompletion)completion succ:(BOOL)succ withTip:(NSString *)tip
-    {
+{
     DebugLog(@"%@", tip);
-        if (completion)
-        {
+    if (completion)
+    {
         completion(succ, tip);
-        }
     }
-    
+}
+
 // 重试前的检查
 - (BOOL)beforeTryCheck:(TCAVCompletion)completion;
-    {
+{
     if (![self isRoomRunning])
-        {
+    {
         [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_RoomNotRunning_Tip];
         return NO;
-        }
-        
+    }
+    
     if (!_avContext)
     {
         [self completion:completion succ:NO withTag:ETCAVLiveRoomEngine_AVContextNull_Tip];
@@ -724,7 +724,7 @@
     
     if ([self needExitIMChatRoom])
     {
-    [[IMAPlatform sharedInstance] asyncExitAVChatRoom:_roomInfo succ:nil fail:nil];
+        [[IMAPlatform sharedInstance] asyncExitAVChatRoom:_roomInfo succ:nil fail:nil];
     }
     _enableChat = NO;
     

@@ -13,7 +13,7 @@
 
 
 #define kDefaultUserIcon            [UIImage imageNamed:@"default_head@2x.jpg"]
-#define kDefaultCoverIcon            [UIImage imageNamed:@"default_cover@2x.jpg"]
+#define kDefaultCoverIcon           [UIImage imageNamed:@"default_cover@2x.jpg"]
 
 
 #define kAppLargeTextFont       [UIFont systemFontOfSize:16]

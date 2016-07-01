@@ -53,12 +53,16 @@
 
 - (void)onTapBlank:(UITapGestureRecognizer *)tap;
 
-- (void)showPar:(BOOL)show;
+- (void)showPar:(UIButton *)par;
 - (void)onRefreshPAR;
 
 // for 多人互动
 - (void)onClickSub:(id<AVMultiUserAble>)user;
 
 - (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room;
+
+
+- (void)onUserLeave:(NSArray *)users;
+- (void)onUserBack:(NSArray *)user;
 
 @end

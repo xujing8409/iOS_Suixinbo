@@ -25,7 +25,7 @@
         
         DebugLog(@"登录成功:%@ tinyid:%llu sig:%@", param.identifier, [[IMSdkInt sharedInstance] getTinyId], param.userSig);
         [IMAPlatform setAutoLogin:YES];
-        
+
         
         if (succ)
         {

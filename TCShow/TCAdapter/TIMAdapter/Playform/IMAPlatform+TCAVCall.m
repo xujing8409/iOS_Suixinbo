@@ -104,8 +104,8 @@ static NSString *const kIMAPlatformCallViewController = @"kIMAPlatformCallViewCo
             // 当前的消息是原来的人发送的
             if (self.callViewController)
             {
-            [self.callViewController onRecvInviteCall:cmd];
-        }
+                [self.callViewController onRecvInviteCall:cmd];
+            }
             else
             {
                 //

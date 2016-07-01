@@ -26,13 +26,13 @@ static NSString *const kAVIMCMDCallInfo = @"kAVIMCMDCallInfo";
 - (instancetype)initWithCall:(NSInteger)command avRoomID:(int)roomid group:(NSString *)gid groupType:(NSString *)groupTpe type:(BOOL)isVoiceCall tip:(NSString *)tip
 {
     if (roomid < 0)
-{
+    {
         DebugLog(@"房间号参数不合法");
         return nil;
-}
-
+    }
+    
     if (!((gid.length > 0 && groupTpe.length > 0) || (groupTpe.length == 0 && groupTpe.length == 0)))
-{
+    {
         DebugLog(@"群号参数不合法");
         return nil;
     }

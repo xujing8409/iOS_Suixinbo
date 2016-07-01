@@ -48,7 +48,7 @@ static AVIMRunLoop *_sharedRunLoop = nil;
 
 - (void)runloopThreadEntry
 {
-    NSAssert(![NSThread isMainThread], @"runloopThread error");    
+    NSAssert(![NSThread isMainThread], @"runloopThread error");
     CFRunLoopSourceRef source;
     CFRunLoopSourceContext sourceContext;
     bzero(&sourceContext, sizeof(sourceContext));

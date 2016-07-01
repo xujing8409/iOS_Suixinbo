@@ -48,8 +48,8 @@
     {
         if (_isCallSponsor)
         {
-        return EAVCtrlState_All;
-    }
+            return EAVCtrlState_All;
+        }
         else
         {
             return EAVCtrlState_Speaker | EAVCtrlState_Mic;

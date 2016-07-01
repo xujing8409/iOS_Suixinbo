@@ -13,7 +13,7 @@
 
 @interface TCAVLiveRoomPushRequest : NSObject
 
-@property (nonatomic, strong) OMAVRoomInfo *roomInfo;   //  房间信息
+@property (nonatomic, strong) OMAVRoomInfo *roomInfo;   // 房间信息
 
 @property (nonatomic, strong) AVStreamInfo *pushParam;  // 推流参数
 

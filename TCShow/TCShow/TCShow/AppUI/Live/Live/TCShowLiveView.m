@@ -177,11 +177,11 @@
 {
     if (tap.state == UIGestureRecognizerStateEnded)
     {
-    if ([_bottomView isPureMode] || _inputViewShowing)
-    {
-        return;
-    }
-
+        if ([_bottomView isPureMode] || _inputViewShowing)
+        {
+            return;
+        }
+        
         if ([_inputView isInputViewActive])
         {
             [_inputView resignFirstResponder];
@@ -270,7 +270,7 @@
     [_parTextView sameWith:_topView];
     [_parTextView layoutBelow:_topView margin:kDefaultMargin];
     [_parTextView scaleToAboveOf:_bottomView margin:kDefaultMargin];
-
+    
 }
 
 
@@ -375,7 +375,7 @@
 
 - (void)onTimViewTimeRefresh:(TCShowLiveTimeView *)topView
 {
-
+    
 }
 
 - (void)onRefreshPAR
@@ -389,11 +389,12 @@
         }
     }
 }
-- (void)showPar:(BOOL)hidden
+- (void)showPar:(UIButton *)par
 {
     if ([_roomEngine isCameraEnable])
     {
-        _parTextView.hidden = !hidden;
+        par.selected = !par.selected;
+        _parTextView.hidden = !par.selected;
     }
     else
     {
@@ -411,5 +412,14 @@
     _room = room;
     [_topView changeRoomInfo:room];
     
+}
+
+- (void)onUserLeave:(NSArray *)users
+{
+    // 直播场景下，不做处理
+}
+- (void)onUserBack:(NSArray *)user
+{
+    // 直播场景下，不做处理
 }
 @end

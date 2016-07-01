@@ -117,7 +117,7 @@
     if (_cancel != btn)
     {
         [[HUDHelper sharedInstance] tipMessage:@"举报成功"];
-}
+    }
     [self removeFromSuperview];
 #endif
 }

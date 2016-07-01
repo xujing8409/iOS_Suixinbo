@@ -378,7 +378,7 @@ static BOOL kIsAlertingForceOffline = NO;
 {
     /*
      dispatch_async(dispatch_get_main_queue(), ^{
-    DebugLog(@"groupId = %@, membersInfo = %@", groupId, membersInfo);
+     DebugLog(@"groupId = %@, membersInfo = %@", groupId, membersInfo);
      
      IMAGroup *temp = [[IMAGroup alloc] initWith:groupId];
      IMAGroup *group = (IMAGroup *)[[IMAPlatform sharedInstance].contactMgr isContainUser:temp];
@@ -400,7 +400,7 @@ static BOOL kIsAlertingForceOffline = NO;
 {
     /*
      dispatch_async(dispatch_get_main_queue(), ^{
-    DebugLog(@"groupId = %@, membersInfo = %@", groupId, members);
+     DebugLog(@"groupId = %@, membersInfo = %@", groupId, members);
      
      IMAGroup *temp = [[IMAGroup alloc] initWith:groupId];
      IMAGroup *group = (IMAGroup *)[[IMAPlatform sharedInstance].contactMgr isContainUser:temp];

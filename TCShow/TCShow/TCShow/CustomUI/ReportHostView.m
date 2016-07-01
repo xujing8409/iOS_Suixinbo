@@ -58,7 +58,7 @@
     
     [_contentView sizeWith:CGSizeMake(240, 275)];
     [_contentView alignParentCenter];
-
+    
     [_title sizeWith:CGSizeMake(220, 30)];
     [_title alignParentTopWithMargin:kDefaultMargin];
     [_title layoutParentHorizontalCenter];

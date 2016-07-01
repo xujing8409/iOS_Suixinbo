@@ -91,7 +91,7 @@
 
 
 - (void)onRoomEnterBackground
-    {
+{
     _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
     [super onRoomEnterBackground];
 }
@@ -117,27 +117,27 @@
     
     if (needAdd)
     {
-    for (NSInteger i = 0; i < _multiUser.count; i++)
-    {
-        id<IMUserAble> iu = [_multiUser objectAtIndex:i];
-        
-        NSString *iuid = [iu imUserId];
-        
-        if ([iuid isEqualToString:userid])
+        for (NSInteger i = 0; i < _multiUser.count; i++)
         {
-            DebugLog(@"已经上请求的列表中---> requestAllView");
-            needAdd = NO;
-            break;
+            id<IMUserAble> iu = [_multiUser objectAtIndex:i];
+            
+            NSString *iuid = [iu imUserId];
+            
+            if ([iuid isEqualToString:userid])
+            {
+                DebugLog(@"已经上请求的列表中---> requestAllView");
+                needAdd = NO;
+                break;
+            }
+            
+            if ([curId isEqualToString:userid])
+            {
+                // 本地用户不能添加到请求列表中
+                DebugLog(@"本地用户不能添加到请求列表中----> requestAllView");
+                needAdd = NO;
+                break;
+            }
         }
-        
-        if ([curId isEqualToString:userid])
-        {
-            // 本地用户不能添加到请求列表中
-            DebugLog(@"本地用户不能添加到请求列表中----> requestAllView");
-            needAdd = NO;
-            break;
-        }
-    }
     }
     
     

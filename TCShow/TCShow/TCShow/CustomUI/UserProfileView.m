@@ -156,7 +156,7 @@
     [_icon sd_setImageWithURL:[NSURL URLWithString:[user imUserIconUrl]] placeholderImage:kDefaultUserIcon];
     _name.text = [user imUserName];
     
-
+    
     __weak UserProfileView *ws = self;
     [[IMAPlatform sharedInstance].host asyncGetProfileOf:user succ:^(TIMUserProfile *profile) {
         [ws configWith:profile];

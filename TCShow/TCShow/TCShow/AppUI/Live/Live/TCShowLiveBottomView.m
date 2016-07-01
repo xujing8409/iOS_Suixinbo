@@ -47,7 +47,7 @@
 
 - (void)onTurnLED:(MenuButton *)btn
 {
-    
+   
     if ([_roomEngine isFrontCamera])
     {
         [[HUDHelper sharedInstance] tipMessage:@"前置摄像头下开闪光灯，会影响直播"];

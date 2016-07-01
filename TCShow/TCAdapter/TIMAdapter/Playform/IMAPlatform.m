@@ -91,7 +91,7 @@ static Class kHostClass = Nil;
         [kTCAVIMLogDateFormatter setTimeStyle:NSDateFormatterShortStyle];
         [kTCAVIMLogDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
     }
-
+    
 #endif
     
     // Demo中使用了自定义字段，如果用户的App没有将这行注释// setting.userCustom
@@ -189,11 +189,11 @@ static Class kHostClass = Nil;
         work = EQALNetworkType_ReachableViaWWAN;
     }
     DebugLog(@"网络切换到(-1:未知 0:无网 1:wifi 2:移动网):%d", work);
-//    if (work != _networkType)
-//    {
-        self.networkType = work;
-        
-//    }
+    //    if (work != _networkType)
+    //    {
+    self.networkType = work;
+    
+    //    }
 }
 
 
