@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, AVCtrlState)
     EAVCtrlState_Mic = 0x01 << 1,               // 是否开启了麦克风
     EAVCtrlState_Camera = 0x01 << 2,            // 是否打开了相机
     EAVCtrlState_Beauty = 0x01 << 3,            // 是否打开了美颜：注意打开相机之后才可以设置美颜
-
+    
     // 是否打开推流，因推流非常占用云后台资源，需要向后台申请资源，如果推流中出现问题，请到( https://www.qcloud.com/doc/product/268/旁路直播开发 )了解详细内容
     // 不建议进入时默认打开，会影响进房速度
     // 只有主播可以设置
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, AVCtrlState)
     EAVCtrlState_RTMPStream = 0x01 << 5,        // RTMP
     EAVCtrlState_RAWStream = 0x01 << 6,         // RAW
     EAVCtrlState_HLS_RTMP = EAVCtrlState_HLSStream | EAVCtrlState_RTMPStream,
-    
+
     
     // 添加录制
     // https://www.qcloud.com/doc/product/268/%E5%BD%95%E5%88%B6%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91
@@ -175,7 +175,8 @@ typedef NS_ENUM(NSInteger, AVIMCommand) {
     AVIMCMD_EnterLive,          // 用户加入直播, Group消息 ： 1
     AVIMCMD_ExitLive,           // 用户退出直播, Group消息 ： 2
     AVIMCMD_Praise,             // 点赞消息, Demo中使用Group消息 ： 3
-    
+    AVIMCMD_Host_Leave,         // 主播离开, Group消息 ： 4
+    AVIMCMD_Host_Back,          // 主播回来, Group消息 ： 5
     // 中间预留扩展
     
     
