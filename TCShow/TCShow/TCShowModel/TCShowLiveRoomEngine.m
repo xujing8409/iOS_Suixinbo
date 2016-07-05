@@ -93,7 +93,7 @@
     else
     {
         // 观从进入直播间对应的角色名
-        return @"NormalGuest";
+        return @"InteractGuest";
     }
 }
 

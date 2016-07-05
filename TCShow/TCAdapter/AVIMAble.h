@@ -175,8 +175,8 @@ typedef NS_ENUM(NSInteger, AVIMCommand) {
     AVIMCMD_EnterLive,          // 用户加入直播, Group消息 ： 1
     AVIMCMD_ExitLive,           // 用户退出直播, Group消息 ： 2
     AVIMCMD_Praise,             // 点赞消息, Demo中使用Group消息 ： 3
-    AVIMCMD_Host_Leave,         // 主播离开, Group消息 ： 4
-    AVIMCMD_Host_Back,          // 主播回来, Group消息 ： 5
+    AVIMCMD_Host_Leave,         // 主播或互动观众离开, Group消息 ： 4
+    AVIMCMD_Host_Back,          // 主播或互动观众回来, Group消息 ： 5
     // 中间预留扩展
     
     

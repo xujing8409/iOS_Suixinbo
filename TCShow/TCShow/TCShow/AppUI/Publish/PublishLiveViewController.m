@@ -364,11 +364,11 @@
     [_publishInteractBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
 #if kAppStoreVersion
 #else
-#if DEBUG
+//#if DEBUG
     _publishInteractBtn.layer.cornerRadius = 6;
     _publishInteractBtn.layer.masksToBounds = YES;
-#else
-#endif
+//#else
+//#endif
 #endif
     [self.view addSubview:_publishInteractBtn];
     

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef EQALNetworkType TCQALNetwork;
-
 // 当前是用户信息
 @interface IMAHost : NSObject<IMHostAble>
 

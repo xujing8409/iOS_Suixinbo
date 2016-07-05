@@ -58,11 +58,11 @@
 - (NSInteger)maxRequestViewCount;
 
 // 具体与Spear配置相关，请注意设置
-// completion为异步回调，注意内存汇露
+// completion为异步回调，注意内存泄露
 - (void)changeToInteractAuthAndRole:(CommonCompletionBlock)completion;
 
 // 当前是互动观众时，下麦时，使用
-// completion为异步回调，注意内存汇露
+// completion为异步回调，注意内存泄露
 - (void)changeToNormalGuestAuthAndRole:(CommonCompletionBlock)completion;
 
 @end
