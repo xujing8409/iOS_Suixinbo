@@ -1,5 +1,5 @@
 ﻿# iOS随心播
-因GitHub有文件大小限制，以及微云限制，现将IMSDK以及AVSDK上传到腾讯云COS上。
+因GitHub有文件大小限制，现将IMSDK以及AVSDK上传到腾讯云COS上。
 更新时，请到对应的地址进行更新，并添加到工程下面对应的目录下
 
 IMSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160629/IMSDK.zip 下载后解压，然后再放至对应放到工程目录  TCShow/TCAdapter/TIMAdapter/Framework/IMSDK
@@ -35,4 +35,4 @@ AVSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160629/Libs.zip  下载后
 观众配置（互动直播中使用，AVSDK切换角色，并不能更新音频场景，所以音频场景先择：开播）：
 ![spear配置](https://raw.githubusercontent.com/zhaoyang21cn/iOS_Suixinbo/master/InteractGuest.jpeg)
 互动观众配置：
-![spear配置](https://raw.githubusercontent.com/zhaoyang21cn/iOS_Suixinbo/master/InteractUser.jpeg)
+![spear配置](https://raw.githubusercontent.com/zhaoyang21cn/iOS_Suixinbo/master/InteractUser.jpeg
