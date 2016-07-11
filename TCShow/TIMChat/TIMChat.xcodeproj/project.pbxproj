@@ -3166,20 +3166,22 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework",
 					"$(PROJECT_DIR)/TCAdapter/TCAVIMAdapter/Libs",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/IMSDK",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework",
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TIMChat/TIMChat-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/CommonLibrary/BlocksKit/include";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi/Headers",
+					"$(SRCROOT)/CommonLibrary/BlocksKit/include",
+				);
 				INFOPLIST_FILE = TIMChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework/WXApi",
 					"$(PROJECT_DIR)/CommonLibrary/BlocksKit",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
@@ -3202,20 +3204,22 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework",
 					"$(PROJECT_DIR)/TCAdapter/TCAVIMAdapter/Libs",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/IMSDK",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework",
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TIMChat/TIMChat-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/CommonLibrary/BlocksKit/include";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi/Headers",
+					"$(SRCROOT)/CommonLibrary/BlocksKit/include",
+				);
 				INFOPLIST_FILE = "TIMChat/DailyBuild-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework/WXApi",
 					"$(PROJECT_DIR)/CommonLibrary/BlocksKit",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
@@ -3298,20 +3302,22 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework",
 					"$(PROJECT_DIR)/TCAdapter/TCAVIMAdapter/Libs",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/IMSDK",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework",
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TIMChat/TIMChat-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/CommonLibrary/BlocksKit/include";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi/Headers",
+					"$(SRCROOT)/CommonLibrary/BlocksKit/include",
+				);
 				INFOPLIST_FILE = "TIMChat/DailyBuild-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/TIMAdapter/Framework/WXApi",
 					"$(PROJECT_DIR)/CommonLibrary/BlocksKit",
 					"$(PROJECT_DIR)/TCAdapter/TIMAdapter/Framework/WXApi",
 				);
