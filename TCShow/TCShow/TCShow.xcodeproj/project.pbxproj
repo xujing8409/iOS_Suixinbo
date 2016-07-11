@@ -28,6 +28,7 @@
 		92224AE61CEB12100050404A /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92224AE51CEB12100050404A /* libresolv.tbd */; };
 		92285E321CD8D03A00F2D88E /* EditInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92285E311CD8D03A00F2D88E /* EditInfoViewController.m */; };
 		92285E351CD8D5AC00F2D88E /* HostProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92285E341CD8D5AC00F2D88E /* HostProfileViewController.m */; };
+		9228736F1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9228736E1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m */; };
 		922C36821CDC3253008518F5 /* TCAVIMMIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 922C36811CDC3253008518F5 /* TCAVIMMIManager.m */; };
 		9235FD331CD065B800AADB2A /* TCAVFrameDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9235FD321CD065B800AADB2A /* TCAVFrameDispatcher.m */; };
 		92560A7A1CE45EE000622051 /* UserProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92560A791CE45EE000622051 /* UserProfileView.m */; };
@@ -278,6 +279,8 @@
 		92285E311CD8D03A00F2D88E /* EditInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditInfoViewController.m; sourceTree = "<group>"; };
 		92285E331CD8D5AC00F2D88E /* HostProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostProfileViewController.h; sourceTree = "<group>"; };
 		92285E341CD8D5AC00F2D88E /* HostProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostProfileViewController.m; sourceTree = "<group>"; };
+		9228736D1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+AudioTransmission.h"; sourceTree = "<group>"; };
+		9228736E1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+AudioTransmission.m"; sourceTree = "<group>"; };
 		922C36801CDC3253008518F5 /* TCAVIMMIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVIMMIManager.h; sourceTree = "<group>"; };
 		922C36811CDC3253008518F5 /* TCAVIMMIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVIMMIManager.m; sourceTree = "<group>"; };
 		9235FD311CD065B800AADB2A /* TCAVFrameDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVFrameDispatcher.h; sourceTree = "<group>"; };
@@ -1572,6 +1575,8 @@
 				926DEC8E1CF6F34A00F9251B /* TCAVTryItem.m */,
 				927600DF1CFC1A8B00BA9632 /* TCAVLiveRoomEngine+Record.h */,
 				927600E01CFC1A8B00BA9632 /* TCAVLiveRoomEngine+Record.m */,
+				9228736D1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.h */,
+				9228736E1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m */,
 			);
 			path = AVEngine;
 			sourceTree = "<group>";
@@ -2133,6 +2138,7 @@
 				929408C41CD88D79004A0FE2 /* TCShowLiveRoomEngine.m in Sources */,
 				925941C01CC6607400227DD7 /* TCShowLiveInputView.m in Sources */,
 				92CD1D181D12CD3200E43AF0 /* TCAVCallRoomEngine.m in Sources */,
+				9228736F1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m in Sources */,
 				92D2CBC31CC4E4D200501760 /* Reachability.m in Sources */,
 				92D2CBB61CC4E4D200501760 /* JSONKit.m in Sources */,
 			);

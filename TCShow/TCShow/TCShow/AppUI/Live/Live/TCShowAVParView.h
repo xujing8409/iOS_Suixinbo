@@ -14,6 +14,7 @@
 - (void)onAVParView:(TCShowAVParView *)par clickPar:(UIButton *)button;
 - (void)onAVParView:(TCShowAVParView *)par clickPush:(UIButton *)button;
 - (void)onAVParView:(TCShowAVParView *)par clickRec:(UIButton *)button;
+- (void)onAVParView:(TCShowAVParView *)par clickSpeed:(UIButton *)button;
 
 @end
 
@@ -23,6 +24,7 @@
     UIButton *_par;     // PAR
     UIButton *_push;    // Push
     UIButton *_rec;     // rec
+    UIButton *_speed;   // 测速
 }
 
 @property (nonatomic, weak) id<TCShowAVParViewDelegate> delegate;

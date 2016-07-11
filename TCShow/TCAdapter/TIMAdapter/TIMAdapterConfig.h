@@ -61,6 +61,7 @@
 #define IMALocalizedError(intCode, enStr) NSLocalizedString(([NSString stringWithFormat:@"%d", (int)intCode]), enStr)
 
 //==============================
+// 后期此处会有修改，不使用字典方式传送
 #if kSupportCallScene
 // 语音视频通话中用到的关键字
 // int 类型

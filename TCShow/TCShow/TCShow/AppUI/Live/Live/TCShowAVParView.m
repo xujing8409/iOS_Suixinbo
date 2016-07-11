@@ -72,6 +72,23 @@
     _rec.layer.masksToBounds = YES;
     
     [self addSubview:_rec];
+    
+    
+    _speed = [[UIButton alloc] init];
+    
+    [_speed setTitle:@"测速" forState:UIControlStateNormal];
+    [_speed addTarget:self action:@selector(onClickSpeed:) forControlEvents:UIControlEventTouchUpInside];
+    _speed.titleLabel.font = kAppMiddleTextFont;
+    [_speed setTitleColor:kBlackColor forState:UIControlStateNormal];
+    [_speed setTitleColor:kWhiteColor forState:UIControlStateSelected];
+    
+    [_speed setBackgroundImage:nor forState:UIControlStateNormal];
+    [_speed setBackgroundImage:recHig forState:UIControlStateSelected];
+    
+    _speed.layer.cornerRadius = 4;
+    _speed.layer.masksToBounds = YES;
+    
+    [self addSubview:_speed];
 }
 
 
@@ -99,10 +116,19 @@
     }
 }
 
+- (void)onClickSpeed:(UIButton *)btn
+{
+    if ([_delegate respondsToSelector:@selector(onAVParView:clickSpeed:)])
+    {
+        [_delegate onAVParView:self clickSpeed:btn];
+    }
+
+}
+
 - (void)relayoutFrameOfSubViews
 {
     CGRect rect = self.bounds;
-    NSArray *array = _isHostPar ? @[_par, _push, _rec] : @[_par];
+    NSArray *array = _isHostPar ? @[_par, _push, _rec, _speed] : @[_par, _speed];
     [self gridViews:array inColumn:array.count size:CGSizeMake(80, 24) margin:CGSizeMake(3, 3) inRect:rect];
 }
 

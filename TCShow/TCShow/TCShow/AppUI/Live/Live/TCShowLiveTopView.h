@@ -26,6 +26,7 @@
 - (void)onTopView:(TCShowLiveTopView *)topView clickPAR:(UIButton *)par;
 - (void)onTopView:(TCShowLiveTopView *)topView clickPush:(UIButton *)push;
 - (void)onTopView:(TCShowLiveTopView *)topView clickREC:(UIButton *)rec;
+- (void)onTopView:(TCShowLiveTopView *)topView clickSpeed:(UIButton *)speed;
 
 
 @end

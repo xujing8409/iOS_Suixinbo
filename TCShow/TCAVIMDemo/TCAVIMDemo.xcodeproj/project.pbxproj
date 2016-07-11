@@ -13,6 +13,12 @@
 		920B2F391CEDE126005AB9F2 /* SimpleLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920B2F381CEDE126005AB9F2 /* SimpleLiveViewController.m */; };
 		920B2F421CEDEB1F005AB9F2 /* C2CVideoUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920B2F401CEDEB1F005AB9F2 /* C2CVideoUIViewController.m */; };
 		920B2F431CEDEB1F005AB9F2 /* C2CVideoUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920B2F411CEDEB1F005AB9F2 /* C2CVideoUIViewController.xib */; };
+		921662561D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.m in Sources */ = {isa = PBXBuildFile; fileRef = 921662531D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.m */; };
+		921662571D2DFFC200823724 /* TCAVCallRoomEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 921662551D2DFFC200823724 /* TCAVCallRoomEngine.m */; };
+		9216625B1D2E019E00823724 /* AudioTransViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9216625A1D2E019E00823724 /* AudioTransViewController.m */; };
+		9216625F1D2E01C900823724 /* AudioTransUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9216625D1D2E01C900823724 /* AudioTransUIViewController.m */; };
+		921662601D2E01C900823724 /* AudioTransUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9216625E1D2E01C900823724 /* AudioTransUIViewController.xib */; };
+		922E87601D2BC692004846B7 /* FullPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E875F1D2BC692004846B7 /* FullPreviewViewController.m */; };
 		92349FB81CEDBFC5008C203F /* AVIMMILayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92349FB71CEDBFC5008C203F /* AVIMMILayerViewController.m */; };
 		923778231CE9F536007AD22B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 923778221CE9F536007AD22B /* main.m */; };
 		923778261CE9F536007AD22B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 923778251CE9F536007AD22B /* AppDelegate.m */; };
@@ -216,6 +222,7 @@
 		92C5A4691D12D76500B321AC /* AVIMCMD+TCAVCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A4681D12D76500B321AC /* AVIMCMD+TCAVCall.m */; };
 		92C5A46C1D12D78A00B321AC /* IMAPlatform+TCAVCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A46B1D12D78A00B321AC /* IMAPlatform+TCAVCall.m */; };
 		92C5A46F1D12D7AE00B321AC /* TCAVCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A46E1D12D7AE00B321AC /* TCAVCallViewController.m */; };
+		92DD6F2D1D2E07EB00B341E3 /* 48000_2.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 92DD6F2C1D2E07EB00B341E3 /* 48000_2.pcm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,6 +237,17 @@
 		920B2F3F1CEDEB1F005AB9F2 /* C2CVideoUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C2CVideoUIViewController.h; sourceTree = "<group>"; };
 		920B2F401CEDEB1F005AB9F2 /* C2CVideoUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C2CVideoUIViewController.m; sourceTree = "<group>"; };
 		920B2F411CEDEB1F005AB9F2 /* C2CVideoUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = C2CVideoUIViewController.xib; sourceTree = "<group>"; };
+		921662521D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+AudioTransmission.h"; sourceTree = "<group>"; };
+		921662531D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+AudioTransmission.m"; sourceTree = "<group>"; };
+		921662541D2DFFC200823724 /* TCAVCallRoomEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallRoomEngine.h; sourceTree = "<group>"; };
+		921662551D2DFFC200823724 /* TCAVCallRoomEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallRoomEngine.m; sourceTree = "<group>"; };
+		921662591D2E019E00823724 /* AudioTransViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTransViewController.h; sourceTree = "<group>"; };
+		9216625A1D2E019E00823724 /* AudioTransViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTransViewController.m; sourceTree = "<group>"; };
+		9216625C1D2E01C900823724 /* AudioTransUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTransUIViewController.h; sourceTree = "<group>"; };
+		9216625D1D2E01C900823724 /* AudioTransUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTransUIViewController.m; sourceTree = "<group>"; };
+		9216625E1D2E01C900823724 /* AudioTransUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioTransUIViewController.xib; sourceTree = "<group>"; };
+		922E875E1D2BC692004846B7 /* FullPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullPreviewViewController.h; sourceTree = "<group>"; };
+		922E875F1D2BC692004846B7 /* FullPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullPreviewViewController.m; sourceTree = "<group>"; };
 		92349FB61CEDBFC5008C203F /* AVIMMILayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMMILayerViewController.h; sourceTree = "<group>"; };
 		92349FB71CEDBFC5008C203F /* AVIMMILayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVIMMILayerViewController.m; sourceTree = "<group>"; };
 		9237781E1CE9F536007AD22B /* TCAVIMDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TCAVIMDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -692,6 +710,7 @@
 		92C5A46B1D12D78A00B321AC /* IMAPlatform+TCAVCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IMAPlatform+TCAVCall.m"; sourceTree = "<group>"; };
 		92C5A46D1D12D7AE00B321AC /* TCAVCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallViewController.h; sourceTree = "<group>"; };
 		92C5A46E1D12D7AE00B321AC /* TCAVCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallViewController.m; sourceTree = "<group>"; };
+		92DD6F2C1D2E07EB00B341E3 /* 48000_2.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = 48000_2.pcm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -751,6 +770,28 @@
 				920B2F381CEDE126005AB9F2 /* SimpleLiveViewController.m */,
 			);
 			path = "简单直播Demo";
+			sourceTree = "<group>";
+		};
+		921662581D2E016800823724 /* 音频透传 */ = {
+			isa = PBXGroup;
+			children = (
+				92DD6F2C1D2E07EB00B341E3 /* 48000_2.pcm */,
+				921662591D2E019E00823724 /* AudioTransViewController.h */,
+				9216625A1D2E019E00823724 /* AudioTransViewController.m */,
+				9216625C1D2E01C900823724 /* AudioTransUIViewController.h */,
+				9216625D1D2E01C900823724 /* AudioTransUIViewController.m */,
+				9216625E1D2E01C900823724 /* AudioTransUIViewController.xib */,
+			);
+			path = "音频透传";
+			sourceTree = "<group>";
+		};
+		922E875D1D2BC2FB004846B7 /* 修改渲染控件，控制全屏 */ = {
+			isa = PBXGroup;
+			children = (
+				922E875E1D2BC692004846B7 /* FullPreviewViewController.h */,
+				922E875F1D2BC692004846B7 /* FullPreviewViewController.m */,
+			);
+			path = "修改渲染控件，控制全屏";
 			sourceTree = "<group>";
 		};
 		923778151CE9F536007AD22B = {
@@ -822,6 +863,8 @@
 		92377AA41CEA052E007AD22B /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				921662581D2E016800823724 /* 音频透传 */,
+				922E875D1D2BC2FB004846B7 /* 修改渲染控件，控制全屏 */,
 				9267103D1D17BBDA0048DAAF /* LivePreview修复区域 */,
 				920B2F331CEDD63B005AB9F2 /* 简单直播Demo */,
 				92377AA51CEA052E007AD22B /* AppUIHeader.h */,
@@ -1441,6 +1484,10 @@
 		92377C1D1CEA0B31007AD22B /* AVEngine */ = {
 			isa = PBXGroup;
 			children = (
+				921662521D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.h */,
+				921662531D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.m */,
+				921662541D2DFFC200823724 /* TCAVCallRoomEngine.h */,
+				921662551D2DFFC200823724 /* TCAVCallRoomEngine.m */,
 				927600E21CFC465300BA9632 /* TCAVLiveRoomEngine+Record.h */,
 				927600E31CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m */,
 				926DEC901CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.h */,
@@ -1718,6 +1765,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				921662601D2E01C900823724 /* AudioTransUIViewController.xib in Resources */,
 				92377D211CEA0B31007AD22B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				920B2F431CEDEB1F005AB9F2 /* C2CVideoUIViewController.xib in Resources */,
 				923778311CE9F536007AD22B /* LaunchScreen.storyboard in Resources */,
@@ -1725,6 +1773,7 @@
 				92377D1A1CEA0B31007AD22B /* Localizable.strings in Resources */,
 				9237782E1CE9F536007AD22B /* Assets.xcassets in Resources */,
 				92377D221CEA0B31007AD22B /* TLSUI.bundle in Resources */,
+				92DD6F2D1D2E07EB00B341E3 /* 48000_2.pcm in Resources */,
 				92377D071CEA0B31007AD22B /* Shaderv.glsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1736,6 +1785,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9216625B1D2E019E00823724 /* AudioTransViewController.m in Sources */,
 				92377CFE1CEA0B31007AD22B /* TCAVMultiLiveRoomEngine.m in Sources */,
 				92377AE11CEA052E007AD22B /* C2CVideoViewController.m in Sources */,
 				926DEC941CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m in Sources */,
@@ -1777,6 +1827,7 @@
 				92377CF91CEA0B31007AD22B /* UIViewController+Layout.m in Sources */,
 				92377AE21CEA052E007AD22B /* C2CVoiceViewController.m in Sources */,
 				92377CCD1CEA0B31007AD22B /* MKNetworkOperation.m in Sources */,
+				921662561D2DFFC200823724 /* TCAVLiveRoomEngine+AudioTransmission.m in Sources */,
 				92377CE71CEA0B31007AD22B /* KeyValue.m in Sources */,
 				92377D041CEA0B31007AD22B /* AVGLRenderView.mm in Sources */,
 				926710401D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m in Sources */,
@@ -1812,6 +1863,7 @@
 				926DEC951CF738CF00F9251B /* TCAVTryItem.m in Sources */,
 				92C5A46C1D12D78A00B321AC /* IMAPlatform+TCAVCall.m in Sources */,
 				92377CC61CEA0B31007AD22B /* NSData+MKBase64.m in Sources */,
+				922E87601D2BC692004846B7 /* FullPreviewViewController.m in Sources */,
 				92377D131CEA0B31007AD22B /* AVIMCache.m in Sources */,
 				92377AD61CEA052E007AD22B /* RichMenuTableViewCell.m in Sources */,
 				92377CBD1CEA0B31007AD22B /* MoreTableView.m in Sources */,
@@ -1820,6 +1872,7 @@
 				92377CBA1CEA0B31007AD22B /* KeyValueTableViewController.m in Sources */,
 				92377C9C1CEA0B31007AD22B /* FTUtils+UIGestureRecognizer.m in Sources */,
 				92377CA11CEA0B31007AD22B /* MKMapView+ZoomLevel.m in Sources */,
+				9216625F1D2E01C900823724 /* AudioTransUIViewController.m in Sources */,
 				920B2F391CEDE126005AB9F2 /* SimpleLiveViewController.m in Sources */,
 				92377D0A1CEA0B31007AD22B /* TCAVMultiLivePreview.m in Sources */,
 				92377ADB1CEA052E007AD22B /* HostProfileViewController.m in Sources */,
@@ -1874,6 +1927,7 @@
 				92377D2F1CEA0B31007AD22B /* IMAPlatformConfig.m in Sources */,
 				92377CC21CEA0B31007AD22B /* JSONKit.m in Sources */,
 				92377AD51CEA052E007AD22B /* RichCellMenuItem.m in Sources */,
+				921662571D2DFFC200823724 /* TCAVCallRoomEngine.m in Sources */,
 				92377D291CEA0B31007AD22B /* IMAHost.m in Sources */,
 				92377CFD1CEA0B31007AD22B /* TCAVLiveRoomEngine.m in Sources */,
 				92377CBE1CEA0B31007AD22B /* FBKVOController.m in Sources */,
@@ -2022,6 +2076,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -2052,6 +2108,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;

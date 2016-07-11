@@ -406,6 +406,14 @@
     }
 }
 
+- (void)onAVParView:(TCShowAVParView *)par clickSpeed:(UIButton *)button
+{
+    if ([_delegate respondsToSelector:@selector(onTopView:clickSpeed:)])
+    {
+        [_delegate onTopView:self clickSpeed:button];
+    }
+}
+
 - (void)relayoutPARView
 {
     if (_parView)

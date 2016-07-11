@@ -27,6 +27,9 @@
 
 #import "ChangeLivePreviewFrameViewController.h"
 
+#import "FullPreviewViewController.h"
+#import "AudioTransViewController.h"
+
 
 #import "MainViewController.h"
 #import "SettingHeader.h"

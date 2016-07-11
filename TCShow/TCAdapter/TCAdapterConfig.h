@@ -188,5 +188,11 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 
 #endif
 
+//==================================================================================
+// 是否支持混音
+#ifndef kSupportAudioTransmission
+#define kSupportAudioTransmission 0
+#endif
+
 
 #endif /* TCAdapterConfig_h */

@@ -415,6 +415,11 @@
     
 }
 
+- (void)onTopView:(TCShowLiveTopView *)topView clickSpeed:(UIButton *)speed
+{
+    
+}
+
 - (void)showPush:(AVEncodeType)type succ:(BOOL)succ request:(TCAVLiveRoomPushRequest *)req
 {
     NSString *pushUrl = [req getPushUrl:type];
