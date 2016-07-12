@@ -573,6 +573,10 @@
 {
     return _hasEnableCameraBeforeEnterBackground;
 }
+- (BOOL)hasEnableMicBeforeEnterBackground
+{
+    return _hasEnableMicBeforeEnterBackground;
+}
 
 
 - (void)onRoomEnterForeground
@@ -586,6 +590,13 @@
         [self asyncEnableCamera:YES needNotify:NO];
     }
     
+    if ([self checkAppSupportBackgroundMode] && _isRoomAlive && [self hasEnableMicBeforeEnterBackground])
+    {
+        // 有后台模式时，开mic
+         DebugLog(@"进入前台开mic");
+        [self asyncEnableMic:YES completion:nil];
+    }
+    
 }
 - (void)onRoomEnterBackground
 {
@@ -595,6 +606,13 @@
         DebugLog(@"退到后台关相机");
         // 到前台的时候打开摄像头，但不需要通知到处面
         [self enableCamera:NO needTry:NO needNotify:NO completion:nil];
+    }
+    
+    if ([self checkAppSupportBackgroundMode] && _isRoomAlive && [self hasEnableMicBeforeEnterBackground])
+    {
+        // 有后台模式时，开mic
+        DebugLog(@"进入关开mic");
+        [self asyncEnableMic:NO completion:nil];
     }
     
     [super onRoomEnterBackground];
@@ -1058,10 +1076,29 @@
     
     id<AVUserAble> ah = (id<AVUserAble>) _IMUser;
     
+    // AVSDK默认开Speaker，关Mic，关Camera
     NSInteger state = [ah avCtrlState];
+    if (!((state & EAVCtrlState_Speaker) == EAVCtrlState_Speaker))
+    {
+        // AVSDK默认开扬声器，如果进入设置不打开，则需要手动关掉
+        [self asyncEnableSpeaker:(state & EAVCtrlState_Speaker) isEnterRoom:YES completion:nil];
+    }
+    else
+    {
+        [self enableHostCtrlState:EAVCtrlState_Speaker];
+    }
     
-    [self asyncEnableSpeaker:(state & EAVCtrlState_Speaker) isEnterRoom:YES completion:nil];
-    [self asyncEnableMic:(state & EAVCtrlState_Mic) isEnterRoom:YES completion:nil];
+    
+    _hasEnableMicBeforeEnterBackground = ((state & EAVCtrlState_Mic) == EAVCtrlState_Mic);
+    if (_hasEnableMicBeforeEnterBackground)
+    {
+        // AVSDK默认关mic
+        [self asyncEnableMic:(state & EAVCtrlState_Mic) isEnterRoom:YES completion:nil];
+    }
+    else
+    {
+        [self disableHostCtrlState:EAVCtrlState_Mic];
+    }
     
     if (state & EAVCtrlState_Camera)
     {
@@ -1077,7 +1114,8 @@
 #if kSupportTimeStatistics
     else
     {
-    // 不开相计时，不作首帧计时
+        [self disableHostCtrlState:EAVCtrlState_Camera];
+        // 不开相计时，不作首帧计时
         _hasShowLocalFirstFrame = YES;
     }
 #endif

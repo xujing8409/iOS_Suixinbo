@@ -129,7 +129,13 @@
 {
     CGRect rect = self.bounds;
     NSArray *array = _isHostPar ? @[_par, _push, _rec, _speed] : @[_par, _speed];
-    [self gridViews:array inColumn:array.count size:CGSizeMake(80, 24) margin:CGSizeMake(3, 3) inRect:rect];
+    NSInteger width = (rect.size.width - (array.count + 1)*3) / array.count;
+    
+    if (width > 80)
+    {
+        width = 80;
+    }
+    [self gridViews:array inColumn:array.count size:CGSizeMake(width, 24) margin:CGSizeMake(3, 3) inRect:rect];
 }
 
 

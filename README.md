@@ -1,4 +1,4 @@
-﻿# iOS随心播
+# iOS随心播
 因GitHub有文件大小限制，现将IMSDK以及AVSDK上传到腾讯云COS上。
 更新时，请到对应的地址进行更新，并添加到工程下面对应的目录下
 
@@ -25,6 +25,9 @@ AVSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160629/Libs.zip  下载后
 8.iOS杀掉进程后，<90S,再创建直播，在直播间的观众可以正常恢复声音/画面
 
 9.iOS杀掉进程后，>90S，后台自动关闭房间
+
+##电话示例参考
+iOS_TIMChat (注意阅读ReadMe) : https://github.com/zhaoyang21cn/iOS_TIMChat
 
 ##随心播的Spear的配置
 因随心播的参数配置较高，因此对主播上行带宽有要求

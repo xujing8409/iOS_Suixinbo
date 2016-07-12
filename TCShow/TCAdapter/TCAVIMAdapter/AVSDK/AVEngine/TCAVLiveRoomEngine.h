@@ -53,6 +53,7 @@ typedef cameraPos TCAVEngineCamera;
     
     // 退后台前是否打开过相机
     BOOL            _hasEnableCameraBeforeEnterBackground;
+    BOOL            _hasEnableMicBeforeEnterBackground;
 }
 
 // 当前摄像头ID

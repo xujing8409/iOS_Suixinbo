@@ -66,7 +66,7 @@
     
 @protected
     id<AVRoomAble>                          _switchingToRoom;               // 要切换到的房间信息
-//    BOOL                                    _isSwitchingRoom;               // 当前是否在切换房间
+//    BOOL                                    _isSwitchingRoom;             // 当前是否在切换房间
 }
 
 @property (nonatomic, weak) id<TCAVRoomEngineDelegate> delegate;
@@ -129,6 +129,13 @@
 - (void)onWillEnterLive;
 - (void)onWillExitLive;
 #endif
+
+// 是否支持后台模模式
+// 随心播示例中默认不支持后台模式，若支持后台模式，app进入后台时，程序仍可在后台进行录音，不建议这么做（有窃听隐私的问题存在）
+// TCAdapter中默认是只要是检测到开了后台模式（尤其是音频模式），则在切换到后台时，会自动关mic，切回前吧时，再打开mic
+// 后台模式可在XCode-->Target-->Capabilities-->Bacground Modes 或info.plist文件中查看
+// 用户可重写以下方法，来控制如果上述逻辑
+- (BOOL)checkAppSupportBackgroundMode;
 
 // 因外部可能会重写enterLive方法，如果重写了，子类的子类内部再调[super enterLive] ，可能会有问题
 // 用户不要重写此方法

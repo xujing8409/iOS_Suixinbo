@@ -93,6 +93,7 @@
 - (void)onRoomEnterBackground
 {
     _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
+    _hasEnableMicBeforeEnterBackground = [self isMicEnable];
     [super onRoomEnterBackground];
 }
 

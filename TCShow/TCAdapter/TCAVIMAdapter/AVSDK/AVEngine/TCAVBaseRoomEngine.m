@@ -533,6 +533,13 @@
 }
 #endif
 
+- (BOOL)checkAppSupportBackgroundMode
+{
+    NSArray *modes = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"UIBackgroundModes"];
+    DebugLog(@"开启的后台模式:%@", modes);
+    return modes.count;
+}
+
 - (void)onRealEnterLive:(id<AVRoomAble>)room
 {
     if (!_avContext)
