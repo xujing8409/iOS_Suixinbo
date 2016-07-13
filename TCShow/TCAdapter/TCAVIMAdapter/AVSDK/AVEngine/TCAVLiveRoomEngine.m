@@ -569,48 +569,41 @@
     }
 }
 
-- (BOOL)hasEnableCameraBeforeEnterBackground
-{
-    return _hasEnableCameraBeforeEnterBackground;
-}
-- (BOOL)hasEnableMicBeforeEnterBackground
-{
-    return _hasEnableMicBeforeEnterBackground;
-}
-
-
 - (void)onRoomEnterForeground
 {
     [super onRoomEnterForeground];
     
-    if (_isRoomAlive && [self hasEnableCameraBeforeEnterBackground])
+    if (_isRoomAlive && _hasEnableCameraBeforeEnterBackground)
     {
         DebugLog(@"进入前台开相机");
         // 到前台的时候打开摄像头，但不需要通知到处面
         [self asyncEnableCamera:YES needNotify:NO];
     }
     
-    if ([self checkAppSupportBackgroundMode] && _isRoomAlive && [self hasEnableMicBeforeEnterBackground])
+    if ([self checkAppSupportBackgroundMode] && _isRoomAlive && _hasEnableMicBeforeEnterBackground)
     {
         // 有后台模式时，开mic
+        // 无后台模式，系统自动开
          DebugLog(@"进入前台开mic");
         [self asyncEnableMic:YES completion:nil];
     }
     
 }
 - (void)onRoomEnterBackground
-{
-
-    if (_isRoomAlive && [self hasEnableCameraBeforeEnterBackground])
+{ 
+    _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
+    if (_hasEnableCameraBeforeEnterBackground && _isRoomAlive)
     {
         DebugLog(@"退到后台关相机");
         // 到前台的时候打开摄像头，但不需要通知到处面
         [self enableCamera:NO needTry:NO needNotify:NO completion:nil];
     }
     
-    if ([self checkAppSupportBackgroundMode] && _isRoomAlive && [self hasEnableMicBeforeEnterBackground])
+    _hasEnableMicBeforeEnterBackground = [self isMicEnable];
+    if (_hasEnableMicBeforeEnterBackground && [self checkAppSupportBackgroundMode] && _isRoomAlive)
     {
-        // 有后台模式时，开mic
+        // 有后台模式时，关mic
+        // 无后台模式，系统自动关
         DebugLog(@"进入关开mic");
         [self asyncEnableMic:NO completion:nil];
     }

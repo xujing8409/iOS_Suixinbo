@@ -88,15 +88,6 @@
     
 }
 
-
-
-- (void)onRoomEnterBackground
-{
-    _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
-    _hasEnableMicBeforeEnterBackground = [self isMicEnable];
-    [super onRoomEnterBackground];
-}
-
 // ower write super method
 
 // 添加到待请求队列
