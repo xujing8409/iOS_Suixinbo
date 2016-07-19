@@ -161,8 +161,9 @@
 {
     if (![user conformsToProtocol:@protocol(AVUserAble)])
     {
-        DebugLog(@"因此类中要使用TCAVLiveRoomEngine，为保证其能正常使用，其传入的Host必须要实现AVUserAble");
-        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:@"必须实现AVUserAble协议" userInfo:nil];
+        DebugLog(@"因此类中要使用TCAVLiveRoomEngine，为保证其能正常使用，其传入的Host[%@ : %p]必须要实现AVUserAble", [user class], user);
+        NSString *reason = [NSString stringWithFormat:@"[%@ : %p]必须实现AVUserAble协议", [user class], user];
+        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:reason userInfo:nil];
         @throw e;
     }
 }

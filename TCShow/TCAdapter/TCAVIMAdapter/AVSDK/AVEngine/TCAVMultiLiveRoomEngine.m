@@ -37,7 +37,9 @@
 {
     if (![host conformsToProtocol:@protocol(AVMultiUserAble)])
     {
-        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:@"必须实现AVMultiUserAble协议" userInfo:nil];
+        NSString *reason = [NSString stringWithFormat:@"[%@ : %p]必须实现AVMultiUserAble协议", [host class], host];
+        DebugLog(@"%@", reason);
+        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:reason userInfo:nil];
         @throw e;
     }
     
@@ -54,7 +56,9 @@
 {
     if (![host conformsToProtocol:@protocol(AVMultiUserAble)])
     {
-        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:@"必须实现AVMultiUserAble协议" userInfo:nil];
+        NSString *reason = [NSString stringWithFormat:@"[%@ : %p]必须实现AVMultiUserAble协议", [host class], host];
+        DebugLog(@"%@", reason);
+        NSException *e = [NSException exceptionWithName:@"TCAVMultiLiveRoomEngineHostInVailed" reason:reason userInfo:nil];
         @throw e;
     }
     if (self = [super initWith:host])

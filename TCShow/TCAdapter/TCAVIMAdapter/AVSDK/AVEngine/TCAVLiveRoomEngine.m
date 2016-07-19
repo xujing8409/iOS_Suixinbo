@@ -49,7 +49,9 @@
 {
     if (![host conformsToProtocol:@protocol(AVUserAble)])
     {
-        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:@"必须实现AVUserAble协议" userInfo:nil];
+        NSString *reason = [NSString stringWithFormat:@"[%@ : %p]必须实现AVUserAble协议", [host class], host];
+        DebugLog(@"%@", reason);
+        NSException *e = [NSException exceptionWithName:@"TCAVLiveRoomEngineHostInVailed" reason:reason userInfo:nil];
         @throw e;
     }
     

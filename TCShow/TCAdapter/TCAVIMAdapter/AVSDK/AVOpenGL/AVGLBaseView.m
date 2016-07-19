@@ -129,7 +129,7 @@
 
 - (void)stopDisplay
 {
-    _stopDisplay=YES;
+    _stopDisplay = YES;
     
     if (_timer) {
         [_timer removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
@@ -141,6 +141,10 @@
 
 -(void)destroyOpenGL
 {
+    // 正常调用顺序是：stopDisplay---> destoryOpenGL，
+    // 防止外部用户，停止直播时没有stopDisplay，还要继续调用display方法然后crash问题
+    [self stopDisplay];
+    
     if (_frameBuffer != -1){
         glDeleteFramebuffers(1, &_frameBuffer);
     }

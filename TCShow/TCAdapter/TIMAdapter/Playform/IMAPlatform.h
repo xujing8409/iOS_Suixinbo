@@ -10,6 +10,7 @@
 
 // Demo的业务逻辑入口，外部所的要使用IMSDK的地方，都间接能过IMAPlatform调用
 typedef EQALNetworkType TCQALNetwork;
+
 @interface IMAPlatform : NSObject
 {
 @protected
