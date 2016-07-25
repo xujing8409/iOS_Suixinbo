@@ -20,7 +20,8 @@
 
 @end
 
-
+#if kSupportMultiLive
 @interface TCShowMultiLiveRoomEngine : TCAVMultiLiveRoomEngine
 
 @end
+#endif

@@ -73,7 +73,7 @@
     
     [self addSubview:_rec];
     
-    
+#if kIsMeasureSpeed
     _speed = [[UIButton alloc] init];
     
     [_speed setTitle:@"测速" forState:UIControlStateNormal];
@@ -89,6 +89,7 @@
     _speed.layer.masksToBounds = YES;
     
     [self addSubview:_speed];
+#endif
 }
 
 
@@ -128,7 +129,13 @@
 - (void)relayoutFrameOfSubViews
 {
     CGRect rect = self.bounds;
+    
+#if kIsMeasureSpeed
     NSArray *array = _isHostPar ? @[_par, _push, _rec, _speed] : @[_par, _speed];
+#else
+    NSArray *array = _isHostPar ? @[_par, _push, _rec] : @[_par];
+#endif
+    
     NSInteger width = (rect.size.width - (array.count + 1)*3) / array.count;
     
     if (width > 80)

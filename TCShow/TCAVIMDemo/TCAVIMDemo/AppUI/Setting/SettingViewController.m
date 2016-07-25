@@ -197,8 +197,9 @@
     NSString *imVersion = [[TIMManager sharedInstance] GetVersion];
     NSString *tlsVersion = [[TLSHelper getInstance] getSDKVersion];
     NSString *qalVersion = [[QalSDKProxy sharedInstance] getSDKVer];
+    NSString *qavVersion = [QAVContext getVersion];
     
-    NSString *myMessage = [NSString stringWithFormat:@"IMSDK Version:%@\r\nTLSSDK Version:%@\r\nQALSDK Version:%@",imVersion, tlsVersion,qalVersion];
+    NSString *myMessage = [NSString stringWithFormat:@"IMSDK Version:%@\r\nTLSSDK Version:%@\r\nQALSDK Version:%@\AVSDK Version:%@",imVersion, tlsVersion, qalVersion, qavVersion];
     UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:@"SDK版本号" message:myMessage cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
     [alert show];
 }

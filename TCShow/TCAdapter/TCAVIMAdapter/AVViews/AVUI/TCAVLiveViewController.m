@@ -403,7 +403,7 @@
     }
     else
     {
-        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak AVIMMsgHandler *wav = (AVIMMsgHandler *)_msgHandler;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
@@ -417,7 +417,7 @@
 
 - (void)releaseIMMsgHandler
 {
-    _msgHandler.roomIMListner = nil;
+    ((AVIMMsgHandler *)_msgHandler).roomIMListner = nil;
     [_msgHandler releaseIMRef];
 }
 
@@ -460,7 +460,7 @@
         if (_enableIM)
         {
             [self prepareIMMsgHandler];
-            [_liveView setMsgHandler:_msgHandler];
+            [_liveView setMsgHandler:(AVIMMsgHandler *)_msgHandler];
         }
         
         if (!_isHost)

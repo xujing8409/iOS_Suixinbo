@@ -323,6 +323,21 @@
     }
 }
 
+- (void)sendLikeMessage
+{
+    // do nothing
+    AVIMCMD *cmd = [[AVIMCMD alloc] initWith:AVIMCMD_Praise];
+    
+    TIMCustomElem *elem = [[TIMCustomElem alloc] init];
+    elem.data = [cmd packToSendData];
+    
+    TIMMessage *timMsg = [[TIMMessage alloc] init];
+    [timMsg addElem:elem];
+    
+    [_chatRoomConversation sendLikeMessage:timMsg succ:nil fail:nil];
+    
+}
+
 @end
 
 
@@ -346,20 +361,7 @@
     }
 }
 
-- (void)sendLikeMessage
-{
-    // do nothing
-    AVIMCMD *cmd = [[AVIMCMD alloc] initWith:AVIMCMD_Praise];
-    
-    TIMCustomElem *elem = [[TIMCustomElem alloc] init];
-    elem.data = [cmd packToSendData];
-    
-    TIMMessage *timMsg = [[TIMMessage alloc] init];
-    [timMsg addElem:elem];
-    
-    [_chatRoomConversation sendLikeMessage:timMsg succ:nil fail:nil];
-    
-}
+
 // 收到群自定义消息处理
 - (void)onRecvGroupSender:(id<IMUserAble>)sender textMsg:(NSString *)msg
 {

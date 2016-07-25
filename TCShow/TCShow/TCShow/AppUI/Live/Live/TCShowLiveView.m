@@ -277,7 +277,7 @@
 - (void)setMsgHandler:(AVIMMsgHandler *)msgHandler
 {
     _msgHandler = msgHandler;
-    _topView.imSender = (TCShowAVIMHandler *)msgHandler;
+//    _topView.imSender = (TCShowAVIMHandler *)msgHandler;
 }
 
 - (void)onBottomViewSwitchToPureMode:(TCShowLiveBottomView *)bottomView

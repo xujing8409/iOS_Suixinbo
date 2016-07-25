@@ -36,6 +36,7 @@
     ImageTitleButton        *_publishBtn;               // 发布按钮
     ImageTitleButton        *_publishInteractBtn;       // 发布互动直播按钮
     BOOL                     _isPublishInteractLive;
+
     
 @protected
     UIImage                 *_currentImage;     // 记录当前选中的图片（如果是从相机拍照获得的图片，可以保存到本地，如果是从相册获取的图片，不再保存到本地）

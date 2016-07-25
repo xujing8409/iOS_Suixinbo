@@ -25,6 +25,9 @@
     
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.title = @"发布直播";
+#if kIsMeasureSpeed
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"测速" style:UIBarButtonItemStylePlain target:self action:@selector(onTestSpeed)];
+#endif
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(onClose:)];
     
@@ -100,6 +103,14 @@
 }
 
 #pragma mark - 发布
+
+- (void)onTestSpeed
+{
+    DebugLog(@"onTestSpeed");
+#if kIsMeasureSpeed
+    [[IMAPlatform sharedInstance] requestTestSpeed];
+#endif
+}
 
 - (void)onPublishInteract
 {
@@ -196,8 +207,10 @@
     
     if (_isPublishInteractLive)
     {
+#if kSupportMultiLive
         TCShowMultiLiveViewController *vc = [[TCShowMultiLiveViewController alloc] initWith:liveRoom user:host];
         [[AppDelegate sharedAppDelegate] pushViewController:vc];
+#endif
     }
     else
     {
@@ -352,8 +365,13 @@
     [_publishBtn setTitle:@"开始直播" forState:UIControlStateNormal];
     [_publishBtn.titleLabel setFont:kAppMiddleTextFont];
     [_publishBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
+    
+#if kSupportMultiLive
     _publishBtn.layer.cornerRadius = 6;
     _publishBtn.layer.masksToBounds = YES;
+#else
+    
+#endif
     [self.view addSubview:_publishBtn];
     
     _publishInteractBtn = [[ImageTitleButton alloc] initWithStyle:EImageLeftTitleRightCenter];
@@ -364,14 +382,15 @@
     [_publishInteractBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
 #if kAppStoreVersion
 #else
-//#if DEBUG
+#if kSupportMultiLive
     _publishInteractBtn.layer.cornerRadius = 6;
     _publishInteractBtn.layer.masksToBounds = YES;
-//#else
-//#endif
+#else
+    _publishInteractBtn.hidden = YES;
+#endif
+    
 #endif
     [self.view addSubview:_publishInteractBtn];
-    
 }
 
 
@@ -462,19 +481,25 @@
     [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
     [_publishInteractBtn alignParentBottom];
 #else
-//#if DEBUG
+#if kSupportMultiLive
+    //#if DEBUG
     [_publishBtn sizeWith:CGSizeMake((self.view.bounds.size.width - 3 * kDefaultMargin)/2, 44)];
     [_publishBtn alignParentBottomWithMargin:kDefaultMargin];
     [_publishBtn alignParentLeftWithMargin:kDefaultMargin];
     
     [_publishInteractBtn sameWith:_publishBtn];
     [_publishInteractBtn layoutToRightOf:_publishBtn margin:kDefaultMargin];
-//#else
-//    [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
-//    [_publishInteractBtn alignParentBottom];
-//#endif
+    //#else
+    //    [_publishInteractBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
+    //    [_publishInteractBtn alignParentBottom];
+    //#endif
+#else
+    [_publishBtn sizeWith:CGSizeMake(self.view.bounds.size.width, 60)];
+    [_publishBtn alignParentBottom];
+#endif
     
 #endif
+    
     
     
     CGSize pubSize = [self publishSize];

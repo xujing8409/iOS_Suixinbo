@@ -18,7 +18,7 @@
     _lostTip = [[UILabel alloc] init];
     _lostTip.textAlignment = NSTextAlignmentCenter;
     _lostTip.textColor = kWhiteColor;
-    _lostTip.font = kAppMiddleTextFont;
+    _lostTip.font = kCommonMiddleTextFont;
     [self addSubview:_lostTip];
 }
 

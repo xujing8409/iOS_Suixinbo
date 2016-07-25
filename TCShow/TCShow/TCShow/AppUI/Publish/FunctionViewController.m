@@ -55,7 +55,7 @@
     }];
     [_data addObject:item];
     
-    
+#if kSupportMultiLive
     item = [[MenuItem alloc] initWithTitle:@"互动直播" icon:nil action:^(id<MenuAbleItem> menu) {
         
         IMAHost *host = [IMAPlatform sharedInstance].host;
@@ -100,7 +100,7 @@
             item.avRoomId = 10000;
             item.chatRoomId = @"500000";
             
-             // 2.创建直播界面，此处传入的user参数为本机登录IMSDK的用户
+            // 2.创建直播界面，此处传入的user参数为本机登录IMSDK的用户
             TCShowMultiLiveViewController *vc = [[TCShowMultiLiveViewController alloc] initWith:item user:[IMAPlatform sharedInstance].host];
             // 是否需要直播聊天室，默认YES
             // vc.enableIM = YES;
@@ -111,7 +111,7 @@
         }
     }];
     [_data addObject:item];
-    
+#endif
 }
 
 @end

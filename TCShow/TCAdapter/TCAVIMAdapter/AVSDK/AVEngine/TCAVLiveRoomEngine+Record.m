@@ -82,7 +82,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
     }
     else if (!ise && item)
     {
-        DebugLog(@"正在进行制制，无需再开启");
+        TIMLog(@"正在进行制制，无需再开启");
         return NO;
     }
     
@@ -90,19 +90,19 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
     // 检查状态
     if (!_isRoomAlive)
     {
-        DebugLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再录制");
+        TIMLog(@"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再录制");
         return NO;
     }
     
     if (item.isTrying)
     {
-        DebugLog(@"正在处理调用录制接口");
+        TIMLog(@"正在处理调用录制接口");
         return NO;
     }
     
     item.isTrying = YES;
     item.hasTryCount = 0;
-    DebugLog(@"开始录制");
+    TIMLog(@"开始录制");
     return YES;
 }
 
@@ -186,10 +186,10 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
             {
                 completion(YES, recReq);
             }
-            DebugLog(@"开启录制成功");
+            TIMLog(@"开启录制成功");
         } errBlock:^(int code, NSString *err) {
             // 录制失败
-            DebugLog(@"开启录制失败 (code = %d, err = %@)", code, err);
+            TIMLog(@"开启录制失败 (code = %d, err = %@)", code, err);
             ws.recordTryItem = nil;
             [ws disableHostCtrlState:EAVCtrlState_Record];
             
@@ -210,7 +210,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
         
         if (res != 0)
         {
-            DebugLog(@"调用IMSDK推流接口出错");
+            TIMLog(@"调用IMSDK推流接口出错");
             if ([ws.delegate respondsToSelector:@selector(onAVEngine:onRecord:recordRequest:)])
             {
                 [ws.delegate onAVEngine:ws onRecord:NO recordRequest:nil];
@@ -219,7 +219,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
     }
     else
     {
-        DebugLog(@"recInfo参数错误");
+        TIMLog(@"recInfo参数错误");
     }
 }
 
@@ -249,7 +249,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
             }
             ws.recordTryItem = nil;
         } errBlock:^(int code, NSString *err) {
-            DebugLog(@"停止录制 (code = %d, err = %@)", code, err);
+            TIMLog(@"停止录制 (code = %d, err = %@)", code, err);
             if (completion)
             {
                 completion(YES, req);
@@ -258,12 +258,12 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
         }];
         if(ret != 0)
         {
-            DebugLog(@"调用IMSDK录制接口出错:%d", ret);
+            TIMLog(@"调用IMSDK录制接口出错:%d", ret);
         }
     }
     else
     {
-        DebugLog(@"没有录制");
+        TIMLog(@"没有录制");
         if (completion)
         {
             completion(YES, nil);

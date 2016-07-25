@@ -5,7 +5,7 @@
 //  Created by AlexiChen on 16/4/21.
 //  Copyright © 2016年 AlexiChen. All rights reserved.
 //
-
+#if kSupportMultiLive
 #import "TCShowMultiLiveView.h"
 
 
@@ -110,3 +110,4 @@
 }
 
 @end
+#endif

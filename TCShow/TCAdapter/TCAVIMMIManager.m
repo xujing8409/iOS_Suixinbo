@@ -295,7 +295,7 @@
         __weak id<TCAVIMMIManagerDelegate> wd = _multiDelegate;
         // 发送邀请
         __weak TCAVMultiLivePreview *wp = _preview;
-        [_msgHandler sendC2CAction:AVIMCMD_Multi_Host_Invite to:user succ:^{
+        [(MultiAVIMMsgHandler *)_msgHandler sendC2CAction:AVIMCMD_Multi_Host_Invite to:user succ:^{
             // 分配资源
             if ([wd respondsToSelector:@selector(onAVIMMIMManager:assignWindowResourceTo:isInvite:)])
             {
@@ -425,7 +425,7 @@
     if (succ)
     {
         // 发送取消互动
-        [_msgHandler sendGroupAction:AVIMCMD_Multi_CancelInteract operateUser:user succ:^{
+        [(MultiAVIMMsgHandler *)_msgHandler sendGroupAction:AVIMCMD_Multi_CancelInteract operateUser:user succ:^{
             DebugLog(@"发送消息取消与(%@)互动消息成功", [user imUserId]);
         } fail:^(int code, NSString *msg) {
             DebugLog(@"发送消息取消与(%@)互动消息失败", [user imUserId]);
@@ -441,7 +441,7 @@
     if (succ)
     {
         // 发送取消互动
-        [_msgHandler sendC2CAction:AVIMCMD_Multi_Host_CancelInvite to:user succ:^{
+        [(MultiAVIMMsgHandler *)_msgHandler sendC2CAction:AVIMCMD_Multi_Host_CancelInvite to:user succ:^{
             DebugLog(@"发送取消邀请与(%@)互动消息成功", [user imUserId]);
         } fail:^(int code, NSString *msg) {
             DebugLog(@"发送取消邀请与(%@)互动消息失败", [user imUserId]);

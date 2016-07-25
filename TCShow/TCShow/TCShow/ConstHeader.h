@@ -50,6 +50,10 @@
 // 使用时，请确保列表中有两个可用的直播间信息
 #define kSupportSwitchRoom  1
 
+// 是否支持互动直播
+// 为0时，只显示直播，为1时直播与互动都显示
+#define kSupportMultiLive 0
+
 
 
 

@@ -29,5 +29,8 @@
 
 #import "TIMUserProfile+IMUserAble.h"
 
+#if kIsMeasureSpeed
+#import "IMAPlatform+TestSpeed.h"
+#endif
 
 #endif /* IMPlatformHeader_h */

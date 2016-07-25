@@ -70,8 +70,8 @@
     id<TCAVLiveUIAbleView>              _liveView;
     
 @protected
-    BOOL                _enableIM;      // 是否需要支持IM，在viewDidLoad之前设置才有效，默认为YES
-    AVIMMsgHandler      *_msgHandler;   // 直播间内消息处理模块
+    BOOL                                _enableIM;      // 是否需要支持IM，在viewDidLoad之前设置才有效，默认为YES
+    id<AVIMMsgHandlerAble>              _msgHandler;   // 直播间内消息处理模块
 }
 @property (nonatomic, assign) BOOL enableIM;
 @property (nonatomic, readonly) TCAVLivePreview *livePreview;

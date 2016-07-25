@@ -68,7 +68,7 @@ static Class kHostClass = Nil;
 - (void)configIMSDK:(IMAPlatformConfig *)cfg
 {
     TIMManager *manager = [TIMManager sharedInstance];
-    
+
     [manager setEnv:cfg.environment];
     [manager initLogSettings:cfg.enableConsoleLog logPath:[manager getLogPath]];
     [manager setLogLevel:cfg.logLevel];

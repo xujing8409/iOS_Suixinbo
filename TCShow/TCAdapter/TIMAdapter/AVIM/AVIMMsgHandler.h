@@ -56,7 +56,7 @@
 // 本类中发消息从主线程中进入，收消息后马上进入子线程处理，处理完成后再返回主界面刷新
 
 
-@interface AVIMMsgHandler : NSObject<TIMMessageListener, TIMGroupMemberListener>
+@interface AVIMMsgHandler : NSObject<AVIMMsgHandlerAble, TIMMessageListener, TIMGroupMemberListener>
 {
 @protected
     id<AVRoomAble>          _imRoomInfo;            // 房间信息
@@ -85,30 +85,14 @@
 // 运行过程中，如果先是YES，再置为NO，设置前使用者注意将_msgCache的取出，内部自动作清空处理
 @property (nonatomic, assign) BOOL isCacheMode;     // 是否是缓存模式
 
-// 外部逻辑保证imRoom对应的直播聊天室已经创建成功
-- (instancetype)initWith:(id<AVRoomAble>)imRoom;
+// 发送点赞消息，AVIMMsgHandler里是空方法，供子类重写
+// 用户可根据业务需要，使用群或C2C发送
+// 另外点赞消息产生的动画，大量产生时非常耗性能，建议观众端从业务上处理，不要频繁发送，demo中是只允许1秒点一次
+- (void)sendLikeMessage;
 
 // 切换到对应的直播间
 // 外部保证imRoom的正确性
 - (void)switchToLiveRoom:(id<AVRoomAble>)imRoom;
-
-// 进入直播间
-- (void)enterLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;
-
-// 退出直播间
-- (void)exitLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;;
-
-// 成员发群消息
-- (void)sendMessage:(NSString *)msg;
-
-// 释放相关的引用
-- (void)releaseIMRef;
-
-// 发送自定义的消息
-
-- (void)sendCustomGroupMsg:(AVIMCMD *)elem succ:(TIMSucc)succ fail:(TIMFail)fail;
-
-- (void)sendCustomC2CMsg:(AVIMCMD *)elem toUser:(id<IMUserAble>)recv succ:(TIMSucc)succ fail:(TIMFail)fail;;
 
 @end
 
@@ -120,10 +104,7 @@
 // C2C消息时，查不到用户的头像信息
 - (id<IMUserAble>)syncGetC2CUserInfo:(NSString *)identifier;
 
-// 发送点赞消息，AVIMMsgHandler里是空方法，供子类重写
-// 用户可根据业务需要，使用群或C2C发送
-// 另外点赞消息产生的动画，大量产生时非常耗性能，建议观众端从业务上处理，不要频繁发送，demo中是只允许1秒点一次
-- (void)sendLikeMessage;
+
 
 // 收到群自定义消息处理
 // 返回的是界面上待处理的消息内容，最终放入

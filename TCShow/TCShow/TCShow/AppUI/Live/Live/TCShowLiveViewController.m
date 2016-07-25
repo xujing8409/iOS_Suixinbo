@@ -8,8 +8,6 @@
 
 #import "TCShowLiveViewController.h"
 
-
-
 @implementation TCShowLiveUIViewController
 
 #if kSupportSwitchRoom
@@ -127,7 +125,7 @@
                 DebugLog(@"切换房间不成功");
                 
             }
-
+            
         }
     }
     else
@@ -345,7 +343,7 @@
 
 - (void)onTopView:(TCShowLiveTopView *)topView clickPAR:(UIButton *)par
 {
-   
+    
     [_liveView showPar:par];
 }
 
@@ -417,7 +415,9 @@
 
 - (void)onTopView:(TCShowLiveTopView *)topView clickSpeed:(UIButton *)speed
 {
-    
+#if kIsMeasureSpeed
+    [[IMAPlatform sharedInstance] requestTestSpeed:_roomEngine.getRoomInfo.liveAVRoomId];
+#endif
 }
 
 - (void)showPush:(AVEncodeType)type succ:(BOOL)succ request:(TCAVLiveRoomPushRequest *)req
@@ -537,7 +537,7 @@
 {
     if (!_roomEngine)
     {
-    
+        
         id<AVUserAble> ah = (id<AVUserAble>)_currentUser;
         [ah setAvCtrlState:[self defaultAVHostConfig]];
         TCShowLiveRoomEngine *roomEngine = [[TCShowLiveRoomEngine alloc] initWith:(id<IMHostAble, AVUserAble>)_currentUser enableChat:_enableIM];
@@ -550,7 +550,7 @@
         {
             [_liveView setRoomEngine:_roomEngine];
         }
-    }    
+    }
 }
 
 - (NSInteger)defaultAVHostConfig
@@ -601,7 +601,7 @@
     }
     else
     {
-        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak AVIMMsgHandler *wav = (AVIMMsgHandler *)_msgHandler;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
@@ -631,7 +631,7 @@
     // 1秒更新点赞
     if (_uiRefreshCount % 40 == 0 && ![vc isPureMode])
     {
-        NSDictionary *dic = [_msgHandler getMsgCache];
+        NSDictionary *dic = [(AVIMMsgHandler *)_msgHandler getMsgCache];
         AVIMCache *msgcache = dic[@(AVIMCMD_Text)];
         [vc onUIRefreshIMMsg:msgcache];
         

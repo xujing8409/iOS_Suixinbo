@@ -136,10 +136,17 @@
         return;
     }
     // 进入直播间
+#if kSupportMultiLive
+    // 互动直播使用TCShowMultiLiveViewController
     TCShowLiveListItem *item = _datas[indexPath.row];
     TCShowMultiLiveViewController *vc = [[TCShowMultiLiveViewController alloc] initWith:item user:[IMAPlatform sharedInstance].host];
     [[AppDelegate sharedAppDelegate] pushViewController:vc];
-    
+#else
+    // 如果是直播TCShowLiveViewController
+    TCShowLiveListItem *item = _datas[indexPath.row];
+    TCShowLiveViewController *vc = [[TCShowLiveViewController alloc] initWith:item user:[IMAPlatform sharedInstance].host];
+    [[AppDelegate sharedAppDelegate] pushViewController:vc];
+#endif
 }
 
 @end

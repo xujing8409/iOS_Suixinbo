@@ -93,7 +93,7 @@
 }
 @property (nonatomic, weak) id<TCShowLiveTopViewDelegate> delegate;
 @property (nonatomic, readonly) TCShowLiveTimeView *timeView;
-@property (nonatomic, weak) TCShowAVIMHandler *imSender;
+//@property (nonatomic, weak) TCShowAVIMHandler *imSender;
 
 - (instancetype)initWith:(id<TCShowLiveRoomAble>)room;
 

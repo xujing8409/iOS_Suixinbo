@@ -13,6 +13,7 @@
 
 #import "QALSDK/QalSDKProxy.h"
 
+
 @implementation SettingViewController
 
 - (void)viewDidLoad
@@ -81,6 +82,15 @@
         [alert show];
     }];
     [array addObject:about];
+
+#if kIsMeasureSpeed
+    MenuItem *speed = [[MenuItem alloc] initWithTitle:@"网络测速" icon:nil action:^(id<MenuAbleItem> menu) {
+        [[IMAPlatform sharedInstance] requestTestSpeed];
+    }];
+    [array addObject:speed];
+#endif
+    
+    
     [dic setObject:array forKey:@(0)];
     
     

@@ -77,7 +77,7 @@
 // 添加电话监听: 进入直播成功后监听
 - (void)addPhoneListener;
 
-- (void)handlePhostEvent:(CTCall *)call;
+- (void)handlePhoneEvent:(CTCall *)call;
 
 // 移除电话监听：退出直播后监听
 - (void)removePhoneListener;

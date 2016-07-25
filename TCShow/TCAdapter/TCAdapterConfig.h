@@ -54,6 +54,23 @@
 #endif
 
 //==================================================================================
+
+// 为方便测试同事进行日志查看
+#if kBetaVersion
+
+#define TIMLog(fmt, ...) [[TIMManager sharedInstance] log:TIM_LOG_INFO tag:@"TIMLog" msg:[NSString stringWithFormat:@"[%s Line %d]" fmt, __PRETTY_FUNCTION__, __LINE__,  ##__VA_ARGS__]];
+
+#else
+
+#if DEBUG
+#define TIMLog(fmt, ...) NSLog((@"[%s Line %d]" fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#define TIMLog(fmt, ...) //NSLog((@"[%s Line %d]" fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#endif
+
+#endif
+
+//==================================================================================
 // 是否支持消息缓存，而不是立即显示，主要是看大消息量时，立即显示会导致界面卡顿
 // 因不清楚各App的消息种类，以及消息类型（是否支持IM等），故放到业务层去处理，各App可依照此处逻辑
 // 为0时，立即显示
@@ -192,6 +209,13 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 // 是否支持混音
 #ifndef kSupportAudioTransmission
 #define kSupportAudioTransmission 0
+#endif
+
+#ifndef kIsMeasureSpeed
+// 测速功能IMSDK 2.2才开放，到时再改为1
+//是否集成网络测速功能 1:是 0:否
+
+#define kIsMeasureSpeed 0
 #endif
 
 

@@ -25,7 +25,7 @@
 
 
 // 多人互动
-
+#if kSupportMultiLive
 #import "TCShowMultiSubView.h"
 
 #import "TCShowMultiView.h"
@@ -33,5 +33,6 @@
 #import "TCShowMultiLiveView.h"
 
 #import "TCShowMultiLiveViewController.h"
+#endif
 
 #endif /* LiveHeader_h */

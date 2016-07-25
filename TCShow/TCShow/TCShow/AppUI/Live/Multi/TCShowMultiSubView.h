@@ -6,8 +6,8 @@
 //  Copyright © 2016年 AlexiChen. All rights reserved.
 //
 
+#if kSupportMultiLive
 #import <UIKit/UIKit.h>
-
 
 // 多人互动直播时：viewcontroller.view控件自底向上顺序为
 // 1.TCAVMultiLivePreview
@@ -75,3 +75,4 @@
 - (void)onUserBack:(id<IMUserAble>)user;
 
 @end
+#endif

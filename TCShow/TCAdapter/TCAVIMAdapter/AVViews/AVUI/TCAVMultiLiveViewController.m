@@ -49,7 +49,7 @@
     }
     else
     {
-        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak AVIMMsgHandler *wav = (AVIMMsgHandler *)_msgHandler;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];

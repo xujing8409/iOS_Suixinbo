@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		922AEB781D37653300B86191 /* dailybuild */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 922AEB791D37653300B86191 /* Build configuration list for PBXAggregateTarget "dailybuild" */;
+			buildPhases = (
+				922AEB7C1D37654800B86191 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dailybuild;
+			productName = dailybuild;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		920B2F0A1CEDC2B8005AB9F2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 920B2F091CEDC2B8005AB9F2 /* libresolv.tbd */; };
 		920B2F321CEDD554005AB9F2 /* TCAVRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 920B2F311CEDD554005AB9F2 /* TCAVRoom.m */; };
@@ -18,6 +32,8 @@
 		9216625B1D2E019E00823724 /* AudioTransViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9216625A1D2E019E00823724 /* AudioTransViewController.m */; };
 		9216625F1D2E01C900823724 /* AudioTransUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9216625D1D2E01C900823724 /* AudioTransUIViewController.m */; };
 		921662601D2E01C900823724 /* AudioTransUIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9216625E1D2E01C900823724 /* AudioTransUIViewController.xib */; };
+		922AEB771D37277100B86191 /* EightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922AEB761D37277100B86191 /* EightViewController.m */; };
+		922AEB811D3765FD00B86191 /* TCAVIMDemo-DailyBuild-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 922AEB801D3765FD00B86191 /* TCAVIMDemo-DailyBuild-Info.plist */; };
 		922E87601D2BC692004846B7 /* FullPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E875F1D2BC692004846B7 /* FullPreviewViewController.m */; };
 		92349FB81CEDBFC5008C203F /* AVIMMILayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92349FB71CEDBFC5008C203F /* AVIMMILayerViewController.m */; };
 		923778231CE9F536007AD22B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 923778221CE9F536007AD22B /* main.m */; };
@@ -246,6 +262,9 @@
 		9216625C1D2E01C900823724 /* AudioTransUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTransUIViewController.h; sourceTree = "<group>"; };
 		9216625D1D2E01C900823724 /* AudioTransUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTransUIViewController.m; sourceTree = "<group>"; };
 		9216625E1D2E01C900823724 /* AudioTransUIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioTransUIViewController.xib; sourceTree = "<group>"; };
+		922AEB751D37277100B86191 /* EightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EightViewController.h; sourceTree = "<group>"; };
+		922AEB761D37277100B86191 /* EightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EightViewController.m; sourceTree = "<group>"; };
+		922AEB801D3765FD00B86191 /* TCAVIMDemo-DailyBuild-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TCAVIMDemo-DailyBuild-Info.plist"; sourceTree = "<group>"; };
 		922E875E1D2BC692004846B7 /* FullPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullPreviewViewController.h; sourceTree = "<group>"; };
 		922E875F1D2BC692004846B7 /* FullPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullPreviewViewController.m; sourceTree = "<group>"; };
 		92349FB61CEDBFC5008C203F /* AVIMMILayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMMILayerViewController.h; sourceTree = "<group>"; };
@@ -693,6 +712,7 @@
 		926395111D268D610098E296 /* TCAVLeaveAbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVLeaveAbleView.h; sourceTree = "<group>"; };
 		9267103E1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeLivePreviewFrameViewController.h; sourceTree = "<group>"; };
 		9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeLivePreviewFrameViewController.m; sourceTree = "<group>"; };
+		926CFC221D3F56670018C552 /* AVIMMsgHandlerAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMMsgHandlerAble.h; sourceTree = "<group>"; };
 		926DEC901CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+PushStream.h"; sourceTree = "<group>"; };
 		926DEC911CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+PushStream.m"; sourceTree = "<group>"; };
 		926DEC921CF738CF00F9251B /* TCAVTryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVTryItem.h; sourceTree = "<group>"; };
@@ -785,6 +805,15 @@
 			path = "音频透传";
 			sourceTree = "<group>";
 		};
+		922AEB741D37274B00B86191 /* 8路画面测试 */ = {
+			isa = PBXGroup;
+			children = (
+				922AEB751D37277100B86191 /* EightViewController.h */,
+				922AEB761D37277100B86191 /* EightViewController.m */,
+			);
+			path = "8路画面测试";
+			sourceTree = "<group>";
+		};
 		922E875D1D2BC2FB004846B7 /* 修改渲染控件，控制全屏 */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,6 +845,7 @@
 		923778201CE9F536007AD22B /* TCAVIMDemo */ = {
 			isa = PBXGroup;
 			children = (
+				922AEB801D3765FD00B86191 /* TCAVIMDemo-DailyBuild-Info.plist */,
 				920B2F2E1CEDD48A005AB9F2 /* TCAVIMModel */,
 				92377AA41CEA052E007AD22B /* AppUI */,
 				923778241CE9F536007AD22B /* AppDelegate.h */,
@@ -863,6 +893,7 @@
 		92377AA41CEA052E007AD22B /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				922AEB741D37274B00B86191 /* 8路画面测试 */,
 				921662581D2E016800823724 /* 音频透传 */,
 				922E875D1D2BC2FB004846B7 /* 修改渲染控件，控制全屏 */,
 				9267103D1D17BBDA0048DAAF /* LivePreview修复区域 */,
@@ -1599,6 +1630,7 @@
 		92377C531CEA0B31007AD22B /* AVIM */ = {
 			isa = PBXGroup;
 			children = (
+				926CFC221D3F56670018C552 /* AVIMMsgHandlerAble.h */,
 				92C5A4671D12D76500B321AC /* AVIMCMD+TCAVCall.h */,
 				92C5A4681D12D76500B321AC /* AVIMCMD+TCAVCall.m */,
 				92377C541CEA0B31007AD22B /* AVIMCache.h */,
@@ -1736,6 +1768,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = AlexiChen;
 				TargetAttributes = {
+					922AEB781D37653300B86191 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					9237781D1CE9F536007AD22B = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 43YJ58H38Q;
@@ -1756,6 +1791,7 @@
 			projectRoot = "";
 			targets = (
 				9237781D1CE9F536007AD22B /* TCAVIMDemo */,
+				922AEB781D37653300B86191 /* dailybuild */,
 			);
 		};
 /* End PBXProject section */
@@ -1767,6 +1803,7 @@
 			files = (
 				921662601D2E01C900823724 /* AudioTransUIViewController.xib in Resources */,
 				92377D211CEA0B31007AD22B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				922AEB811D3765FD00B86191 /* TCAVIMDemo-DailyBuild-Info.plist in Resources */,
 				920B2F431CEDEB1F005AB9F2 /* C2CVideoUIViewController.xib in Resources */,
 				923778311CE9F536007AD22B /* LaunchScreen.storyboard in Resources */,
 				92377D061CEA0B31007AD22B /* Shaderf.glsl in Resources */,
@@ -1779,6 +1816,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		922AEB7C1D37654800B86191 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# compress application.\n\nPROJ_NAME=\"TCAVIMDemo\"\n\n/bin/rm -R $CONFIGURATION_BUILD_DIR/Payload\n\n/bin/mkdir $CONFIGURATION_BUILD_DIR/Payload\n\n/bin/cp -R $CONFIGURATION_BUILD_DIR/$PROJ_NAME\".app\" $CONFIGURATION_BUILD_DIR/Payload\n\ncd $CONFIGURATION_BUILD_DIR\n\n# zip up the SNSBee directory\n\n/usr/bin/zip -r $PROJ_NAME\".ipa\" Payload";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9237781A1CE9F536007AD22B /* Sources */ = {
@@ -1853,6 +1906,7 @@
 				92377CAF1CEA0B31007AD22B /* UIView+CaptureImage.m in Sources */,
 				92377CEB1CEA0B31007AD22B /* MenuItem.m in Sources */,
 				92377CD41CEA0B31007AD22B /* SDWebImageCompat.m in Sources */,
+				922AEB771D37277100B86191 /* EightViewController.m in Sources */,
 				92377CE91CEA0B31007AD22B /* LibraryScrollView.m in Sources */,
 				92C5A4661D12D75100B321AC /* TCAVCallManager.m in Sources */,
 				92377CA81CEA0B31007AD22B /* NSString+RegexCheck.m in Sources */,
@@ -1990,6 +2044,101 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		922AEB7A1D37653300B86191 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "TCAVIMDemo/TCAVIMDemo-DailyBuild-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		922AEB7B1D37653300B86191 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "TCAVIMDemo/TCAVIMDemo-DailyBuild-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		922AEB7D1D37658700B86191 /* DailyBuild */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = DailyBuild;
+		};
+		922AEB7E1D37658700B86191 /* DailyBuild */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework",
+					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/IMSDK",
+					"$(SRCROOT)/../TCAdapter/TCAVIMAdapter/Libs",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TCAVIMDemo/TCAVIMDemo-Prefix.pch";
+				INFOPLIST_FILE = TCAVIMDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../CommonLibrary/BlocksKit",
+					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = DailyBuild;
+		};
+		922AEB7F1D37658700B86191 /* DailyBuild */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tencent Technology (Shenzhen) Co., Ltd";
+				INFOPLIST_FILE = "TCAVIMDemo/TCAVIMDemo-DailyBuild-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = DailyBuild;
+		};
 		923778331CE9F536007AD22B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2098,7 +2247,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.TCAVIMDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2130,7 +2279,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.TCAVIMDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2139,11 +2288,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		922AEB791D37653300B86191 /* Build configuration list for PBXAggregateTarget "dailybuild" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				922AEB7A1D37653300B86191 /* Debug */,
+				922AEB7B1D37653300B86191 /* Release */,
+				922AEB7F1D37658700B86191 /* DailyBuild */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		923778191CE9F536007AD22B /* Build configuration list for PBXProject "TCAVIMDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				923778331CE9F536007AD22B /* Debug */,
 				923778341CE9F536007AD22B /* Release */,
+				922AEB7D1D37658700B86191 /* DailyBuild */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2153,6 +2313,7 @@
 			buildConfigurations = (
 				923778361CE9F536007AD22B /* Debug */,
 				923778371CE9F536007AD22B /* Release */,
+				922AEB7E1D37658700B86191 /* DailyBuild */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -55,7 +55,7 @@
 
 @end
 
-
+#if kSupportMultiLive
 @implementation TCShowMultiLiveRoomEngine
 
 - (void)enterIMLiveChatRoom:(id<AVRoomAble>)room
@@ -104,3 +104,4 @@
 
 
 @end
+#endif

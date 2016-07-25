@@ -277,7 +277,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         return;
     }
     _isExiting = YES;
-   
+    
     UIAlertView *alert =  [UIAlertView bk_showAlertViewWithTitle:nil message:forceTip cancelButtonTitle:@"确定"otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         [self exitLive];
     }];
@@ -464,12 +464,12 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         __weak TCAVBaseViewController *ws = self;
         _callCenter.callEventHandler = ^(CTCall *call) {
             // 需要在主线程执行
-            [ws performSelectorOnMainThread:@selector(handlePhostEvent:) withObject:call waitUntilDone:YES];
+            [ws performSelectorOnMainThread:@selector(handlePhoneEvent:) withObject:call waitUntilDone:YES];
         };
     }
 }
 
-- (void)handlePhostEvent:(CTCall *)call
+- (void)handlePhoneEvent:(CTCall *)call
 {
     DebugLog(@"电话中断处理：电话状态为call.callState = %@", call.callState);
     if ([call.callState isEqualToString:CTCallStateDisconnected])
@@ -478,9 +478,14 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         
         if (_hasHandleCall)
         {
-            // 说明在前的时候接通过电话
+            // 说明在前台的时候接通过电话
             DebugLog(@"电话中断处理：在前如的时候处理的电话，挂断后，立即回到前台");
-            [self onAppEnterForeground];
+            // iOS8下电话来之后，如果快速挂断，直接调用会导致无法打开摄像头
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // 不加延时，若挂断时，相机操作会打不开
+                [self onAppEnterForeground];
+            });
+            
         }
         else
         {

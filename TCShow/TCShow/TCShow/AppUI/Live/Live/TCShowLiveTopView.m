@@ -174,7 +174,6 @@
         [_liveTimer invalidate];
         _liveTimer = nil;
     }
-    
 }
 
 
@@ -347,7 +346,7 @@
 //    {
         _parView = [[TCShowAVParView alloc] init];
         _parView.delegate = self;
-    _parView.isHostPar = [[[room liveHost] imUserId] isEqualToString:[[IMAPlatform sharedInstance].host imUserId]];
+        _parView.isHostPar = [[[room liveHost] imUserId] isEqualToString:[[IMAPlatform sharedInstance].host imUserId]];
         [self addSubview:_parView];
 //    }
 }

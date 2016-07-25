@@ -592,8 +592,11 @@
     
 }
 - (void)onRoomEnterBackground
-{ 
-    _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
+{
+    if (!_hasEnableCameraBeforeEnterBackground)
+    {
+        _hasEnableCameraBeforeEnterBackground = [self isCameraEnable];
+    }
     if (_hasEnableCameraBeforeEnterBackground && _isRoomAlive)
     {
         DebugLog(@"退到后台关相机");
@@ -601,7 +604,10 @@
         [self enableCamera:NO needTry:NO needNotify:NO completion:nil];
     }
     
-    _hasEnableMicBeforeEnterBackground = [self isMicEnable];
+    if (!_hasEnableMicBeforeEnterBackground)
+    {
+        _hasEnableMicBeforeEnterBackground = [self isMicEnable];
+    }
     if (_hasEnableMicBeforeEnterBackground && [self checkAppSupportBackgroundMode] && _isRoomAlive)
     {
         // 有后台模式时，关mic

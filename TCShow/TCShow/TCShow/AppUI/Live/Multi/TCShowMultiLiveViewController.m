@@ -5,7 +5,7 @@
 //  Created by AlexiChen on 16/4/21.
 //  Copyright © 2016年 AlexiChen. All rights reserved.
 //
-
+#if kSupportMultiLive
 #import "TCShowMultiLiveViewController.h"
 
 
@@ -653,7 +653,7 @@ static BOOL kRectHostCancelInteract = NO;
 - (void)onTopViewClickInteract:(TCShowLiveTopView *)topView
 {
     __weak TCShowMultiUILiveViewController *ws = self;
-    [(TCShowAVIMMultiHandler *)_msgHandler syncRoomOnlineUser:32 members:^(NSArray *members) {
+    [(MultiAVIMMsgHandler *)_msgHandler syncRoomOnlineUser:32 members:^(NSArray *members) {
         [ws showInteractUserView:members];
     } fail:nil];
     
@@ -853,7 +853,7 @@ static BOOL kRectHostCancelInteract = NO;
     }
     else
     {
-        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak AVIMMsgHandler *wav = (AVIMMsgHandler *)_msgHandler;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
@@ -966,7 +966,7 @@ static BOOL kRectHostCancelInteract = NO;
     TCShowLiveUIViewController *vc = (TCShowLiveUIViewController *)_liveView;
     if (_canRenderNow && ![vc isPureMode])
     {
-        NSDictionary *dic = [_msgHandler getMsgCache];
+        NSDictionary *dic = [(AVIMMsgHandler *)_msgHandler getMsgCache];
         AVIMCache *msgcache = dic[@(AVIMCMD_Text)];
         [vc onUIRefreshIMMsg:msgcache];
         
@@ -1044,3 +1044,4 @@ static BOOL kRectHostCancelInteract = NO;
 
 @end
 
+#endif
