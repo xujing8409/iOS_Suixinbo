@@ -712,7 +712,7 @@
 		926395111D268D610098E296 /* TCAVLeaveAbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVLeaveAbleView.h; sourceTree = "<group>"; };
 		9267103E1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeLivePreviewFrameViewController.h; sourceTree = "<group>"; };
 		9267103F1D17BC4E0048DAAF /* ChangeLivePreviewFrameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeLivePreviewFrameViewController.m; sourceTree = "<group>"; };
-		926CFC221D3F56670018C552 /* AVIMMsgHandlerAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVIMMsgHandlerAble.h; sourceTree = "<group>"; };
+		926CFC221D3F56670018C552 /* MsgHandlerAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandlerAble.h; sourceTree = "<group>"; };
 		926DEC901CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+PushStream.h"; sourceTree = "<group>"; };
 		926DEC911CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+PushStream.m"; sourceTree = "<group>"; };
 		926DEC921CF738CF00F9251B /* TCAVTryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVTryItem.h; sourceTree = "<group>"; };
@@ -1630,7 +1630,7 @@
 		92377C531CEA0B31007AD22B /* AVIM */ = {
 			isa = PBXGroup;
 			children = (
-				926CFC221D3F56670018C552 /* AVIMMsgHandlerAble.h */,
+				926CFC221D3F56670018C552 /* MsgHandlerAble.h */,
 				92C5A4671D12D76500B321AC /* AVIMCMD+TCAVCall.h */,
 				92C5A4681D12D76500B321AC /* AVIMCMD+TCAVCall.m */,
 				92377C541CEA0B31007AD22B /* AVIMCache.h */,

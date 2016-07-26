@@ -18,7 +18,7 @@
 
 #import "AVIMRunLoop.h"
 
-#import "AVIMMsgHandlerAble.h"
+#import "MsgHandlerAble.h"
 
 #import "AVIMMsgHandler.h"
 
