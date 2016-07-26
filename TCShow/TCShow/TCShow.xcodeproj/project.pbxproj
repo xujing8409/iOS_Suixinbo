@@ -321,7 +321,6 @@
 		925A50AC1CD0B59C002FF25F /* LiveEndRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveEndRequest.m; sourceTree = "<group>"; };
 		925C83381CD0C1EF00157101 /* LiveAVRoomIDRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveAVRoomIDRequest.h; sourceTree = "<group>"; };
 		925C83391CD0C1EF00157101 /* LiveAVRoomIDRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveAVRoomIDRequest.m; sourceTree = "<group>"; };
-		926CFC211D3F166F0018C552 /* MsgHandlerAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandlerAble.h; sourceTree = "<group>"; };
 		926DEC8A1CF6E73F00F9251B /* TCAVLiveRoomEngine+PushStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+PushStream.h"; sourceTree = "<group>"; };
 		926DEC8B1CF6E73F00F9251B /* TCAVLiveRoomEngine+PushStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+PushStream.m"; sourceTree = "<group>"; };
 		926DEC8D1CF6F34A00F9251B /* TCAVTryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVTryItem.h; sourceTree = "<group>"; };
@@ -1691,7 +1690,6 @@
 				92D2CB551CC4E4D200501760 /* IMAHost+AVUserAble.m */,
 				92D2CB561CC4E4D200501760 /* TIMUserProfile+IMUserAble.h */,
 				92D2CB571CC4E4D200501760 /* TIMUserProfile+IMUserAble.m */,
-				926CFC211D3F166F0018C552 /* MsgHandlerAble.h */,
 			);
 			path = AVIM;
 			sourceTree = "<group>";
