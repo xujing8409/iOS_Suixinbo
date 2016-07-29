@@ -174,7 +174,7 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 #endif
 
 #ifndef kSupportFixLiveChatRoomID
-// 是否因定群ID
+// 是否固定群ID
 #define kSupportFixLiveChatRoomID 1
 #endif
 

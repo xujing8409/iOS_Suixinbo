@@ -603,7 +603,7 @@
 {
     QAVMultiParam *param = [[QAVMultiParam alloc] init];
     param.roomID = [_roomInfo liveAVRoomId];
-    param.audioCategory = 0;
+    param.audioCategory = [self roomAudioCategory];
     param.controlRole = [self roomControlRole];
     param.authBitMap = [self roomAuthBitMap];
     param.autoCreateRoom = [self isHostLive];
@@ -617,6 +617,20 @@
     return QAV_AUTH_BITS_DEFAULT;
 }
 
+// 房音音频参数配置
+// 1.8.1以及之前的版本，客户端填音频场景，其实是无效的，不会起作用，主要是以SPEAR配置为准
+// 为保留逻辑的完整性，添加该接口，以备后续SDK版本升级中可能过代码进行设置
+- (avAudioCategory)roomAudioCategory
+{
+    if ([self isHostLive])
+    {
+        return CATEGORY_MEDIA_PLAY_AND_RECORD;
+    }
+    else
+    {
+        return CATEGORY_MEDIA_PLAYBACK;
+    }
+}
 - (NSString *)roomControlRole
 {
     // 具体与云平台spear引擎配置有关

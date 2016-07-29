@@ -146,7 +146,9 @@ UIAlertView *_alert;
         }
         else
         {
-            [text appendString:[NSString stringWithFormat:@"丢包率:%d%@, ", (item.sendPkgNum-item.recvPkgNum)/item.sendPkgNum*100, @"%"]];
+            float lose = (float)(item.sendPkgNum-item.recvPkgNum)/item.sendPkgNum;
+            
+            [text appendString:[NSString stringWithFormat:@"丢包率:%d%@, ", (int)(lose*100), @"%"]];
         }
         
         [text appendString:[NSString stringWithFormat:@"时延:%lums\n", (unsigned long)item.averageDelay]];

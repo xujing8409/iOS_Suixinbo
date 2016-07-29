@@ -9,20 +9,31 @@
 #ifndef TCAVIMDemo_Prefix_h
 #define TCAVIMDemo_Prefix_h
 
+//=================================================
+// 在CommonLibraray.h之前配置样式相关
 #define kDefaultMargin  8
-
-#define kSupportAudioTransmission 1
-
 
 #define kDefaultUserIcon            [UIImage imageNamed:@"default_head@2x.jpg"]
 #define kDefaultCoverIcon           [UIImage imageNamed:@"default_cover@2x.jpg"]
-
 
 #define kAppLargeTextFont       [UIFont systemFontOfSize:16]
 #define kAppMiddleTextFont      [UIFont systemFontOfSize:14]
 #define kAppSmallTextFont       [UIFont systemFontOfSize:12]
 
 #define kAppBakgroundColor RGB(240, 240, 240)
+
+
+//======================================
+// 在引入TCAdapter框架之前引定义需要配置参数
+#define kSdkAppId       @"1400001692"
+#define kSdkAccountType @"884"
+
+#define kSupportAudioTransmission 1
+
+#define kIsIMAAppFromBase 0
+//======================================
+
+
 
 #import "CommonLibrary.h"
 

@@ -176,7 +176,6 @@
 }
 
 
-
 - (void)asyncEnterAVChatRoomWithAVRoomID:(id<AVRoomAble>)room succ:(TCAVLiveChatRoomCompletion)succ fail:(TIMFail)fail
 {
     if (!room)

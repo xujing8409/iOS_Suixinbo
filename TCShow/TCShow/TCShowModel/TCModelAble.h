@@ -25,5 +25,6 @@
 // 封面
 - (NSString *)liveCover;
 
+// 观看人数统计
 - (NSInteger)liveWatchCount;
 @end

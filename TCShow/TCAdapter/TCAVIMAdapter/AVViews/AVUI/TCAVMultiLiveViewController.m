@@ -70,6 +70,11 @@
         [ah setAvCtrlState:[self defaultAVHostConfig]];
         _roomEngine = [[TCAVMultiLiveRoomEngine alloc] initWith:(id<IMHostAble, AVMultiUserAble>)_currentUser enableChat:_enableIM];
         _roomEngine.delegate = self;
+        
+        if (!_isHost)
+        {
+            [_liveView setRoomEngine:_roomEngine];
+        }
     }
 }
 

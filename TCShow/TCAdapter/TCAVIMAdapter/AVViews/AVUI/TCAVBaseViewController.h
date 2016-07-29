@@ -47,14 +47,18 @@
 - (instancetype)initWith:(id<AVRoomAble>)info user:(id<IMHostAble>)user;
 
 // 警告退出
+// 直播中，用户手动调用退出，会给出相应的提示，以避免用户误操作，退出
 - (void)alertExitLive;
 
 // 强制警告并退出
+// 进入直播中或直播过程中出错，需要强制退出时的使用此方法
 - (void)forceAlertExitLive:(NSString *)forceTip;
 
-// 实际退出
+// 底层实际退出接口，用户可以使用共自定义退出接口，配合_isExiting使用，注意不要调用多次
 - (void)exitLive;
 
+// _isExiting为退出状态记录，如果为YES，表示正在退出，
+// 正在退出过程中，用户再退出或底层错误通知退出，则不处理
 // 外部通过此方法更新_isExiting的值
 - (void)willExitLiving;
 

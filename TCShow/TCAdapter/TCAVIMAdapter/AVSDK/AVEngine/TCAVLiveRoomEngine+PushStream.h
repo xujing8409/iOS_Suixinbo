@@ -64,7 +64,4 @@ typedef void (^TCAVPushCompletion)(BOOL succ, TCAVLiveRoomPushRequest *req);
 // 退出房间时，如果有推流，TCAVLiveRoomEngine默认调用
 - (void)onAsyncStopPushStreamOnExitRoom:(TCAVCompletion)completion;
 
-
-
-
 @end

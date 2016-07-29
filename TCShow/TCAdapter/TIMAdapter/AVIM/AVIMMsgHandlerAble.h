@@ -19,7 +19,7 @@
 - (void)enterLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;
 
 // 退出直播间
-- (void)exitLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;;
+- (void)exitLiveChatRoom:(TIMSucc)block fail:(TIMFail)fail;
 
 // 成员发群消息
 - (void)sendMessage:(NSString *)msg;

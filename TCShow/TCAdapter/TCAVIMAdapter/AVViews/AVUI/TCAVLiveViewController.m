@@ -36,10 +36,14 @@
     
 }
 
-- (void)setMsgHandler:(AVIMMsgHandler *)msgHandler
+- (void)setMsgHandler:(id<AVIMMsgHandlerAble>)msgHandler
 {
     _msgHandler = msgHandler;
-    _msgHandler.roomIMListner = self;
+    if ([msgHandler isKindOfClass:[AVIMMsgHandler class]])
+    {
+        // 防止enableIM为No时，外部用户设置消息回调，导致
+        ((AVIMMsgHandler *)_msgHandler).roomIMListner = self;
+    }
 }
 
 
@@ -460,6 +464,11 @@
         if (_enableIM)
         {
             [self prepareIMMsgHandler];
+            [_liveView setMsgHandler:(AVIMMsgHandler *)_msgHandler];
+        }
+        else if (_msgHandler)
+        {
+            // 说明是外部设置的消息处理者
             [_liveView setMsgHandler:(AVIMMsgHandler *)_msgHandler];
         }
         

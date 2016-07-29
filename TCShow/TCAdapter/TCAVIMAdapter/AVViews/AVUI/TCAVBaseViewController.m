@@ -94,6 +94,11 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     DebugLog(@"IM断线重连:%d %@", code, err);
 }
+- (void)onUserSigExpired
+{
+    //刷新票据
+    [[IMAPlatform sharedInstance] onUserSigExpired];
+}
 
 
 

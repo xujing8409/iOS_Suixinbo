@@ -81,13 +81,13 @@
     
     // 获取好友列表
     //不能在登录成功之后获取好友里表，需要在OnProxyStatusChange回调成功的时候获取好友列表，否则可能获取不到
-//    [self configContact];
+    // [self configContact];
     
     // 获取会话列表
    // [self configConversation];
     
 #if kSupportAVChatRoom
-    // TODO：用户可结合自身逻辑，看是否处理退历器直播间消息
+    // 用户可结合自身逻辑，看是否处理退历史直播间消息
     [self asyncExitHistoryAVChatRoom];
 #endif
 }

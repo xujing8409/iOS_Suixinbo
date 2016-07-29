@@ -28,7 +28,7 @@
 
 - (void)configOwnViews
 {
-
+    
     
     __weak HostProfileViewController *ws = self;
     
@@ -44,10 +44,13 @@
     }];
     remark.valueAlignment = NSTextAlignmentRight;
     
+#if kIsTCShowSupportIMCustom
+    
     RichCellMenuItem *gender = [[RichCellMenuItem alloc] initWith:@"性别" value:(host.gender ? @"男" : @"女") type:ERichCell_TextNext action:^(RichCellMenuItem *menu, UITableViewCell *cell) {
         [ws onEditGender:menu cell:cell];
     }];
     gender.valueAlignment = NSTextAlignmentRight;
+#endif
     
     
     NSString *sigStr = [[NSString alloc] initWithData:host.profile.selfSignature encoding:NSUTF8StringEncoding];
@@ -56,15 +59,18 @@
     }];
     sig.valueAlignment = NSTextAlignmentRight;
     
-    
-    _datas = [NSMutableArray arrayWithArray:@[uid, remark, gender, sig]];;
+#if kIsTCShowSupportIMCustom
+    _datas = [NSMutableArray arrayWithArray:@[uid, remark, gender, sig]];
+#else
+    _datas = [NSMutableArray arrayWithArray:@[uid, remark, sig]];
+#endif
 }
 
 - (void)onEditIcon:(RichCellMenuItem *)menu cell:(UITableViewCell *)cell
 {
     [self callImagePickerActionSheet];
 }
-
+#if kIsTCShowSupportIMCustom
 - (void)onEditGender:(RichCellMenuItem *)menu cell:(UITableViewCell *)cell
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] init];
@@ -86,9 +92,9 @@
     
     [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
     [sheet showInView:self.view];
-
+    
 }
-
+#endif
 
 - (void)onEditNickName:(RichCellMenuItem *)menu cell:(UITableViewCell *)cell
 {
@@ -183,7 +189,7 @@
     
     
     RichCellMenuItem *iconItem = _datas[0];
-// 上传图片
+    // 上传图片
     __weak UITableView *wt = _tableView;
     [[UploadImageHelper shareInstance] upload:cutImage completion:^(NSString *imageSaveUrl) {
         

@@ -53,6 +53,15 @@
 #define kIsTCShowSupportIMCustom 0
 #endif
 
+// IMAAppDelegate是否从BaseAppDelegate中继承
+// 用处：对于已有App，其可以通过将kIsIMAAppFromBase改为0，减少AppDelegate的配置工作
+// kIsIMAAppFromBase为1时，从BaseAppDelegate中继承，为0时IMAAppDelegate作为基类
+// 为与之前的代码逻辑统一，默认为1
+#ifndef kIsIMAAppFromBase
+#define kIsIMAAppFromBase 1
+#endif
+
+
 // 演求个人资料里面的如何增加扩展字段
 #if kIsTCShowSupportIMCustom
 #define kIMCustomFlag @"Tag_Profile_Custom_1400001692_Param"

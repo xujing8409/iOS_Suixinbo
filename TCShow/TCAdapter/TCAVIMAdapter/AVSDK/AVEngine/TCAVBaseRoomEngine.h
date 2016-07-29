@@ -146,6 +146,11 @@
 
 - (UInt64)roomAuthBitMap;
 
+// 房音音频参数配置
+// 1.8.1以及之前的版本，客户端填音频场景，其实是无效的，不会起作用，主要是以SPEAR配置为准
+// 为保留逻辑的完整性，添加该接口，以备后续SDK版本升级中可能使用代码进行设置音频场景
+- (avAudioCategory)roomAudioCategory;
+
 // 增加此方法方便用户处理在直播过程中通过配置不同的角色名，控制直播效果
 // TCAdapter中使用的默认值，具体如何操作，可看Demo中的配置
 // 具体示例参考TCShowLiveRoomEngine

@@ -314,11 +314,11 @@
     [_liveView setRoomEngine:(TCAVLiveRoomEngine *)roomEngine];
 }
 
-- (void)setMsgHandler:(AVIMMsgHandler *)msgHandler
+- (void)setMsgHandler:(id<AVIMMsgHandlerAble>)msgHandler
 {
     _msgHandler = msgHandler;
-    _msgHandler.roomIMListner = self;
-    [_liveView setMsgHandler:msgHandler];
+    ((AVIMMsgHandler *)_msgHandler).roomIMListner = self;
+    [_liveView setMsgHandler:(AVIMMsgHandler *)_msgHandler];
 }
 
 - (void)layoutOnIPhone

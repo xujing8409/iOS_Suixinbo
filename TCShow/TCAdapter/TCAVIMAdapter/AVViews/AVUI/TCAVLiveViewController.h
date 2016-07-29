@@ -13,9 +13,9 @@
 
 @required
 
-@property (nonatomic, weak) TCAVBaseViewController *liveController;
-@property (nonatomic, weak) TCAVBaseRoomEngine *roomEngine;
-@property (nonatomic, weak) AVIMMsgHandler *msgHandler;
+@property (nonatomic, weak) TCAVBaseViewController  *liveController;
+@property (nonatomic, weak) TCAVBaseRoomEngine      *roomEngine;
+@property (nonatomic, weak) id<AVIMMsgHandlerAble>  msgHandler;
 
 - (instancetype)initWith:(TCAVBaseViewController *)controller;
 
@@ -32,13 +32,13 @@
 @protected
     __weak TCAVBaseViewController   *_liveController;
     __weak TCAVBaseRoomEngine       *_roomEngine;
-    __weak AVIMMsgHandler           *_msgHandler;
+    __weak id<AVIMMsgHandlerAble>   _msgHandler;
     
 }
 
 @property (nonatomic, weak) TCAVBaseViewController *liveController;
 @property (nonatomic, weak) TCAVBaseRoomEngine *roomEngine;
-@property (nonatomic, weak) AVIMMsgHandler *msgHandler;
+@property (nonatomic, weak) id<AVIMMsgHandlerAble> msgHandler;
 
 
 - (instancetype)initWith:(TCAVBaseViewController *)controller;
@@ -71,9 +71,12 @@
     
 @protected
     BOOL                                _enableIM;      // 是否需要支持IM，在viewDidLoad之前设置才有效，默认为YES
-    id<AVIMMsgHandlerAble>              _msgHandler;   // 直播间内消息处理模块
+    id<AVIMMsgHandlerAble>              _msgHandler;    // 直播间内消息处理模块
 }
 @property (nonatomic, assign) BOOL enableIM;
+
+// 添加外部设置消息处理接口接口时注意，设置时外部注意设置enableIM为NO，之后再设置该值
+@property (nonatomic, strong) id<AVIMMsgHandlerAble> msgHandler;
 @property (nonatomic, readonly) TCAVLivePreview *livePreview;
 
 @end

@@ -26,6 +26,18 @@
     [[NSClassFromString(@"UICalloutBarButton") appearance] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
+#if kIsIMAAppFromBase
+#else
+// 一般用户自己App都会重写该方法
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [self configAppLaunch];
+    
+    [super application:application didFinishLaunchingWithOptions:launchOptions];
+    return YES;
+}
+#endif
+
 - (void)enterMainUI
 {
     NSNumber *has = [[NSUserDefaults standardUserDefaults] objectForKey:@"HasReadUserProtocol"];
