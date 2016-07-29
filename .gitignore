@@ -153,8 +153,6 @@ TCShow/TCShowWorkSpace.xcworkspace/xcuserdata/alexichen.xcuserdatad/xcdebugger/B
 
 TCShow/TIMChat/TCAdapter/TCAVIMAdapter/Libs/AVFoundationEx.FrameWork/Headers/AudioHelper.h
 
-*.h
-
 TCShow/TIMChat/TCAdapter/TCAVIMAdapter/Libs/QAVSDK.framework/_CodeSignature/CodeDirectory
 
 TCShow/TIMChat/TCAdapter/TCAVIMAdapter/Libs/QAVSDK.framework/_CodeSignature/CodeRequirements
