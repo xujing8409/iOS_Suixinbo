@@ -255,6 +255,7 @@
 		92E20EF81CEEDA3C00DBBAE9 /* UserProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E20EF51CEEDA3C00DBBAE9 /* UserProtocolViewController.m */; };
 		92E20EF91CEEDA3C00DBBAE9 /* UserProtocolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92E20EF61CEEDA3C00DBBAE9 /* UserProtocolViewController.xib */; };
 		92F850131CF80396006EB63A /* TCShowAVParView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F850121CF80396006EB63A /* TCShowAVParView.m */; };
+		9B0263AD1D4F36E900C7B5DD /* TCAVLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0263AC1D4F36E900C7B5DD /* TCAVLogManager.m */; };
 		9BD9DD251D34C74700C65BDA /* IMAPlatform+TestSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD9DD241D34C74700C65BDA /* IMAPlatform+TestSpeed.m */; };
 /* End PBXBuildFile section */
 
@@ -796,6 +797,8 @@
 		92E20EF61CEEDA3C00DBBAE9 /* UserProtocolViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserProtocolViewController.xib; sourceTree = "<group>"; };
 		92F850111CF80396006EB63A /* TCShowAVParView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCShowAVParView.h; sourceTree = "<group>"; };
 		92F850121CF80396006EB63A /* TCShowAVParView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCShowAVParView.m; sourceTree = "<group>"; };
+		9B0263AB1D4F36E800C7B5DD /* TCAVLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVLogManager.h; sourceTree = "<group>"; };
+		9B0263AC1D4F36E900C7B5DD /* TCAVLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVLogManager.m; sourceTree = "<group>"; };
 		9BD9DD231D34C74700C65BDA /* IMAPlatform+TestSpeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IMAPlatform+TestSpeed.h"; sourceTree = "<group>"; };
 		9BD9DD241D34C74700C65BDA /* IMAPlatform+TestSpeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IMAPlatform+TestSpeed.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1521,6 +1524,8 @@
 		92D2CB131CC4E4D200501760 /* TCAdapter */ = {
 			isa = PBXGroup;
 			children = (
+				9B0263AB1D4F36E800C7B5DD /* TCAVLogManager.h */,
+				9B0263AC1D4F36E900C7B5DD /* TCAVLogManager.m */,
 				92CD1D121D12CCF100E43AF0 /* TCAVCallManager.h */,
 				92CD1D131D12CCF100E43AF0 /* TCAVCallManager.m */,
 				92CD1D141D12CCF100E43AF0 /* TCAVTipTag.h */,
@@ -2065,6 +2070,7 @@
 				92D2CBAF1CC4E4D200501760 /* MenuButton.m in Sources */,
 				92D2CBE41CC4E4D200501760 /* PopupView.m in Sources */,
 				92D2CBE61CC4E4D200501760 /* ScrollBaseViewController.m in Sources */,
+				9B0263AD1D4F36E900C7B5DD /* TCAVLogManager.m in Sources */,
 				929408B81CD85872004A0FE2 /* LiveImageSignRequest.m in Sources */,
 				92D2CB8B1CC4E4D200501760 /* UIViewController+ADScaleTransition.m in Sources */,
 				92D2CBFE1CC4E4D200501760 /* TCAVBaseViewController.m in Sources */,

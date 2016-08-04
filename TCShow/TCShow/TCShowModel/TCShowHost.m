@@ -41,11 +41,17 @@ NSString *const kTCShow_LocationFailNotification = @"kTCShow_LocationFailNotific
         LiveAVRoomIDRequest *req = [[LiveAVRoomIDRequest alloc] initWithHandler:^(BaseRequest *request) {
             LiveAVRoomIDResponseData *data = (LiveAVRoomIDResponseData *)request.response.data;
             ws.avRoomId = data.avRoomId;
+            
+            TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|SUCCEED|get room id from local %d", ((LiveAVRoomIDRequest *)request).uid, data.avRoomId]));
+            
         } failHandler:^(BaseRequest *request) {
-            DebugLog(@"请求RoomID出错");
+
+            TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|FAIL|err=%ld,msg=%@", ((LiveAVRoomIDRequest *)request).uid, (long)request.response.errorCode, request.response.errorInfo]));
         }];
         req.uid = imuid;
         [[WebServiceEngine sharedEngine] asyncRequest:req wait:NO];
+        
+        TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|request room id", imuid]));
     }
     
     // 是否显示位置

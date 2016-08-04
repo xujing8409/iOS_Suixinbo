@@ -219,4 +219,20 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 #endif
 
 
+//==================================================================================
+// TCAdapter 关键路径Log是否输入到文件还是控制台 0:关闭日志输出 1:输出到控制台 2:输出到日志文件 3:输出到控制台和文件
+#define kTCAVLogSwitch 0
+
+#if kTCAVLogSwitch
+
+#define TCAVLog(log) [[TCAVLogManager shareInstance] logTo:(log)]
+
+#else
+#define TCAVLog(log)
+#endif
+
+
+
 #endif /* TCAdapterConfig_h */
+
+

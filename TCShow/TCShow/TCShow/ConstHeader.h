@@ -39,7 +39,7 @@
 //=========================================================
 
 #define kDefaultUserIcon            [UIImage imageNamed:@"default_head@2x.jpg"]
-#define kDefaultCoverIcon            [UIImage imageNamed:@"default_cover@2x.jpg"]
+#define kDefaultCoverIcon           [UIImage imageNamed:@"default_cover@2x.jpg"]
 #define kDefaultSubGroupIcon        [UIImage imageWithColor:kOrangeColor size:CGSizeMake(32, 32)]
 
 
@@ -54,8 +54,6 @@
 // 是否支持互动直播
 // 为0时，只显示直播，为1时直播与互动都显示
 #define kSupportMultiLive 1
-
-
 
 
 #endif /* ConstHeader_h */

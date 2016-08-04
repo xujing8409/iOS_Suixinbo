@@ -598,6 +598,8 @@
         _msgHandler = [[TCShowAVIMHandler alloc] initWith:_roomInfo];
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
         [_msgHandler enterLiveChatRoom:nil fail:nil];
+        
+        [(TCShowLiveUIViewController *)_liveView onIMHandler:(TCShowAVIMHandler *)_msgHandler joinGroup:@[_currentUser]];
     }
     else
     {

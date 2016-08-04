@@ -28,7 +28,7 @@
 
 - (void)configOwnViews
 {
-    
+
     
     __weak HostProfileViewController *ws = self;
     

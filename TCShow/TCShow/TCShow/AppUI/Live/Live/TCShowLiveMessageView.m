@@ -130,7 +130,8 @@
 #if kSupportIMMsgCache
 #define kScrollLiveMessageTableView 0
 #else
-#define kScrollLiveMessageTableView 1
+// 为1时，消息不能正常显示
+#define kScrollLiveMessageTableView 0
 #endif
 
 

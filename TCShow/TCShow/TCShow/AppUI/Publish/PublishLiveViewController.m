@@ -92,6 +92,9 @@
         [ws startLive];
         wp.enabled = YES;
         wpi.enabled = YES;
+        
+        TCAVLog(([NSString stringWithFormat:@"*** clogs.host.createRoom|%@|upload room info to server|room id %d",host.imUserId, host.avRoomId]));
+        
     } failed:^(NSString *failTip) {
         DebugLog(@"-----主播>>>>>上传图片失败");
         wp.enabled = YES;

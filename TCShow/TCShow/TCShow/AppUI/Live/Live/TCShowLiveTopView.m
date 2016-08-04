@@ -157,6 +157,12 @@
         
         [_liveTime setTitle:durStr forState:UIControlStateNormal];
         [_delegate onTimViewTimeRefresh:self];
+        
+#if kSupportIMMsgCache
+#else
+        [self onRefrshPraiseAndAudience];
+#endif
+        
     }
 }
 
@@ -442,5 +448,6 @@
 {
     _room = room;
     [_timeView changeRoomInfo:room];
+    [self configOwnViewsWith:room];
 }
 @end

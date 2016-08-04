@@ -30,8 +30,8 @@ typedef NS_ENUM(NSInteger, TCAVTipTag)
     ETCAVLiveRoomEngine_RoomNotAlive_Tip = 108, // @"房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法".
     ETCAVLiveRoomEngine_EnablingMic_Tip = 109, // @"正在处理Mic".
     ETCAVLiveRoomEngine_EnableMicNotTry_Format_Tip = 110, // @"当前Mic已%@，不需要重复操作".
-    ETCAVLiveRoomEngine_EnableMic_Succ_Tip = 111, // @"enableMic成功".
-    ETCAVLiveRoomEngine_EnableMic_Fail_Tip = 112, // @"enableMic失败".
+    ETCAVLiveRoomEngine_EnableMic_Succ_Format_Tip = 111, // @"enableMic:%d成功".
+    ETCAVLiveRoomEngine_EnableMic_Fail_Format_Tip = 112, // @"enableMic失败".
     ETCAVLiveRoomEngine_RoomNotRunning_Tip = 113, // @"房间不在Running状态".
     ETCAVLiveRoomEngine_AVContextNull_Tip = 114, // @"_avContext 为 空".
     

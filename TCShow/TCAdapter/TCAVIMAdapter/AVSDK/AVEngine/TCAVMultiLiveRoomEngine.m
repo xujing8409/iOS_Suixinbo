@@ -221,6 +221,8 @@
         }
         
         DebugLog(@"[%@][%@] 开始请求[%@]画面", [self class], [_IMUser imUserId] , idlist);
+        TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.upShow|%@|somebody open camera,need req data|ids %@", [_IMUser imUserId], idlist]));
+        
         __weak TCAVMultiLiveRoomEngine *ws = self;
         int res = [QAVEndpoint requestViewList:_avContext identifierList:idlist srcTypeList:typeArray ret:^(QAVResult result) {
             [ws onRequestViewListCallBack:result ];
@@ -237,6 +239,7 @@
     if (QAV_OK == result)
     {
         DebugLog(@"realRequestAllView 成功, 重试次数 : %d", (int)_isRequestAllViewTryCount);
+        TCAVLog(([NSString stringWithFormat:@" *** clogs.viewer.upShow|%@|get stream data|SUCCEED|",[_IMUser imUserId]]));
         // 说明请求成功
         _isRequestAllViewTryCount = 0;
         [self startFirstFrameTimer];
@@ -395,6 +398,10 @@
         NSString *role = _isSwitchToInteract ? [self interactUserRole] : [self roomControlRole];
         QAVResult res = [self changeAVControlRole:role];
         
+        if (res == QAV_OK)
+        {
+            TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.unShow|%@|change auth role|SUCCEED|role = %@",[IMAPlatform sharedInstance].host.imUserId,role]));
+        }
         if (res != QAV_OK)
         {
             

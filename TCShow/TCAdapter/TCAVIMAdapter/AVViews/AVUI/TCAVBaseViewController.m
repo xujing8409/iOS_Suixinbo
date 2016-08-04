@@ -57,6 +57,8 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
         
         
         DebugLog(@"踢下线通知");
+        TCAVLog(([NSString stringWithFormat:@"*** ForceOffline|1-Recv|Succ|recv forceoffline|id = %@", ip.host.imUserId]));
+        
         __weak TCAVBaseViewController *ws = self;
         UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:@"下线通知" message:@"您的帐号于另一台手机上登录，请退出直播，并重新登录" cancelButtonTitle:@"退出直播" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             
@@ -64,11 +66,17 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
             // 待退出直播间成功后再调此方法到登录界面
             ip.offlineExitLivingBlock = ^{
                 [[IMAPlatform sharedInstance] logout:^{
+                    
+                    TCAVLog(([NSString stringWithFormat:@"*** ForceOffline|2-Logout|Succ"]));
+                    
                     [ws tipMessage:@"退出成功" delay:0.5 completion:^{
                         ws.navigationController.navigationBarHidden = NO;
                         [[IMAAppDelegate sharedAppDelegate] enterLoginUI];
                     }];
                 } fail:^(int code, NSString *msg) {
+                    
+                    TCAVLog(([NSString stringWithFormat:@"*** ForceOffline|2-Logout|Fail(code = %d,msg = %@)",code, msg]));
+                    
                     [ws tipMessage:@"退出成功" delay:0.5 completion:^{
                         ws.navigationController.navigationBarHidden = NO;
                         [[IMAAppDelegate sharedAppDelegate] enterLoginUI];

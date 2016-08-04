@@ -274,6 +274,8 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (void)onRecvHostInteractChangeAuthAndRole:(id<IMUserAble>)sender
 {
+
+    TCAVLog(([NSString stringWithFormat:@" *** clogs.viewer.upShow|%@ invite %@|up show|",[sender imUserId], [IMAPlatform sharedInstance].host.imUserId ]));
     // 本地先修改权限
     //  controller.multiManager ;
     // 然后修改role
@@ -654,7 +656,9 @@ static BOOL kRectHostCancelInteract = NO;
 {
     __weak TCShowMultiUILiveViewController *ws = self;
     [(MultiAVIMMsgHandler *)_msgHandler syncRoomOnlineUser:32 members:^(NSArray *members) {
-        [ws showInteractUserView:members];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [ws showInteractUserView:members];
+        });
     } fail:nil];
     
 }
@@ -849,6 +853,8 @@ static BOOL kRectHostCancelInteract = NO;
         _liveView.msgHandler = (TCShowAVIMHandler *)_msgHandler;
         _multiManager.msgHandler = (MultiAVIMMsgHandler *)_msgHandler;
         [_msgHandler enterLiveChatRoom:nil fail:nil];
+        
+        [(TCShowLiveUIViewController *)_liveView onIMHandler:(TCShowAVIMHandler *)_msgHandler joinGroup:@[_currentUser]];
         
     }
     else

@@ -143,6 +143,7 @@
         // 观众加群
         [[TIMGroupManager sharedInstance] JoinGroup:roomid msg:nil succ:^{
             DebugLog(@"----->>>>>观众加入直播聊天室成功");
+            TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.enterRoom|%@|join im chat room|room id %@|SUCCEED",self.host.imUserId, roomid]));
             if (succ)
             {
                 succ(room);
@@ -154,6 +155,7 @@
             if (code == 10013)
             {
                 DebugLog(@"----->>>>>观众加入直播聊天室成功");
+                TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.enterRoom|%@|join im chat room|room id %@|SUCCEED(code=10013)",self.host.imUserId, roomid]));
                 if (succ)
                 {
                     succ(room);
@@ -162,6 +164,7 @@
             else
             {
                 DebugLog(@"----->>>>>观众加入直播聊天室失败 code: %d , msg = %@", code, error);
+                TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.enterRoom|%@|join im chat room|room id %@|FAIL|code=%d,msg=%@",self.host.imUserId, roomid, code, error]));
                 // 作已在群的处的处理
                 if (fail)
                 {
@@ -218,6 +221,9 @@
                 [room setLiveIMChatRoomId:groupId];
                 if (succ)
                 {
+                    TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|create live im group|group id %@", [IMAPlatform sharedInstance].host.imUserId, groupId]));
+                    
+                    TCAVLog(([NSString stringWithFormat:@" *** CreateGroup|tinyid = %llu", [[IMSdkInt sharedInstance] getTinyId]]));
                     succ(room);
                 }
                 
@@ -227,7 +233,10 @@
                 // 为简化逻辑，暂定创建聊天室时返回10025，就直接等同于创建成功
                 if (code == 10025)
                 {
-                    DebugLog(@"----->>>>>主播开始创建直播聊天室成功");
+                    TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|create live im group|group id %@(code=10025,msg=group id has be ysed)", [IMAPlatform sharedInstance].host.imUserId, chatRoomId]));
+
+                    TCAVLog(([NSString stringWithFormat:@" *** CreateGroup|tinyid = %llu", [[IMSdkInt sharedInstance] getTinyId]]));
+                    
                     [room setLiveIMChatRoomId:chatRoomId];
                     if (succ)
                     {
@@ -236,7 +245,8 @@
                 }
                 else
                 {
-                    DebugLog(@"----->>>>>主播开始创建直播聊天室失败 code: %d , msg = %@", code, error);
+                    TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|create live im group FAIL,code=%d,msg=%@", [IMAPlatform sharedInstance].host.imUserId, code ,error]));
+                    
                     if (fail)
                     {
                         fail(code, error);
@@ -295,5 +305,6 @@
         // 观众退群
         [[TIMGroupManager sharedInstance] QuitGroup:roomid succ:succ fail:fail];
     }
+    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.quitRoom|%@|quit im group|group id %@", isHost ? @"host" : @"viewer", self.host.imUserId, roomid]));
 }
 @end

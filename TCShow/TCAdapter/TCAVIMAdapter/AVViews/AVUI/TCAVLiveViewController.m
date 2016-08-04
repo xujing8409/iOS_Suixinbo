@@ -217,6 +217,10 @@
 // 切换直播间
 - (BOOL)switchToLive:(id<AVRoomAble>)room
 {
+    if (_enableIM)
+    {
+        [_msgHandler exitLiveChatRoom:nil fail:nil];
+    }
     BOOL succ = [super switchToLive:room];
     if (succ)
     {

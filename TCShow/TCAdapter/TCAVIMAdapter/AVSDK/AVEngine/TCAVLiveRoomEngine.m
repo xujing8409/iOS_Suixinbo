@@ -188,7 +188,13 @@
                 [self disableHostCtrlState:EAVCtrlState_Mic];
             }
             
-            [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableMic_Succ_Tip];
+            BOOL isHost = [[[_roomInfo liveHost] imUserId] isEqualToString:[IMAPlatform sharedInstance].host.imUserId];
+            
+            TCAVLog(([NSString stringWithFormat:@"*** clogs.%@.%@|%@|SUCCEED|", isHost ? @"host" : @"viewer", enable ? @"upShow" : @"unShow", [IMAPlatform sharedInstance].host.imUserId]));
+            
+            [self completion:completion succ:succ withTip:[NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableMic_Succ_Format_Tip), enable]];
+
+
         }
         else
         {
@@ -197,7 +203,7 @@
             {
                 _handleMicTryCount = 0;
                 _isHandlingMic = NO;
-                [self completion:completion succ:succ withTag:ETCAVLiveRoomEngine_EnableMic_Fail_Tip];
+                [self completion:completion succ:succ withTip:[NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableMic_Fail_Format_Tip), enable]];
             }
             else
             {
@@ -404,6 +410,7 @@
                 if (result == QAV_OK)
                 {
                     // 操作成功
+                    TCAVLog(([NSString stringWithFormat:@" *** clogs.open.camera |SUCCEED|"]));
                     [ws onEnableCameraComplete:camerid enable:enable result:result needNotify:notify completion:completion];
                 }
                 else
@@ -1082,7 +1089,7 @@
     if (!((state & EAVCtrlState_Speaker) == EAVCtrlState_Speaker))
     {
         // AVSDK默认开扬声器，如果进入设置不打开，则需要手动关掉
-        [self asyncEnableSpeaker:(state & EAVCtrlState_Speaker) isEnterRoom:YES completion:nil];
+        [self asyncEnableSpeaker:NO isEnterRoom:YES completion:nil];
     }
     else
     {
@@ -1093,17 +1100,18 @@
     _hasEnableMicBeforeEnterBackground = ((state & EAVCtrlState_Mic) == EAVCtrlState_Mic);
     if (_hasEnableMicBeforeEnterBackground)
     {
-        // AVSDK默认关mic
-        [self asyncEnableMic:(state & EAVCtrlState_Mic) isEnterRoom:YES completion:nil];
+        // 打开麦克风
+        [self asyncEnableMic:YES isEnterRoom:YES completion:nil];
     }
     else
     {
+        // AVSDK默认关mic
         [self disableHostCtrlState:EAVCtrlState_Mic];
     }
     
     if (state & EAVCtrlState_Camera)
     {
-        // 开相机操作是异步，AVSDK默认不开，所不以像上面的写法
+        // 开相机操作是异步，AVSDK默认不开，所以不像上面的写法
         // 开启相机
         // 此处记录，防止进直播后，马上退后台或进其他应用，导致相机无法开启成功
         if ([self isHostLive])

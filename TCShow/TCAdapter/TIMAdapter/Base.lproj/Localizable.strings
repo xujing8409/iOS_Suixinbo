@@ -23,8 +23,8 @@
 "108" = "房间还未创建，请使用enterLive创建成功(enterRoom回调)之后再调此方法";
 "109" = "正在处理Mic";
 "110" = "当前Mic已%@，不需要重复操作";
-"111" = "enableMic成功";
-"112" = "enableMic失败";
+"111" = "enableMic:%d成功";
+"112" = "enableMic:%d失败";
 "113" = "房间不在Running状态";
 "114" = "_avContext为空";
 
