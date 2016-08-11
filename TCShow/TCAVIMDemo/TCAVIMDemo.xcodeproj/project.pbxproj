@@ -239,6 +239,7 @@
 		92C5A46C1D12D78A00B321AC /* IMAPlatform+TCAVCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A46B1D12D78A00B321AC /* IMAPlatform+TCAVCall.m */; };
 		92C5A46F1D12D7AE00B321AC /* TCAVCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A46E1D12D7AE00B321AC /* TCAVCallViewController.m */; };
 		92DD6F2D1D2E07EB00B341E3 /* 48000_2.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 92DD6F2C1D2E07EB00B341E3 /* 48000_2.pcm */; };
+		92E67EEF1D5860CD00A4B57A /* RecordAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E67EEE1D5860CD00A4B57A /* RecordAudioViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -731,6 +732,8 @@
 		92C5A46D1D12D7AE00B321AC /* TCAVCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallViewController.h; sourceTree = "<group>"; };
 		92C5A46E1D12D7AE00B321AC /* TCAVCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVCallViewController.m; sourceTree = "<group>"; };
 		92DD6F2C1D2E07EB00B341E3 /* 48000_2.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = 48000_2.pcm; sourceTree = "<group>"; };
+		92E67EED1D5860CD00A4B57A /* RecordAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordAudioViewController.h; sourceTree = "<group>"; };
+		92E67EEE1D5860CD00A4B57A /* RecordAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordAudioViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -893,6 +896,7 @@
 		92377AA41CEA052E007AD22B /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				92E67EEC1D58608F00A4B57A /* IMSDK2.2只录音频测试 */,
 				922AEB741D37274B00B86191 /* 8路画面测试 */,
 				921662581D2E016800823724 /* 音频透传 */,
 				922E875D1D2BC2FB004846B7 /* 修改渲染控件，控制全屏 */,
@@ -1739,6 +1743,15 @@
 			path = "LivePreview修复区域";
 			sourceTree = "<group>";
 		};
+		92E67EEC1D58608F00A4B57A /* IMSDK2.2只录音频测试 */ = {
+			isa = PBXGroup;
+			children = (
+				92E67EED1D5860CD00A4B57A /* RecordAudioViewController.h */,
+				92E67EEE1D5860CD00A4B57A /* RecordAudioViewController.m */,
+			);
+			path = "IMSDK2.2只录音频测试";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1925,6 +1938,7 @@
 				92377CCC1CEA0B31007AD22B /* MKNetworkEngine.m in Sources */,
 				92377CBA1CEA0B31007AD22B /* KeyValueTableViewController.m in Sources */,
 				92377C9C1CEA0B31007AD22B /* FTUtils+UIGestureRecognizer.m in Sources */,
+				92E67EEF1D5860CD00A4B57A /* RecordAudioViewController.m in Sources */,
 				92377CA11CEA0B31007AD22B /* MKMapView+ZoomLevel.m in Sources */,
 				9216625F1D2E01C900823724 /* AudioTransUIViewController.m in Sources */,
 				920B2F391CEDE126005AB9F2 /* SimpleLiveViewController.m in Sources */,
@@ -2124,7 +2138,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2136,6 +2150,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tencent Technology (Shenzhen) Co., Ltd";
 				INFOPLIST_FILE = "TCAVIMDemo/TCAVIMDemo-DailyBuild-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "32d8f732-d114-494a-adda-1c2bdeec6d7e";
 			};
 			name = DailyBuild;
 		};
@@ -2247,7 +2262,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2279,7 +2294,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alexichen.TCAVIMDemo3s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

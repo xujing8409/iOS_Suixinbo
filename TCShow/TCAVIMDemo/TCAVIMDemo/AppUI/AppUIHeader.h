@@ -32,6 +32,8 @@
 
 #import "EightViewController.h"
 
+#import "RecordAudioViewController.h"
+
 
 #import "MainViewController.h"
 #import "SettingHeader.h"

@@ -47,6 +47,7 @@
     item.funcDesc = @"主要功能：创建一个简单的直播";
     [_data addObject:item];
     
+#if kIsInnerTest
     item = [[TCMenuItem alloc] initWithTitle:@"8路上行测试" icon:nil action:^(id<MenuAbleItem> menu) {
         EightViewController *vc = [[EightViewController alloc] initWith:[AppDelegate sharedAppDelegate].liveRoom user:[IMAPlatform sharedInstance].host];
         vc.enableIM = NO;
@@ -54,6 +55,7 @@
     }];
     item.funcDesc = @"主要功能：腾讯云后台，测试8路试频上行测试";
     [_data addObject:item];
+#endif
     
     item = [[TCMenuItem alloc] initWithTitle:@"一人主播多人开Mic" icon:nil action:^(id<MenuAbleItem> menu) {
         LiveMicViewController *vc = [[LiveMicViewController alloc] initWith:[AppDelegate sharedAppDelegate].liveRoom user:[IMAPlatform sharedInstance].host];
@@ -103,6 +105,16 @@
     }];
     item.funcDesc = @"主要功能：测试音频视频透传接口";
     [_data addObject:item];
+
+#if kIsInnerTest
+    item = [[TCMenuItem alloc] initWithTitle:@"只录音频示例" icon:nil action:^(id<MenuAbleItem> menu) {
+        RecordAudioViewController *vc = [[RecordAudioViewController alloc] initWith:[AppDelegate sharedAppDelegate].liveRoom user:[IMAPlatform sharedInstance].host];
+        vc.enableIM = NO;
+        [[AppDelegate sharedAppDelegate] pushViewController:vc];
+    }];
+    item.funcDesc = @"主要功能：只录音频，IMSDK2.2下有效";
+    [_data addObject:item];
+#endif
     
     
 }

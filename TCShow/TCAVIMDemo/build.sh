@@ -7,7 +7,7 @@ XCODE_PATH=$XCODE_PATH$compileEnv
 
 #local run example:XCODE_PATH=xcodebuild
 
-cd TCShow
+cd TCAVIMDemo
 
 $XCODE_PATH -target dailybuild -configuration DailyBuild clean -sdk $SDK
 

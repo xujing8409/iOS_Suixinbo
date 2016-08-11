@@ -5,7 +5,7 @@
 //  Created by AlexiChen on 16/7/14.
 //  Copyright © 2016年 AlexiChen. All rights reserved.
 //
-
+#if kIsInnerTest
 #import "EightViewController.h"
 
 
@@ -188,3 +188,4 @@
 }
 
 @end
+#endif
