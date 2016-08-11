@@ -23,7 +23,10 @@
     
     [self addTapBlankToHideKeyboardGesture];
 }
-
+- (void)configDemoType:(DemoType)type
+{
+    _demoType = type;
+}
 - (void)addOwnViews
 {
     _avRoomId = [[UITextField alloc] init];
@@ -44,7 +47,7 @@
     _hostId.layer.borderColor = kGrayColor.CGColor;
     _hostId.layer.borderWidth = 1.0;
     _hostId.layer.cornerRadius = 5.0;
-    _hostId.placeholder = @"主播ID";
+    _hostId.placeholder = @"主播ID(无:创建,有:加入)";//不输入主播id则创建房间，输入主播id则加入到对应主播的房间
     [_hostId setAutocorrectionType:UITextAutocorrectionTypeNo];
     [_hostId setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [self.view addSubview:_hostId];
@@ -71,20 +74,47 @@
 
 - (void)onJoin:(ImageTitleButton *)button
 {
-    if (_avRoomId.text.length == 0 || _groupId.text.length == 0)
+    
+    if (_avRoomId.text.length == 0)
     {
-        [[HUDHelper sharedInstance] tipMessage:@"请输入正确的参数"];
+        [[HUDHelper sharedInstance] tipMessage:@"请输入房间ID"];
         return;
     }
+    AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
+    TCUser *user = (TCUser *)(appDelegate.liveRoom.liveHost);
+    IMAHost *host = [IMAPlatform sharedInstance].host;
     
-    ((TCUser *)([AppDelegate sharedAppDelegate].liveRoom.liveHost)).uid = _hostId.text.length ? _hostId.text : [IMAPlatform sharedInstance].host.imUserId;
-    ((TCUser *)([AppDelegate sharedAppDelegate].liveRoom.liveHost)).name = _hostId.text.length ? _hostId.text : [IMAPlatform sharedInstance].host.imUserId;
-    [AppDelegate sharedAppDelegate].liveRoom.liveAVRoomId = [_avRoomId.text intValue];
-    [AppDelegate sharedAppDelegate].liveRoom.liveIMChatRoomId = _groupId.text;
-    [AppDelegate sharedAppDelegate].liveRoom.liveTitle = @"hellotx";
+    user.uid = _hostId.text.length ? _hostId.text : host.imUserId;
+    user.name = _hostId.text.length ? _hostId.text : host.imUserId;
+    appDelegate.liveRoom.liveAVRoomId = [_avRoomId.text intValue];
+    appDelegate.liveRoom.liveIMChatRoomId = _groupId.text.length ? _groupId.text : _avRoomId.text;
+    appDelegate.liveRoom.liveTitle = @"hellotx";
 
-    LiveViewController *liveVc = [[LiveViewController alloc] initWith:[AppDelegate sharedAppDelegate].liveRoom user:[IMAPlatform sharedInstance].host];
-    [[AppDelegate sharedAppDelegate] pushViewController:liveVc];
+    TCAVLiveViewController *vc;
+    switch (_demoType)
+    {
+        case DemoType_SendFlower:
+            vc = [[LiveViewController alloc] initWith:appDelegate.liveRoom user:host];
+            [appDelegate pushViewController:vc];
+            break;
+            
+        case DemoType_ViewersInviteAnchor:
+            
+            vc = [[ViewersAskMicViewController alloc] initWith:appDelegate.liveRoom user:host];
+            [appDelegate pushViewController:vc];
+            
+            break;
+        case DemoType_VAInteractMic:
+            
+            vc = [[VAInteractMicViewController alloc] initWith:appDelegate.liveRoom user:host];
+            [appDelegate pushViewController:vc];
+            
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 - (void)onLogout:(ImageTitleButton *)button

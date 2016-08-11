@@ -85,7 +85,7 @@
             
         }
             break;
-        case TCSoAVIMCommand_Flower:
+        case TCSoMsgType_Flower:
         {
             DebugLog(@"recv flower");
             [_liveView onRecvFlower];

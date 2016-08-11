@@ -22,7 +22,7 @@
 
 - (void)sendFlowerMessage
 {
-    AVIMCMD *cmd = [[AVIMCMD alloc] initWith:TCSoAVIMCommand_Flower];
+    AVIMCMD *cmd = [[AVIMCMD alloc] initWith:TCSoMsgType_Flower];
     
     [self sendCustomGroupMsg:cmd succ:^{
         DebugLog("send flower succ");

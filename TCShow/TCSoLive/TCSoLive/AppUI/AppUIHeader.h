@@ -9,6 +9,8 @@
 #ifndef AppUIHeader_h
 #define AppUIHeader_h
 
+#import "TCSoCommon.h"
+
 #import "MainViewController.h"
 
 #import "LiveParamViewController.h"
@@ -26,5 +28,13 @@
 #import "LiveViewController.h"
 
 #import "LiveUIViewController.h"
+
+#import "ViewersAskMicViewController.h"
+         
+#import "ViewersAskMicUIViewController.h"
+
+#import "VAInteractMicViewController.h"
+
+#import "VAInteractMicUIViewController.h"
 
 #endif /* AppUIHeader_h */

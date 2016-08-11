@@ -87,7 +87,7 @@
     }
     else 
     {
-        __weak AVIMMsgHandler *wav = _msgHandler;
+        __weak AVIMMsgHandler *wav = (AVIMMsgHandler *)_msgHandler;
         __weak id<AVRoomAble> wr = _roomInfo;
         [_msgHandler exitLiveChatRoom:^{
             [wav switchToLiveRoom:wr];
@@ -137,7 +137,7 @@
         AVIMCache *praisecache = dic[@(AVIMCMD_Praise)];
         [vc onUIRefreshPraise:praisecache];
         
-        AVIMCache *flowercache = dic[@(TCSoAVIMCommand_Flower)];
+        AVIMCache *flowercache = dic[@(TCSoMsgType_Flower)];
         [vc onUIRefreshFlower:flowercache];
     }
 }

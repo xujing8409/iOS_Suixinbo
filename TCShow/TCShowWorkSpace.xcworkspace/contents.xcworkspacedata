@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TCSoLive/TCSoLive.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:TCAVIMDemo/TCAVIMDemo.xcodeproj">
    </FileRef>
    <FileRef

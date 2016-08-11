@@ -11,6 +11,10 @@
 		9B0CF6101D3875C40064E7D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0CF60F1D3875C40064E7D0 /* AppDelegate.m */; };
 		9B0CF6181D3875C40064E7D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CF6171D3875C40064E7D0 /* Assets.xcassets */; };
 		9B0CF61B1D3875C40064E7D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CF6191D3875C40064E7D0 /* LaunchScreen.storyboard */; };
+		9B172CA41D5B06E3009CCA99 /* ViewersAskMicUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B172CA01D5B06E3009CCA99 /* ViewersAskMicUIViewController.m */; };
+		9B172CA51D5B06E3009CCA99 /* ViewersAskMicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B172CA31D5B06E3009CCA99 /* ViewersAskMicViewController.m */; };
+		9B172CB01D5B0C9B009CCA99 /* VAInteractMicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B172CAF1D5B0C9B009CCA99 /* VAInteractMicViewController.m */; };
+		9B172CB31D5B0D06009CCA99 /* VAInteractMicUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B172CB21D5B0D06009CCA99 /* VAInteractMicUIViewController.m */; };
 		9B5476DE1D48AED700DC06A6 /* ADTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B54751D1D48AED700DC06A6 /* ADTransition.m */; };
 		9B5476DF1D48AED700DC06A6 /* ADFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5475201D48AED700DC06A6 /* ADFlipTransition.m */; };
 		9B5476E01D48AED700DC06A6 /* UICollectionViewController+ADFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5475221D48AED700DC06A6 /* UICollectionViewController+ADFlipTransition.m */; };
@@ -200,12 +204,12 @@
 		9B5477A91D48AEEE00DC06A6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5477981D48AEEE00DC06A6 /* MobileCoreServices.framework */; };
 		9B5477AA1D48AEEE00DC06A6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5477991D48AEEE00DC06A6 /* libresolv.tbd */; };
 		9B6661F91D49AFC500E8AFE4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6661F81D49AFC500E8AFE4 /* MainViewController.m */; };
+		9B6E764E1D598B1E004B31E8 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6E764D1D598B1E004B31E8 /* LiveViewController.m */; };
 		9B8A01C51D3C8166002C110C /* TCSoLiveMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8A01C41D3C8166002C110C /* TCSoLiveMsg.m */; };
 		9B8CAA141D38852000EDBA0F /* LiveParamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8CAA131D38852000EDBA0F /* LiveParamViewController.m */; };
 		9B8CAA1C1D38C04100EDBA0F /* TCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8CAA1B1D38C04100EDBA0F /* TCUser.m */; };
 		9B8CAA1F1D38C0D400EDBA0F /* TCAVRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8CAA1E1D38C0D400EDBA0F /* TCAVRoom.m */; };
 		9BCEBF581D4B0A4D007348E5 /* LiveUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBF4F1D4B0A4D007348E5 /* LiveUIViewController.m */; };
-		9BCEBF591D4B0A4D007348E5 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBF521D4B0A4D007348E5 /* LiveViewController.m */; };
 		9BCEBF651D4B0AA5007348E5 /* LiveUIBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBF5C1D4B0AA5007348E5 /* LiveUIBottomView.m */; };
 		9BCEBF661D4B0AA5007348E5 /* LiveUIFlowerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBF5E1D4B0AA5007348E5 /* LiveUIFlowerView.m */; };
 		9BCEBF671D4B0AA5007348E5 /* LiveUIMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEBF601D4B0AA5007348E5 /* LiveUIMessageView.m */; };
@@ -224,6 +228,15 @@
 		9B0CF61A1D3875C40064E7D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B0CF61C1D3875C40064E7D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B0CF8931D3876570064E7D0 /* TCSoLive-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TCSoLive-Prefix.pch"; sourceTree = "<group>"; };
+		9B172C9F1D5B06E3009CCA99 /* ViewersAskMicUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewersAskMicUIViewController.h; sourceTree = "<group>"; };
+		9B172CA01D5B06E3009CCA99 /* ViewersAskMicUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewersAskMicUIViewController.m; sourceTree = "<group>"; };
+		9B172CA21D5B06E3009CCA99 /* ViewersAskMicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewersAskMicViewController.h; sourceTree = "<group>"; };
+		9B172CA31D5B06E3009CCA99 /* ViewersAskMicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewersAskMicViewController.m; sourceTree = "<group>"; };
+		9B172CAE1D5B0C9B009CCA99 /* VAInteractMicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAInteractMicViewController.h; sourceTree = "<group>"; };
+		9B172CAF1D5B0C9B009CCA99 /* VAInteractMicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAInteractMicViewController.m; sourceTree = "<group>"; };
+		9B172CB11D5B0D06009CCA99 /* VAInteractMicUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VAInteractMicUIViewController.h; sourceTree = "<group>"; };
+		9B172CB21D5B0D06009CCA99 /* VAInteractMicUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VAInteractMicUIViewController.m; sourceTree = "<group>"; };
+		9B3B78E71D5C5169006E4A08 /* TCSoCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCSoCommon.h; sourceTree = "<group>"; };
 		9B54751B1D48AED700DC06A6 /* ADHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADHeaders.h; sourceTree = "<group>"; };
 		9B54751C1D48AED700DC06A6 /* ADTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTransition.h; sourceTree = "<group>"; };
 		9B54751D1D48AED700DC06A6 /* ADTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTransition.m; sourceTree = "<group>"; };
@@ -653,6 +666,8 @@
 		9B5477991D48AEEE00DC06A6 /* libresolv.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/usr/lib/libresolv.tbd; sourceTree = "<absolute>"; };
 		9B6661F71D49AFC500E8AFE4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		9B6661F81D49AFC500E8AFE4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		9B6E764C1D598B1E004B31E8 /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
+		9B6E764D1D598B1E004B31E8 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
 		9B8A01C31D3C8166002C110C /* TCSoLiveMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCSoLiveMsg.h; sourceTree = "<group>"; };
 		9B8A01C41D3C8166002C110C /* TCSoLiveMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCSoLiveMsg.m; sourceTree = "<group>"; };
 		9B8CAA121D38852000EDBA0F /* LiveParamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveParamViewController.h; sourceTree = "<group>"; };
@@ -666,8 +681,6 @@
 		9BAA54D91D3DD21100AD53A0 /* TCSoModelAble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCSoModelAble.h; sourceTree = "<group>"; };
 		9BCEBF4E1D4B0A4D007348E5 /* LiveUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveUIViewController.h; sourceTree = "<group>"; };
 		9BCEBF4F1D4B0A4D007348E5 /* LiveUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveUIViewController.m; sourceTree = "<group>"; };
-		9BCEBF511D4B0A4D007348E5 /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
-		9BCEBF521D4B0A4D007348E5 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
 		9BCEBF5B1D4B0AA5007348E5 /* LiveUIBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveUIBottomView.h; sourceTree = "<group>"; };
 		9BCEBF5C1D4B0AA5007348E5 /* LiveUIBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveUIBottomView.m; sourceTree = "<group>"; };
 		9BCEBF5D1D4B0AA5007348E5 /* LiveUIFlowerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveUIFlowerView.h; sourceTree = "<group>"; };
@@ -763,6 +776,60 @@
 				9B0CF8931D3876570064E7D0 /* TCSoLive-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9B172C9D1D5B06E3009CCA99 /* 观众请求上麦示例 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172C9E1D5B06E3009CCA99 /* 交互界面 */,
+				9B172CA11D5B06E3009CCA99 /* 渲染界面 */,
+			);
+			path = "观众请求上麦示例";
+			sourceTree = "<group>";
+		};
+		9B172C9E1D5B06E3009CCA99 /* 交互界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172C9F1D5B06E3009CCA99 /* ViewersAskMicUIViewController.h */,
+				9B172CA01D5B06E3009CCA99 /* ViewersAskMicUIViewController.m */,
+			);
+			path = "交互界面";
+			sourceTree = "<group>";
+		};
+		9B172CA11D5B06E3009CCA99 /* 渲染界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172CA21D5B06E3009CCA99 /* ViewersAskMicViewController.h */,
+				9B172CA31D5B06E3009CCA99 /* ViewersAskMicViewController.m */,
+			);
+			path = "渲染界面";
+			sourceTree = "<group>";
+		};
+		9B172CA61D5B0AE4009CCA99 /* 观众主播同时请求上麦示例 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172CA91D5B0BBA009CCA99 /* 交互界面 */,
+				9B172CAA1D5B0BBA009CCA99 /* 渲染界面 */,
+			);
+			path = "观众主播同时请求上麦示例";
+			sourceTree = "<group>";
+		};
+		9B172CA91D5B0BBA009CCA99 /* 交互界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172CB11D5B0D06009CCA99 /* VAInteractMicUIViewController.h */,
+				9B172CB21D5B0D06009CCA99 /* VAInteractMicUIViewController.m */,
+			);
+			path = "交互界面";
+			sourceTree = "<group>";
+		};
+		9B172CAA1D5B0BBA009CCA99 /* 渲染界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B172CAE1D5B0C9B009CCA99 /* VAInteractMicViewController.h */,
+				9B172CAF1D5B0C9B009CCA99 /* VAInteractMicViewController.m */,
+			);
+			path = "渲染界面";
 			sourceTree = "<group>";
 		};
 		9B5475181D48AED700DC06A6 /* CommonLibrary */ = {
@@ -1535,15 +1602,27 @@
 			path = ../TCCall;
 			sourceTree = "<group>";
 		};
+		9B6E764B1D598B1E004B31E8 /* 渲染界面 */ = {
+			isa = PBXGroup;
+			children = (
+				9B6E764C1D598B1E004B31E8 /* LiveViewController.h */,
+				9B6E764D1D598B1E004B31E8 /* LiveViewController.m */,
+			);
+			path = "渲染界面";
+			sourceTree = "<group>";
+		};
 		9B8CAA0E1D38839C00EDBA0F /* AppUI */ = {
 			isa = PBXGroup;
 			children = (
+				9B172CA61D5B0AE4009CCA99 /* 观众主播同时请求上麦示例 */,
+				9B172C9D1D5B06E3009CCA99 /* 观众请求上麦示例 */,
 				9BCEBF421D4B0A4D007348E5 /* 送花示例 */,
 				9B8CAA151D38862900EDBA0F /* AppUIHeader.h */,
 				9B8CAA121D38852000EDBA0F /* LiveParamViewController.h */,
 				9B8CAA131D38852000EDBA0F /* LiveParamViewController.m */,
 				9B6661F71D49AFC500E8AFE4 /* MainViewController.h */,
 				9B6661F81D49AFC500E8AFE4 /* MainViewController.m */,
+				9B3B78E71D5C5169006E4A08 /* TCSoCommon.h */,
 			);
 			path = AppUI;
 			sourceTree = "<group>";
@@ -1570,8 +1649,8 @@
 		9BCEBF421D4B0A4D007348E5 /* 送花示例 */ = {
 			isa = PBXGroup;
 			children = (
+				9B6E764B1D598B1E004B31E8 /* 渲染界面 */,
 				9BCEBF431D4B0A4D007348E5 /* 交互界面 */,
-				9BCEBF501D4B0A4D007348E5 /* 渲染界面 */,
 			);
 			path = "送花示例";
 			sourceTree = "<group>";
@@ -1584,15 +1663,6 @@
 				9BCEBF4F1D4B0A4D007348E5 /* LiveUIViewController.m */,
 			);
 			path = "交互界面";
-			sourceTree = "<group>";
-		};
-		9BCEBF501D4B0A4D007348E5 /* 渲染界面 */ = {
-			isa = PBXGroup;
-			children = (
-				9BCEBF511D4B0A4D007348E5 /* LiveViewController.h */,
-				9BCEBF521D4B0A4D007348E5 /* LiveViewController.m */,
-			);
-			path = "渲染界面";
 			sourceTree = "<group>";
 		};
 		9BCEBF5A1D4B0AA5007348E5 /* LiveUIView */ = {
@@ -1699,7 +1769,6 @@
 				9B5476E71D48AED700DC06A6 /* UIViewController+ADTransition.m in Sources */,
 				9B5477371D48AED700DC06A6 /* LibraryNavigationPanel.m in Sources */,
 				9B5477341D48AED700DC06A6 /* BaseViewController.m in Sources */,
-				9BCEBF591D4B0A4D007348E5 /* LiveViewController.m in Sources */,
 				9B5477571D48AED700DC06A6 /* AVGLCommon.m in Sources */,
 				9B5477051D48AED700DC06A6 /* UIColor+MLPFlatColors.m in Sources */,
 				9B5476E31D48AED700DC06A6 /* ADScaleTransition.m in Sources */,
@@ -1789,6 +1858,7 @@
 				9B54772F1D48AED700DC06A6 /* UIView+WebCacheOperation.m in Sources */,
 				9B54772B1D48AED700DC06A6 /* UIImage+MultiFormat.m in Sources */,
 				9B54776F1D48AED700DC06A6 /* IMAHost+AVUserAble.m in Sources */,
+				9B172CB31D5B0D06009CCA99 /* VAInteractMicUIViewController.m in Sources */,
 				9B5476F21D48AED700DC06A6 /* NSData+CRC.m in Sources */,
 				9B5477551D48AED700DC06A6 /* AVFrameDispatcher.m in Sources */,
 				9B5477711D48AED700DC06A6 /* TIMUserProfile+IMUserAble.m in Sources */,
@@ -1820,6 +1890,7 @@
 				9B54774C1D48AED700DC06A6 /* TCAVBaseRoomEngine.m in Sources */,
 				9B54774F1D48AED700DC06A6 /* TCAVLiveRoomEngine+PushStream.m in Sources */,
 				9B5477261D48AED700DC06A6 /* SDWebImageDownloaderOperation.m in Sources */,
+				9B172CB01D5B0C9B009CCA99 /* VAInteractMicViewController.m in Sources */,
 				9B54775B1D48AED700DC06A6 /* AVGLShareInstance.m in Sources */,
 				9B54773A1D48AED700DC06A6 /* MenuItem.m in Sources */,
 				9B5477491D48AED700DC06A6 /* UIImageView+InitMethod.m in Sources */,
@@ -1831,6 +1902,7 @@
 				9B5477391D48AED700DC06A6 /* LibraryViewController.m in Sources */,
 				9B6661F91D49AFC500E8AFE4 /* MainViewController.m in Sources */,
 				9B5477011D48AED700DC06A6 /* UIView+Glow.m in Sources */,
+				9B172CA41D5B06E3009CCA99 /* ViewersAskMicUIViewController.m in Sources */,
 				9B5477611D48AED700DC06A6 /* TCAVBaseViewController.m in Sources */,
 				9B5477131D48AED700DC06A6 /* NSObject+Json.m in Sources */,
 				9B5477111D48AED700DC06A6 /* JSONKit.m in Sources */,
@@ -1853,10 +1925,12 @@
 				9B5477141D48AED700DC06A6 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				9B54777E1D48AED700DC06A6 /* IMAAppDelegate.m in Sources */,
 				9B5477821D48AED700DC06A6 /* IMALoginParam.m in Sources */,
+				9B172CA51D5B06E3009CCA99 /* ViewersAskMicViewController.m in Sources */,
 				9B5476FB1D48AED700DC06A6 /* UIImage+TintColor.m in Sources */,
 				9B5476FF1D48AED700DC06A6 /* UIView+CustomAutoLayout.m in Sources */,
 				9B5477601D48AED700DC06A6 /* TCAVMultiLivePreview.m in Sources */,
 				9B5477301D48AED700DC06A6 /* HUDHelper.m in Sources */,
+				9B6E764E1D598B1E004B31E8 /* LiveViewController.m in Sources */,
 				9B5476FD1D48AED700DC06A6 /* UITextField+UITextField_Tip.m in Sources */,
 				9B5477121D48AED700DC06A6 /* NSMutableDictionary+Json.m in Sources */,
 			);
