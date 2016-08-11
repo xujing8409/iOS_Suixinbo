@@ -274,8 +274,6 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (void)onRecvHostInteractChangeAuthAndRole:(id<IMUserAble>)sender
 {
-
-    TCAVLog(([NSString stringWithFormat:@" *** clogs.viewer.upShow|%@ invite %@|up show|",[sender imUserId], [IMAPlatform sharedInstance].host.imUserId ]));
     // 本地先修改权限
     //  controller.multiManager ;
     // 然后修改role

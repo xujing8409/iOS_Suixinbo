@@ -116,8 +116,6 @@
     [_topView onRefrshPraiseAndAudience];
     
     [_bottomView showLikeHeart:cache];
-    
-    [self onRefreshPAR];
 }
 #endif
 
@@ -375,7 +373,7 @@
 
 - (void)onTimViewTimeRefresh:(TCShowLiveTimeView *)topView
 {
-    
+    [self onRefreshPAR];
 }
 
 - (void)onRefreshPAR

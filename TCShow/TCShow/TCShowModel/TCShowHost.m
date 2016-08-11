@@ -34,6 +34,7 @@ NSString *const kTCShow_LocationFailNotification = @"kTCShow_LocationFailNotific
     if (avidnum)
     {
         _avRoomId = [avidnum intValue];
+        TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|SUCCEED|get room id from local %d", imuid, _avRoomId]));
     }
     else
     {
@@ -42,7 +43,7 @@ NSString *const kTCShow_LocationFailNotification = @"kTCShow_LocationFailNotific
             LiveAVRoomIDResponseData *data = (LiveAVRoomIDResponseData *)request.response.data;
             ws.avRoomId = data.avRoomId;
             
-            TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|SUCCEED|get room id from local %d", ((LiveAVRoomIDRequest *)request).uid, data.avRoomId]));
+            TCAVLog(([NSString stringWithFormat:@" *** clogs.host.createRoom|%@|SUCCEED|get room id from server %d", ((LiveAVRoomIDRequest *)request).uid, data.avRoomId]));
             
         } failHandler:^(BaseRequest *request) {
 

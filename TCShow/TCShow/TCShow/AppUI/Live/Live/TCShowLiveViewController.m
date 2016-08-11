@@ -416,7 +416,7 @@
 - (void)onTopView:(TCShowLiveTopView *)topView clickSpeed:(UIButton *)speed
 {
 #if kIsMeasureSpeed
-    [[IMAPlatform sharedInstance] requestTestSpeed:_roomEngine.getRoomInfo.liveAVRoomId];
+    [[IMAPlatform sharedInstance] requestTestSpeed];
 #endif
 }
 
