@@ -188,9 +188,7 @@
                 [self disableHostCtrlState:EAVCtrlState_Mic];
             }
             
-            BOOL isHost = [[[_roomInfo liveHost] imUserId] isEqualToString:[IMAPlatform sharedInstance].host.imUserId];
-            
-            TCAVLog(([NSString stringWithFormat:@"*** clogs.%@.%@|%@|SUCCEED|", isHost ? @"host" : @"viewer", enable ? @"upShow" : @"unShow", [IMAPlatform sharedInstance].host.imUserId]));
+            TCAVLog(([NSString stringWithFormat:@"*** clogs.%@.%@|%@|SUCCEED|", [self isHostLive] ? @"host" : @"viewer", enable ? @"upShow" : @"unShow", [IMAPlatform sharedInstance].host.imUserId]));
             
             [self completion:completion succ:succ withTip:[NSString stringWithFormat:TAVLocalizedError(ETCAVLiveRoomEngine_EnableMic_Succ_Format_Tip), enable]];
 

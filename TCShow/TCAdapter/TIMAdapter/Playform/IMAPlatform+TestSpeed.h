@@ -14,7 +14,5 @@
 
 - (void)requestTestSpeed;
 
-- (void)requestTestSpeed:(unsigned int)gorupId;
-
 @end
 #endif

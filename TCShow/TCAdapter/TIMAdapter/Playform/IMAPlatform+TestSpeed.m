@@ -44,19 +44,6 @@ UIAlertView *_alert;
     [self.measureSpeeder requestMeasureSpeedWith:7 authType:6];
 }
 
-- (void)requestTestSpeed:(unsigned int)gorupId
-{
-    [[HUDHelper sharedInstance] syncLoading:@"正在请求测速"];
-    
-    if (!self.measureSpeeder)
-    {
-        self.measureSpeeder = [[TIMAVMeasureSpeeder alloc] init];
-        self.measureSpeeder.delegate = self;
-    }
-    
-    [self.measureSpeeder requestMeasureSpeedWith:7 authType:6 groupId:gorupId];
-}
-
 #pragma mark -AVMeasureSpeederDelegate
 
 // 请求测速失败
