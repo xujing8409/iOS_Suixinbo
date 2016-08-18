@@ -5,6 +5,9 @@
       location = "group:TCSoLive/TCSoLive.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:TCCall/TCCall.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:TCAVIMDemo/TCAVIMDemo.xcodeproj">
    </FileRef>
    <FileRef

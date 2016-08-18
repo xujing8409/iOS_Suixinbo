@@ -56,7 +56,7 @@ typedef cameraPos TCAVEngineCamera;
     BOOL            _hasEnableMicBeforeEnterBackground;
 }
 
-// 当前摄像头ID
+// 当前摄像头ID，进入房间前设置即可，不设置默认开前置摄像头
 @property (nonatomic, assign) TCAVEngineCamera cameraId;
 
 // 用户是否在该类中创建聊天室

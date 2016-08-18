@@ -105,6 +105,11 @@
     NSInteger praise = [_room livePraise];
     [_room setLivePraise:praise + 1];
     [_bottomView showLikeHeart];
+    
+#if kSupportIMMsgCache
+#else
+    [_topView onRefrshPraiseAndAudience];
+#endif
 }
 
 #if kSupportIMMsgCache

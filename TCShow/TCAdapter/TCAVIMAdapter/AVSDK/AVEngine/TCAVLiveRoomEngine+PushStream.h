@@ -19,9 +19,9 @@
 
 @property (nonatomic, strong) AVStreamerResp *pushResp; // 推流返回的结果
 
-- (instancetype)initWith:(id<AVRoomAble>)room type:(AVEncodeType)type context:(QAVContext *)engineContext;
-- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName type:(AVEncodeType)type context:(QAVContext *)engineContext;
-- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName channelDesc:(NSString *)channelDesc type:(AVEncodeType)type context:(QAVContext *)engineContext;
+- (instancetype)initWith:(id<AVRoomAble>)room type:(AVEncodeType)type;
+- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName type:(AVEncodeType)type;
+- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName channelDesc:(NSString *)channelDesc type:(AVEncodeType)type;
 
 - (NSString *)getHLSPushUrl;
 - (NSString *)getRTMPPushUrl;

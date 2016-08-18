@@ -557,7 +557,7 @@
 {
     _mainUser = nil;
     _multiResource = nil;
-    [_roomEngine asyncCancelAllRequestView];
+//    [_roomEngine asyncCancelAllRequestView];
 }
 
 @end

@@ -79,6 +79,9 @@ typedef NS_ENUM(NSInteger, AVCtrlState)
     // AVSDK在 1.8.1.300才支持美白功能
     EAVCtrlState_White = 0x01 << 8,             // 是否开启美白
     
+    EAVCtrlState_HDAudio = 0x01 << 9,             // 是否使用高品质音频
+    EAVCtrlState_AutoRotateVideo = 0x01 << 10,    // 是否自动矫正视频
+    
     
     // 主播进入房间时的推荐配置
     

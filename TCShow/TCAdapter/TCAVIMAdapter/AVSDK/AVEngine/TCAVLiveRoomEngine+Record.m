@@ -11,7 +11,7 @@
 
 @implementation TCAVLiveRoomRecordRequest
 
-- (instancetype)initWith:(id<AVRoomAble>)room record:(AVRecordInfo *)info context:(QAVContext *)engineContext
+- (instancetype)initWith:(id<AVRoomAble>)room record:(AVRecordInfo *)info
 {
     if (!info)
     {
@@ -22,7 +22,7 @@
     {
         UInt32 roomid = (UInt32)[room liveAVRoomId];
         OMAVRoomInfo *avRoomInfo = [[OMAVRoomInfo alloc] init];
-        avRoomInfo.roomId = (UInt32)[[engineContext room] roomId];
+        avRoomInfo.roomId = roomid;
         avRoomInfo.relationId = roomid;
         self.roomInfo = avRoomInfo;
         self.recordInfo = info;
@@ -162,7 +162,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
 
 - (void)startLiveRecord:(AVRecordInfo *)recInfo needCallBack:(BOOL)cb completion:(TCAVRecordCompletion)completion
 {
-    TCAVLiveRoomRecordRequest *recReq = [[TCAVLiveRoomRecordRequest alloc] initWith:_roomInfo record:recInfo context:_avContext];
+    TCAVLiveRoomRecordRequest *recReq = [[TCAVLiveRoomRecordRequest alloc] initWith:_roomInfo record:recInfo];
     if (recReq)
     {
         __weak TCAVLiveRoomEngine *ws = self;

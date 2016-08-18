@@ -517,7 +517,7 @@
         {
             TCAVEngineCamera camera = _cameraId;
             __weak TCAVLiveRoomEngine *ws = self;
-           QAVResult res = [avvc switchCamera:camera complete:^(int result) {
+            QAVResult res = [avvc switchCamera:camera complete:^(int result) {
                 if (QAV_OK == result)
                 {
                     [ws onSwitchCameraComplete:camera result:result completion:completion];
@@ -591,7 +591,7 @@
     {
         // 有后台模式时，开mic
         // 无后台模式，系统自动开
-         DebugLog(@"进入前台开mic");
+        DebugLog(@"进入前台开mic");
         [self asyncEnableMic:YES completion:nil];
     }
     
@@ -666,7 +666,8 @@
         __weak TCAVLiveRoomEngine *ws = self;
         NSString *hostId = [[_roomInfo liveHost] imUserId];
         DebugLog(@"[%@][%@] 开始请求[%@]画面", [self class], [_IMUser imUserId] , hostId);
-        int res = [QAVEndpoint requestViewList:_avContext identifierList:@[hostId] srcTypeList:@[@(QAVVIDEO_SRC_TYPE_CAMERA)] ret:^(QAVResult result) {
+        
+        int res = [_avContext.room requestViewList:@[hostId] srcTypeList:@[@(QAVVIDEO_SRC_TYPE_CAMERA)] ret:^(QAVResult result) {
             if (QAV_OK == result)
             {
                 [ws onRequestViewCompleteResult:result];
@@ -687,6 +688,28 @@
                 
             }
         }];
+        
+        //        int res = [QAVEndpoint requestViewList:_avContext identifierList:@[hostId] srcTypeList:@[@(QAVVIDEO_SRC_TYPE_CAMERA)] ret:^(QAVResult result) {
+        //            if (QAV_OK == result)
+        //            {
+        //                [ws onRequestViewCompleteResult:result];
+        //            }
+        //            else
+        //            {
+        //                _requestHostViewTryCount++;
+        //                if (_requestHostViewTryCount >= [ws requestHostViewMaxTryCount])
+        //                {
+        //                    [ws onRequestViewCompleteResult:QAV_ERR_FAILED];
+        //                }
+        //                else
+        //                {
+        //                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //                        [ws requestHostView];
+        //                    });
+        //                }
+        //
+        //            }
+        //        }];
         if (res != QAV_OK)
         {
             DebugLog(@"QAVEndpoint requestViewList 直接返回: %d", res);
@@ -1060,6 +1083,23 @@
     return 5;
 }
 
+- (QAVMultiParam *)createdAVRoomParam
+{
+    QAVMultiParam *param = [[QAVMultiParam alloc] init];
+    param.relationId = [_roomInfo liveAVRoomId];
+    param.audioCategory = [self roomAudioCategory];
+    param.controlRole = [self roomControlRole];
+    param.authBits = [self roomAuthBitMap];
+    param.createRoom = [self isHostLive];
+    param.videoRecvMode = VIDEO_RECV_MODE_SEMI_AUTO_RECV_CAMERA_VIDEO;
+    NSInteger avcs = [(id<AVUserAble>)_IMUser avCtrlState];
+    param.enableMic = (avcs & EAVCtrlState_Mic) == EAVCtrlState_Mic;
+    param.enableSpeaker = (avcs & EAVCtrlState_Speaker) == EAVCtrlState_Speaker;
+    param.enableHdAudio = (avcs & EAVCtrlState_HDAudio) == EAVCtrlState_HDAudio;
+    param.autoRotateVideo = (avcs & EAVCtrlState_AutoRotateVideo) == EAVCtrlState_AutoRotateVideo;
+    return param;
+}
+
 // 进入AVRoom成功之后要进行的操作
 - (void)onEnterAVRoomSucc
 {
@@ -1084,28 +1124,32 @@
     
     // AVSDK默认开Speaker，关Mic，关Camera
     NSInteger state = [ah avCtrlState];
-    if (!((state & EAVCtrlState_Speaker) == EAVCtrlState_Speaker))
-    {
-        // AVSDK默认开扬声器，如果进入设置不打开，则需要手动关掉
-        [self asyncEnableSpeaker:NO isEnterRoom:YES completion:nil];
-    }
-    else
-    {
-        [self enableHostCtrlState:EAVCtrlState_Speaker];
-    }
     
-    
-    _hasEnableMicBeforeEnterBackground = ((state & EAVCtrlState_Mic) == EAVCtrlState_Mic);
-    if (_hasEnableMicBeforeEnterBackground)
-    {
-        // 打开麦克风
-        [self asyncEnableMic:YES isEnterRoom:YES completion:nil];
-    }
-    else
-    {
-        // AVSDK默认关mic
-        [self disableHostCtrlState:EAVCtrlState_Mic];
-    }
+    // ===================================================
+    // 因1.8.2将进入房间时的mic以及speaker的控制改进房间前进行控制，TCAdapter在进房间后不用再控制
+    //    if (!((state & EAVCtrlState_Speaker) == EAVCtrlState_Speaker))
+    //    {
+    //        // AVSDK默认开扬声器，如果进入设置不打开，则需要手动关掉
+    //        [self asyncEnableSpeaker:NO isEnterRoom:YES completion:nil];
+    //    }
+    //    else
+    //    {
+    //        [self enableHostCtrlState:EAVCtrlState_Speaker];
+    //    }
+    //
+    //
+    //    _hasEnableMicBeforeEnterBackground = ((state & EAVCtrlState_Mic) == EAVCtrlState_Mic);
+    //    if (_hasEnableMicBeforeEnterBackground)
+    //    {
+    //        // 打开麦克风
+    //        [self asyncEnableMic:YES isEnterRoom:YES completion:nil];
+    //    }
+    //    else
+    //    {
+    //        // AVSDK默认关mic
+    //        [self disableHostCtrlState:EAVCtrlState_Mic];
+    //    }
+    // ===================================================
     
     if (state & EAVCtrlState_Camera)
     {

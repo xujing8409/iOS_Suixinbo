@@ -371,22 +371,22 @@ Vertex loadintVertex[4] =
                     }
                     else
                     {
-                    //如果允许裁剪，说明是普通画面
-                    stride_y += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT * _image.width/_image.height)/2;
-                    if (self.isFloat && viewWidth != GROUP_SMALL_VIEW_WIDTH)
-                    {
-                        //浮窗的画面比例也和主屏幕不一样，所以要特殊处理
-                        stride_x += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT*PREVIEW_LAYER_H/PREVIEW_LAYER_W)/2;
-                    }
-                    else
-                    {
-                        if (viewWidth == GROUP_SMALL_VIEW_WIDTH)
+                        //如果允许裁剪，说明是普通画面
+                        stride_y += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT * _image.width/_image.height)/2;
+                        if (self.isFloat && viewWidth != GROUP_SMALL_VIEW_WIDTH)
                         {
-                            //小画面
-                            stride_x += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT*viewHeight/viewWidth)/2;
+                            //浮窗的画面比例也和主屏幕不一样，所以要特殊处理
+                            stride_x += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT*PREVIEW_LAYER_H/PREVIEW_LAYER_W)/2;
+                        }
+                        else
+                        {
+                            if (viewWidth == GROUP_SMALL_VIEW_WIDTH)
+                            {
+                                //小画面
+                                stride_x += (1 - (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT*viewHeight/viewWidth)/2;
+                            }
                         }
                     }
-                }
                 }
                 else
                 {

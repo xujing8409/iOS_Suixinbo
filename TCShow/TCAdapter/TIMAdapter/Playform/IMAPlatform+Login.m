@@ -72,8 +72,33 @@
     }];
     [alert show];
 }
+/*
+- (void)configGroup
+{
+    [self.contactMgr asyncConfigGroup];
+}
 
+- (void)configHost:(TIMLoginParam *)param
+{
+    if (!_host)
+    {
+        _host = [[IMAHost alloc] init];
+    }
+    _host.loginParm = param;
+    [_host asyncProfile];
+}
 
+- (void)configConversation
+{
+//    [self.conversationMgr asyncConversationList];
+}
+
+- (void)configContact
+{
+    [self.contactMgr asyncConfigContact];
+}
+
+*/
 - (void)configOnLoginSucc:(TIMLoginParam *)param
 {
     // 配置, 获取个人名片

@@ -11,23 +11,23 @@
 
 @implementation TCAVLiveRoomPushRequest
 
-- (instancetype)initWith:(id<AVRoomAble>)room type:(AVEncodeType)type context:(QAVContext *)engineContext
+- (instancetype)initWith:(id<AVRoomAble>)room type:(AVEncodeType)type
 {
-    return [self initWith:room channelName:[room liveTitle] type:type context:engineContext];
+    return [self initWith:room channelName:[room liveTitle] type:type];
 }
 
-- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName type:(AVEncodeType)type context:(QAVContext *)engineContext
+- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName type:(AVEncodeType)type
 {
-    return [self initWith:room channelName:channelName channelDesc:channelName type:type context:engineContext];
+    return [self initWith:room channelName:channelName channelDesc:channelName type:type];
 }
 
-- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName channelDesc:(NSString *)channelDesc type:(AVEncodeType)type context:(QAVContext *)engineContext
+- (instancetype)initWith:(id<AVRoomAble>)room channelName:(NSString *)channelName channelDesc:(NSString *)channelDesc type:(AVEncodeType)type
 {
     if (self = [super init])
     {
         UInt32 roomid = (UInt32)[room liveAVRoomId];
         OMAVRoomInfo *avRoomInfo = [[OMAVRoomInfo alloc] init];
-        avRoomInfo.roomId = (UInt32)[[engineContext room] roomId];
+        avRoomInfo.roomId = roomid;
         avRoomInfo.relationId = roomid;
         self.roomInfo = avRoomInfo;
         
@@ -318,7 +318,7 @@ static NSString *const kTCAVLiveRoomEnginePushingMap = @"kTCAVLiveRoomEnginePush
 
 - (void)pushStream:(AVEncodeType)type channelName:(NSString *)channelName channelDesc:(NSString *)channelDesc needCallBack:(BOOL)cb completion:(TCAVPushCompletion)completion
 {
-    TCAVLiveRoomPushRequest *pushRequest = [[TCAVLiveRoomPushRequest alloc] initWith:_roomInfo channelName:channelName channelDesc:channelDesc type:type context:_avContext];
+    TCAVLiveRoomPushRequest *pushRequest = [[TCAVLiveRoomPushRequest alloc] initWith:_roomInfo channelName:channelName channelDesc:channelDesc type:type];
     
     __weak TCAVLiveRoomEngine *ws = self;
     NSInteger state = [self getVailedPushState:type];

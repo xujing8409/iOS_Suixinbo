@@ -147,9 +147,7 @@ static BOOL kIsAlertingForceOffline = NO;
 {
     [[HUDHelper sharedInstance] syncStopLoading];
     
-    NSString *err = [[NSString alloc] initWithFormat:@"刷新票据失败\ncode:%d, error:%@", errInfo.dwErrorCode, errInfo.sErrorTitle];
-    
-    DebugLog(@"%@",err);
+    DebugLog(@"刷新票据失败 : code:%d, error:%@", errInfo.dwErrorCode, errInfo.sErrorTitle);
     
     [[HUDHelper sharedInstance] syncLoading:@"刷新票据失败,正在退出"];
     
@@ -208,7 +206,7 @@ static BOOL kIsAlertingForceOffline = NO;
  *
  *  @param status 当前状态
  */
--(void) OnProxyStatusChange:(TIM_FRIENDSHIP_PROSY_STATUS)status
+-(void) OnProxyStatusChange:(TIM_FRIENDSHIP_PROXY_STATUS)status
 {
     /*
      if (status == TIM_FRIENDSHIP_STATUS_SYNCED)

@@ -197,7 +197,6 @@
 		92377D0B1CEA0B31007AD22B /* TCAVBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C421CEA0B31007AD22B /* TCAVBaseViewController.m */; };
 		92377D0C1CEA0B31007AD22B /* TCAVLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C441CEA0B31007AD22B /* TCAVLiveViewController.m */; };
 		92377D0D1CEA0B31007AD22B /* TCAVMultiLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C461CEA0B31007AD22B /* TCAVMultiLiveViewController.m */; };
-		92377D0E1CEA0B31007AD22B /* AVFoundationEx.FrameWork in Frameworks */ = {isa = PBXBuildFile; fileRef = 92377C491CEA0B31007AD22B /* AVFoundationEx.FrameWork */; };
 		92377D0F1CEA0B31007AD22B /* QAVSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92377C4A1CEA0B31007AD22B /* QAVSDK.framework */; };
 		92377D111CEA0B31007AD22B /* QAVEndpoint+IMUserAble.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C4D1CEA0B31007AD22B /* QAVEndpoint+IMUserAble.m */; };
 		92377D121CEA0B31007AD22B /* TCAVIMMIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92377C511CEA0B31007AD22B /* TCAVIMMIManager.m */; };
@@ -233,6 +232,7 @@
 		926DEC941CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 926DEC911CF738CF00F9251B /* TCAVLiveRoomEngine+PushStream.m */; };
 		926DEC951CF738CF00F9251B /* TCAVTryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 926DEC931CF738CF00F9251B /* TCAVTryItem.m */; };
 		927600E41CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 927600E31CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m */; };
+		92A3B8541D62B373006ECD6C /* xplatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3B8531D62B373006ECD6C /* xplatform.framework */; };
 		92B7E1E71CF455FD0008CC21 /* TCAVSharedContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B7E1E61CF455FD0008CC21 /* TCAVSharedContext.m */; };
 		92C5A4661D12D75100B321AC /* TCAVCallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A4641D12D75100B321AC /* TCAVCallManager.m */; };
 		92C5A4691D12D76500B321AC /* AVIMCMD+TCAVCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C5A4681D12D76500B321AC /* AVIMCMD+TCAVCall.m */; };
@@ -649,7 +649,6 @@
 		92377C451CEA0B31007AD22B /* TCAVMultiLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVMultiLiveViewController.h; sourceTree = "<group>"; };
 		92377C461CEA0B31007AD22B /* TCAVMultiLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVMultiLiveViewController.m; sourceTree = "<group>"; };
 		92377C471CEA0B31007AD22B /* AVViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVViewHeader.h; sourceTree = "<group>"; };
-		92377C491CEA0B31007AD22B /* AVFoundationEx.FrameWork */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVFoundationEx.FrameWork; sourceTree = "<group>"; };
 		92377C4A1CEA0B31007AD22B /* QAVSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QAVSDK.framework; sourceTree = "<group>"; };
 		92377C4C1CEA0B31007AD22B /* QAVEndpoint+IMUserAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QAVEndpoint+IMUserAble.h"; sourceTree = "<group>"; };
 		92377C4D1CEA0B31007AD22B /* QAVEndpoint+IMUserAble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QAVEndpoint+IMUserAble.m"; sourceTree = "<group>"; };
@@ -720,6 +719,8 @@
 		926DEC931CF738CF00F9251B /* TCAVTryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVTryItem.m; sourceTree = "<group>"; };
 		927600E21CFC465300BA9632 /* TCAVLiveRoomEngine+Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TCAVLiveRoomEngine+Record.h"; sourceTree = "<group>"; };
 		927600E31CFC465300BA9632 /* TCAVLiveRoomEngine+Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TCAVLiveRoomEngine+Record.m"; sourceTree = "<group>"; };
+		92A3B8531D62B373006ECD6C /* xplatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xplatform.framework; sourceTree = "<group>"; };
+
 		92B7E1E51CF455FD0008CC21 /* TCAVSharedContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVSharedContext.h; sourceTree = "<group>"; };
 		92B7E1E61CF455FD0008CC21 /* TCAVSharedContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVSharedContext.m; sourceTree = "<group>"; };
 		92C5A4631D12D75100B321AC /* TCAVCallManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVCallManager.h; sourceTree = "<group>"; };
@@ -745,6 +746,7 @@
 				92377AA31CEA045E007AD22B /* libstdc++.6.tbd in Frameworks */,
 				92377D201CEA0B31007AD22B /* TencentOpenAPI.framework in Frameworks */,
 				92377AA11CEA043E007AD22B /* libz.tbd in Frameworks */,
+				92A3B8541D62B373006ECD6C /* xplatform.framework in Frameworks */,
 				92377A941CE9FE7C007AD22B /* libc++.tbd in Frameworks */,
 				92377D251CEA0B31007AD22B /* libWeChatSDK.a in Frameworks */,
 				92377A9E1CE9FEA2007AD22B /* MobileCoreServices.framework in Frameworks */,
@@ -756,7 +758,6 @@
 				92377A921CE9FE72007AD22B /* SystemConfiguration.framework in Frameworks */,
 				92377A901CE9FE65007AD22B /* AVFoundation.framework in Frameworks */,
 				92377C9D1CEA0B31007AD22B /* libBlocksKit.a in Frameworks */,
-				92377D0E1CEA0B31007AD22B /* AVFoundationEx.FrameWork in Frameworks */,
 				92377D0F1CEA0B31007AD22B /* QAVSDK.framework in Frameworks */,
 				92377D1F1CEA0B31007AD22B /* TLSSDK.framework in Frameworks */,
 				92377A8E1CE9FE61007AD22B /* ImageIO.framework in Frameworks */,
@@ -1609,7 +1610,7 @@
 		92377C481CEA0B31007AD22B /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				92377C491CEA0B31007AD22B /* AVFoundationEx.FrameWork */,
+				92A3B8531D62B373006ECD6C /* xplatform.framework */,
 				92377C4A1CEA0B31007AD22B /* QAVSDK.framework */,
 			);
 			path = Libs;

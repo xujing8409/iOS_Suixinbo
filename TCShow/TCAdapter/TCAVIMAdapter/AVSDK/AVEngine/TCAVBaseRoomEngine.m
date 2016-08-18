@@ -49,15 +49,15 @@
         else
 #endif
         {
-            QAVContextConfig *config = [[QAVContextConfig alloc] init];
-            
-            NSString *appid = [host imSDKAppId];
-            
-            config.sdk_app_id = appid;
-            config.app_id_at3rd = appid;
-            config.identifier = [host imUserId];
-            config.account_type = [host imSDKAccountType];
-            _avContext = [QAVContext CreateContext:config];
+            //            QAVContextConfig *config = [[QAVContextConfig alloc] init];
+            //
+            //            NSString *appid = [host imSDKAppId];
+            //
+            //            config.sdk_app_id = appid;
+            //            config.app_id_at3rd = appid;
+            //            config.identifier = [host imUserId];
+            //            config.account_type = [host imSDKAccountType];
+            _avContext = [QAVContext CreateContext];
         }
         
         
@@ -199,7 +199,6 @@
     [ctrl setLocalVideoDelegate:nil];
     [ctrl setRemoteVideoDelegate:nil];
     [_avContext exitRoom];
-    
 }
 
 - (BOOL)isRoomRunning
@@ -295,7 +294,7 @@
 }
 
 
--(void)OnExitRoomComplete:(int)result
+-(void)OnExitRoomComplete
 {
     if (!_avContext)
     {
@@ -320,6 +319,38 @@
     }];
 #endif
     
+}
+
+- (void)OnRoomDisconnect:(int)reason
+{
+    if (!_avContext)
+    {
+        DebugLog(@"avContext已销毁");
+        return;
+    }
+    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.sdkDisconnect|%@|sdkDisconnect room|SUCCEED|result %d", [self isHostLive] ? @"host" : @"viewer", ((IMAHost *)_IMUser).imUserId, result]));
+    
+    __weak TCAVBaseRoomEngine *ws = self;
+#if kIsUseAVSDKAsLiveScene
+    [ws onContextCloseComplete:nil];
+#else
+    [_avContext stopContext:^(QAVResult result) {
+        [ws onContextCloseComplete:nil];
+    }];
+#endif
+}
+
+- (void)OnCameraSettingNotify:(int)width Height:(int)height Fps:(int)fps
+{
+    // no nothing
+    // overwrite by subclass
+   // TCAVIMLog(@"摄像头设置变更: width = %d, height=%d fps=%d", width, height, fps);
+}
+
+- (void)OnRoomEvent:(int)type subtype:(int)subtype data:(void *)data
+{
+    //
+    TCAVIMLog(@"房间事件通知: type = %d, subtype=%d data=%@", type, subtype, data);
 }
 
 - (void)OnPrivilegeDiffNotify:(int)privilege
@@ -475,6 +506,17 @@
     
 }
 
+/**
+ @brief 摄像头返回的本地画面原始数据
+ @param 本地视频帧数据
+ */
+-(void)OnLocalVideoRawSampleBuf:(CMSampleBufferRef)buf result:(CMSampleBufferRef *)ret
+{
+    // do nothing
+    // over write by subclass
+    // 本地对画面进行预处理
+}
+
 -(void)OnVideoPreview:(QAVVideoFrame*)frameData
 {
     if (!_hasShowFirstRemoteFrame)
@@ -592,9 +634,24 @@
 #endif
     {
         __weak TCAVBaseRoomEngine *ws = self;
-        [_avContext startContext:^(QAVResult result) {
+        
+        
+        QAVContextConfig *config = [[QAVContextConfig alloc] init];
+        
+        NSString *appid = [_IMUser imSDKAppId];
+        
+        config.sdk_app_id = appid;
+        config.app_id_at3rd = appid;
+        config.identifier = [_IMUser imUserId];
+        config.account_type = [_IMUser imSDKAccountType];
+        
+        [_avContext startContextwithConfig:config andblock:^(QAVResult result) {
             [ws onContextStartComplete:(int)result];
         }];
+        
+        //        [_avContext startContext:^(QAVResult result) {
+        //            [ws onContextStartComplete:(int)result];
+        //        }];
     }
     
     
@@ -605,11 +662,14 @@
 - (QAVMultiParam *)createdAVRoomParam
 {
     QAVMultiParam *param = [[QAVMultiParam alloc] init];
-    param.roomID = [_roomInfo liveAVRoomId];
+    param.relationId = [_roomInfo liveAVRoomId];
     param.audioCategory = [self roomAudioCategory];
     param.controlRole = [self roomControlRole];
-    param.authBitMap = [self roomAuthBitMap];
-    param.autoCreateRoom = [self isHostLive];
+    param.authBits = [self roomAuthBitMap];
+    param.createRoom = [self isHostLive];
+    // 与原1.8.2之前逻辑统一
+    param.enableMic = NO;
+    param.enableSpeaker = YES;
     param.videoRecvMode = VIDEO_RECV_MODE_SEMI_AUTO_RECV_CAMERA_VIDEO;
     return param;
 }
@@ -665,11 +725,14 @@
     }
     else
     {
-        TCAVIMLog(@"StartContextr失败，开始StopContext");
         __weak TCAVBaseRoomEngine *ws = self;
-        [_avContext stopContext:^(QAVResult result) {
-            [ws onContextCloseComplete:nil];
-        }];
+        
+        QAVResult res =  [_avContext stopContext];
+        TCAVIMLog(@"StartContextr失败，StopContext = %ld", (long)res);
+        [ws onContextCloseComplete:nil];
+        //        [_avContext stopContext:^(QAVResult result) {
+        //            [ws onContextCloseComplete:nil];
+        //        }];
     }
     
 }

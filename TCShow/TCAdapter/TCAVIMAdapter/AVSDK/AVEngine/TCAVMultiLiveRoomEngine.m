@@ -224,7 +224,11 @@
         TCAVLog(([NSString stringWithFormat:@"*** clogs.viewer.upShow|%@|somebody open camera,need req data|ids %@", [_IMUser imUserId], idlist]));
         
         __weak TCAVMultiLiveRoomEngine *ws = self;
-        int res = [QAVEndpoint requestViewList:_avContext identifierList:idlist srcTypeList:typeArray ret:^(QAVResult result) {
+        
+        //        int res = [QAVEndpoint requestViewList:_avContext identifierList:idlist srcTypeList:typeArray ret:^(QAVResult result) {
+        //            [ws onRequestViewListCallBack:result ];
+        //        }];
+        int res = [_avContext.room requestViewList:idlist srcTypeList:typeArray ret:^(QAVResult result) {
             [ws onRequestViewListCallBack:result ];
         }];
         if (res != QAV_OK)
@@ -333,7 +337,8 @@
 - (void)asyncCancelAllRequestView
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(realRequestAllView) object:nil];
-    [QAVEndpoint cancelAllview:_avContext ret:nil];
+    [_avContext.room cancelAllview:nil];
+    //    [QAVEndpoint cancelAllview:_avContext ret:nil];
     [_multiUser removeAllObjects];
 }
 

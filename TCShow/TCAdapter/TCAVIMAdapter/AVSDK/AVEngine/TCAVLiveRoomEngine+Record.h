@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) NSArray *recordFileIds;   // 录制结束后，调用停止成功后，才会返回的fileID
 
-- (instancetype)initWith:(id<AVRoomAble>)room record:(AVRecordInfo *)info context:(QAVContext *)engineContext;
+- (instancetype)initWith:(id<AVRoomAble>)room record:(AVRecordInfo *)info;
 
 @end
 

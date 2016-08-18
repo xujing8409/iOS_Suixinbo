@@ -831,7 +831,6 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (NSInteger)defaultAVHostConfig
 {
-    
     // 添加推荐配置
     if (_isHost)
     {

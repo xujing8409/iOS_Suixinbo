@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[TCAVBaseRoomEngine isRoomRunning]:TCAVBaseRoomEngine.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(TCAVBaseRoomEngine *const)self">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[IMAPlatform configIMSDK:]:IMAPlatform.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(IMAPlatformConfig *)cfg">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

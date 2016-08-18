@@ -31,6 +31,7 @@
 		9228736F1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9228736E1D2D0ABA00AEE123 /* TCAVLiveRoomEngine+AudioTransmission.m */; };
 		922C36821CDC3253008518F5 /* TCAVIMMIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 922C36811CDC3253008518F5 /* TCAVIMMIManager.m */; };
 		9235FD331CD065B800AADB2A /* TCAVFrameDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9235FD321CD065B800AADB2A /* TCAVFrameDispatcher.m */; };
+		9255DEE81D6161700082D553 /* xplatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9255DEE71D6161700082D553 /* xplatform.framework */; };
 		92560A7A1CE45EE000622051 /* UserProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92560A791CE45EE000622051 /* UserProfileView.m */; };
 		92560A7D1CE45F0A00622051 /* ReportHostView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92560A7C1CE45F0A00622051 /* ReportHostView.m */; };
 		92562BB41CBBC4A2007595F9 /* LivingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92562B921CBBC4A2007595F9 /* LivingListViewController.m */; };
@@ -201,7 +202,6 @@
 		92D2CBFE1CC4E4D200501760 /* TCAVBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2CB3B1CC4E4D200501760 /* TCAVBaseViewController.m */; };
 		92D2CBFF1CC4E4D200501760 /* TCAVLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2CB3D1CC4E4D200501760 /* TCAVLiveViewController.m */; };
 		92D2CC001CC4E4D200501760 /* TCAVMultiLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2CB3F1CC4E4D200501760 /* TCAVMultiLiveViewController.m */; };
-		92D2CC011CC4E4D200501760 /* AVFoundationEx.FrameWork in Frameworks */ = {isa = PBXBuildFile; fileRef = 92D2CB421CC4E4D200501760 /* AVFoundationEx.FrameWork */; };
 		92D2CC021CC4E4D200501760 /* QAVSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92D2CB431CC4E4D200501760 /* QAVSDK.framework */; };
 		92D2CC041CC4E4D200501760 /* QAVEndpoint+IMUserAble.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2CB461CC4E4D200501760 /* QAVEndpoint+IMUserAble.m */; };
 		92D2CC051CC4E4D200501760 /* AVIMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 92D2CB4C1CC4E4D200501760 /* AVIMCache.m */; };
@@ -291,6 +291,7 @@
 		92553E6B1D00529700BE2D6C /* CommonLibraryMacroConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonLibraryMacroConfig.h; sourceTree = "<group>"; };
 		92553E6C1D005FDC00BE2D6C /* TCAdapterConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TCAdapterConfig.h; sourceTree = "<group>"; };
 		92553E6D1D00658400BE2D6C /* TIMAdapterConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TIMAdapterConfig.h; sourceTree = "<group>"; };
+		9255DEE71D6161700082D553 /* xplatform.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = xplatform.framework; sourceTree = "<group>"; };
 		92560A781CE45EE000622051 /* UserProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileView.h; sourceTree = "<group>"; };
 		92560A791CE45EE000622051 /* UserProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileView.m; sourceTree = "<group>"; };
 		92560A7B1CE45F0A00622051 /* ReportHostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportHostView.h; sourceTree = "<group>"; };
@@ -712,7 +713,6 @@
 		92D2CB3E1CC4E4D200501760 /* TCAVMultiLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAVMultiLiveViewController.h; sourceTree = "<group>"; };
 		92D2CB3F1CC4E4D200501760 /* TCAVMultiLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCAVMultiLiveViewController.m; sourceTree = "<group>"; };
 		92D2CB401CC4E4D200501760 /* AVViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVViewHeader.h; sourceTree = "<group>"; };
-		92D2CB421CC4E4D200501760 /* AVFoundationEx.FrameWork */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVFoundationEx.FrameWork; sourceTree = "<group>"; };
 		92D2CB431CC4E4D200501760 /* QAVSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QAVSDK.framework; sourceTree = "<group>"; };
 		92D2CB451CC4E4D200501760 /* QAVEndpoint+IMUserAble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QAVEndpoint+IMUserAble.h"; sourceTree = "<group>"; };
 		92D2CB461CC4E4D200501760 /* QAVEndpoint+IMUserAble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QAVEndpoint+IMUserAble.m"; sourceTree = "<group>"; };
@@ -820,13 +820,13 @@
 				92D2CC111CC4E4D200501760 /* TLSSDK.framework in Frameworks */,
 				92D2CC121CC4E4D200501760 /* TencentOpenAPI.framework in Frameworks */,
 				929408C11CD85967004A0FE2 /* libTXYUploader.a in Frameworks */,
+				9255DEE81D6161700082D553 /* xplatform.framework in Frameworks */,
 				92DC9CFB1CBB758E00702263 /* libc++.tbd in Frameworks */,
 				92DC9CF91CBB758300702263 /* SystemConfiguration.framework in Frameworks */,
 				92DC9CF71CBB757D00702263 /* AVFoundation.framework in Frameworks */,
 				92D2CB911CC4E4D200501760 /* libBlocksKit.a in Frameworks */,
 				92D2CC0F1CC4E4D200501760 /* IMSDKBugly.framework in Frameworks */,
 				92D2CC101CC4E4D200501760 /* QALSDK.framework in Frameworks */,
-				92D2CC011CC4E4D200501760 /* AVFoundationEx.FrameWork in Frameworks */,
 				92D2CC151CC4E4D200501760 /* TLSUI.framework in Frameworks */,
 				92D2CC021CC4E4D200501760 /* QAVSDK.framework in Frameworks */,
 				92D2CC171CC4E4D200501760 /* libWeChatSDK.a in Frameworks */,
@@ -1656,7 +1656,7 @@
 		92D2CB411CC4E4D200501760 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				92D2CB421CC4E4D200501760 /* AVFoundationEx.FrameWork */,
+				9255DEE71D6161700082D553 /* xplatform.framework */,
 				92D2CB431CC4E4D200501760 /* QAVSDK.framework */,
 			);
 			path = Libs;
@@ -2282,7 +2282,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo4s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "32d8f732-d114-494a-adda-1c2bdeec6d7e";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2420,7 +2420,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo4s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2457,7 +2457,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo4s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

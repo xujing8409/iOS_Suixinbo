@@ -62,9 +62,9 @@ static TCAVSharedContext *kSharedConext = nil;
         config.app_id_at3rd = appid;
         config.identifier = [host imUserId];
         config.account_type = [host imSDKAccountType];
-        QAVContext *context = [QAVContext CreateContext:config];
         
-        [context startContext:^(QAVResult result) {
+        QAVContext *context = [QAVContext CreateContext];
+        [context startContextwithConfig:config andblock:^(QAVResult result) {
             if (block)
             {
                 block();
@@ -79,18 +79,27 @@ static TCAVSharedContext *kSharedConext = nil;
 {
     if (kSharedConext)
     {
-        TCAVIMLog(@"销毁Context");
-        QAVResult res = [[TCAVSharedContext sharedInstance].sharedContext stopContext:^(QAVResult result) {
-            [QAVContext DestroyContext:[TCAVSharedContext sharedInstance].sharedContext];
-            kSharedConext = nil;
-            
-            if (block)
-            {
-                block();
-            }
-        }];
-        
-        DebugLog(@"res = %d", (int)res);
+    
+        QAVResult res = [[TCAVSharedContext sharedInstance].sharedContext stopContext];
+        TCAVIMLog(@"销毁Contextres = %d", (int)res);
+
+        [[TCAVSharedContext sharedInstance].sharedContext destroy];
+        kSharedConext = nil;
+        if (block)
+        {
+            block();
+        }
+//        QAVResult res = [[TCAVSharedContext sharedInstance].sharedContext stopContext:^(QAVResult result) {
+//            [QAVContext DestroyContext:[TCAVSharedContext sharedInstance].sharedContext];
+//            kSharedConext = nil;
+//            
+//            if (block)
+//            {
+//                block();
+//            }
+//        }];
+//        
+//        DebugLog(@"res = %d", (int)res);
     }
 }
 
