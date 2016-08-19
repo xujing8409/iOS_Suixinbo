@@ -211,17 +211,20 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 #define kSupportAudioTransmission 0
 #endif
 
-#ifndef kIsMeasureSpeed
+//==================================================================================
+// 是否支持测速
 // 测速功能IMSDK 2.2才开放，到时再改为1
-//是否集成网络测速功能 1:是 0:否
-
+// 是否集成网络测速功能 1:是 0:否
+#ifndef kIsMeasureSpeed
 #define kIsMeasureSpeed 0
 #endif
 
 
 //==================================================================================
 // TCAdapter 关键路径Log是否输入到文件还是控制台 0:关闭日志输出 1:输出到控制台 2:输出到日志文件 3:输出到控制台和文件
+#ifndef kTCAVLogSwitch
 #define kTCAVLogSwitch 0
+#endif
 
 #if kTCAVLogSwitch
 

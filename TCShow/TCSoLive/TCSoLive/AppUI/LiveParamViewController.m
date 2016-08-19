@@ -33,15 +33,15 @@
     _avRoomId.layer.borderColor = kGrayColor.CGColor;
     _avRoomId.layer.borderWidth = 1.0;
     _avRoomId.layer.cornerRadius = 5.0;
-    _avRoomId.placeholder = @"音视频房间ID";
+    _avRoomId.placeholder = @"音视频房间ID(int)";
     [self.view addSubview:_avRoomId];
     
-    _groupId = [[UITextField alloc] init];
-    _groupId.layer.borderColor = kGrayColor.CGColor;
-    _groupId.layer.borderWidth = 1.0;
-    _groupId.layer.cornerRadius = 5.0;
-    _groupId.placeholder = @"聊天室ID";
-    [self.view addSubview:_groupId];
+//    _groupId = [[UITextField alloc] init];
+//    _groupId.layer.borderColor = kGrayColor.CGColor;
+//    _groupId.layer.borderWidth = 1.0;
+//    _groupId.layer.cornerRadius = 5.0;
+//    _groupId.placeholder = @"聊天室ID";
+//    [self.view addSubview:_groupId];
     
     _hostId = [[UITextField alloc] init];
     _hostId.layer.borderColor = kGrayColor.CGColor;
@@ -86,8 +86,9 @@
     
     user.uid = _hostId.text.length ? _hostId.text : host.imUserId;
     user.name = _hostId.text.length ? _hostId.text : host.imUserId;
+    //在本例子中，用户只传入了一个int型的房间id，所以将av房间和im房间id共用一个id
     appDelegate.liveRoom.liveAVRoomId = [_avRoomId.text intValue];
-    appDelegate.liveRoom.liveIMChatRoomId = _groupId.text.length ? _groupId.text : _avRoomId.text;
+    appDelegate.liveRoom.liveIMChatRoomId = _avRoomId.text;//_groupId.text.length ? _groupId.text : _avRoomId.text;
     appDelegate.liveRoom.liveTitle = @"hellotx";
 
     TCAVLiveViewController *vc;
@@ -142,11 +143,11 @@
     [_avRoomId alignParentTopWithMargin:kDefaultMargin*10];
     [_avRoomId layoutParentHorizontalCenter];
     
-    [_groupId sameWith:_avRoomId];
-    [_groupId layoutBelow:_avRoomId margin:kDefaultMargin];
+//    [_groupId sameWith:_avRoomId];
+//    [_groupId layoutBelow:_avRoomId margin:kDefaultMargin];
     
-    [_hostId sameWith:_groupId];
-    [_hostId layoutBelow:_groupId margin:kDefaultMargin];
+    [_hostId sameWith:_avRoomId];
+    [_hostId layoutBelow:_avRoomId margin:kDefaultMargin];
     
     [_joinButton sameWith:_hostId];
     [_joinButton layoutBelow:_hostId margin:kDefaultMargin*3];

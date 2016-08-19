@@ -1093,7 +1093,11 @@
     param.createRoom = [self isHostLive];
     param.videoRecvMode = VIDEO_RECV_MODE_SEMI_AUTO_RECV_CAMERA_VIDEO;
     NSInteger avcs = [(id<AVUserAble>)_IMUser avCtrlState];
+#if kAVSDKDefaultOpenMic
     param.enableMic = (avcs & EAVCtrlState_Mic) == EAVCtrlState_Mic;
+#else
+    param.enableMic = NO;
+#endif
     param.enableSpeaker = (avcs & EAVCtrlState_Speaker) == EAVCtrlState_Speaker;
     param.enableHdAudio = (avcs & EAVCtrlState_HDAudio) == EAVCtrlState_HDAudio;
     param.autoRotateVideo = (avcs & EAVCtrlState_AutoRotateVideo) == EAVCtrlState_AutoRotateVideo;

@@ -31,7 +31,7 @@ typedef NS_ENUM(int, DemoType)
 
 @property (nonatomic, strong) UITextField *avRoomId;
 
-@property (nonatomic, strong) UITextField *groupId;
+//@property (nonatomic, strong) UITextField *groupId;
 
 @property (nonatomic, strong) UITextField *hostId;
 

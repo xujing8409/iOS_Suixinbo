@@ -373,6 +373,7 @@
     [_bottomView showLikeHeart];
     
     [_room setLivePraise:[_room livePraise] + 1];
+    [_topView onRefrshPraiseAndAudience];
     
 }
 

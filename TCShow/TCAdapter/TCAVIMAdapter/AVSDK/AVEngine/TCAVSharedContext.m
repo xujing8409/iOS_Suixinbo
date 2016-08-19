@@ -10,7 +10,7 @@
 
 @interface TCAVSharedContext ()
 
-@property (nonnull, strong) QAVContext *sharedContext;
+@property (nonatomic, strong) QAVContext *sharedContext;
 
 @end
 
@@ -52,7 +52,7 @@ static TCAVSharedContext *kSharedConext = nil;
 
 + (void)configWithStartedContext:(id<IMHostAble>)host completion:(CommonVoidBlock)block
 {
-    if (kSharedConext == nil)
+    if ([TCAVSharedContext sharedInstance].sharedContext == nil)
     {
         QAVContextConfig *config = [[QAVContextConfig alloc] init];
         
@@ -64,42 +64,32 @@ static TCAVSharedContext *kSharedConext = nil;
         config.account_type = [host imSDKAccountType];
         
         QAVContext *context = [QAVContext CreateContext];
+        [context setSpearEngineMode:QAV_SPEAR_ENGINE_MODE_WEBCLOUD];
+        
         [context startContextwithConfig:config andblock:^(QAVResult result) {
+            
             if (block)
             {
                 block();
             }
             [TCAVSharedContext sharedInstance].sharedContext = context;
-            DebugLog(@"共享的QAVContext = %p", context);
+            DebugLog(@"共享的QAVContext = %p result = %d", context, (int)result);
         }];
+        
     }
 }
 
 + (void)destroyContextCompletion:(CommonVoidBlock)block
 {
-    if (kSharedConext)
+    if ([TCAVSharedContext sharedInstance].sharedContext)
     {
-    
-        QAVResult res = [[TCAVSharedContext sharedInstance].sharedContext stopContext];
-        TCAVIMLog(@"销毁Contextres = %d", (int)res);
-
+        [[TCAVSharedContext sharedInstance].sharedContext stopContext];
         [[TCAVSharedContext sharedInstance].sharedContext destroy];
-        kSharedConext = nil;
+        [TCAVSharedContext sharedInstance].sharedContext = nil;
         if (block)
         {
             block();
         }
-//        QAVResult res = [[TCAVSharedContext sharedInstance].sharedContext stopContext:^(QAVResult result) {
-//            [QAVContext DestroyContext:[TCAVSharedContext sharedInstance].sharedContext];
-//            kSharedConext = nil;
-//            
-//            if (block)
-//            {
-//                block();
-//            }
-//        }];
-//        
-//        DebugLog(@"res = %d", (int)res);
     }
 }
 
