@@ -17,7 +17,7 @@
     DebugLog(@"======>>>>> [%@] %@ 释放成功 <<<<======", [self class], self);
 #if kIsUseAVSDKAsLiveScene
 #else
-    [QAVContext DestroyContext:_avContext];
+    [_avContext destroy];
 #endif
     [UIApplication sharedApplication].idleTimerDisabled = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -233,9 +233,10 @@
 #if kIsUseAVSDKAsLiveScene
             [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterRoom_Fail_Tip)];
 #else
-            [_avContext stopContext:^(QAVResult result) {
-                [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterRoom_Fail_Tip)];
-            }];
+            [_avContext stopContext];
+//            [_avContext stopContext:^(QAVResult result) {
+            [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterRoom_Fail_Tip)];
+//            }];
 #endif
         }
     }
@@ -246,10 +247,11 @@
 #if kIsUseAVSDKAsLiveScene
         [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_Network_Invailed_Tip)];
 #else
+        [_avContext stopContext];
         // 检查当前网络
-        [_avContext stopContext:^(QAVResult result) {
-            [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_Network_Invailed_Tip)];
-        }];
+//        [_avContext stopContext:^(QAVResult result) {
+        [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_Network_Invailed_Tip)];
+//        }];
 #endif
     }
 }
@@ -284,9 +286,10 @@
 #else
         TCAVIMLog(@"进入AV房间失败: %d, 开始StopContext", result);
         __weak TCAVBaseRoomEngine *ws = self;
-        [_avContext stopContext:^(QAVResult result) {
+        [_avContext stopContext];
+//        [_avContext stopContext:^(QAVResult result) {
             [ws onContextCloseComplete:TAVLocalizedError(ETCAVBaseRoomEngine_EnterAVRoom_Fail_Tip)];
-        }];
+//        }];
 #endif
         
         
@@ -314,9 +317,10 @@
 #if kIsUseAVSDKAsLiveScene
     [ws onContextCloseComplete:nil];
 #else
-    [_avContext stopContext:^(QAVResult result) {
+    [_avContext stopContext];
+//    [_avContext stopContext:^(QAVResult result) {
         [ws onContextCloseComplete:nil];
-    }];
+//    }];
 #endif
     
 }
@@ -334,9 +338,10 @@
 #if kIsUseAVSDKAsLiveScene
     [ws onContextCloseComplete:nil];
 #else
-    [_avContext stopContext:^(QAVResult result) {
-        [ws onContextCloseComplete:nil];
-    }];
+    [_avContext stopContext];
+//    [_avContext stopContext:^(QAVResult result) {
+    [ws onContextCloseComplete:nil];
+//    }];
 #endif
 }
 
