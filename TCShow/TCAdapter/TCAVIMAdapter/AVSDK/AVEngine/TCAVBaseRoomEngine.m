@@ -355,7 +355,7 @@
 - (void)OnRoomEvent:(int)type subtype:(int)subtype data:(void *)data
 {
     //
-    TCAVIMLog(@"房间事件通知: type = %d, subtype=%d data=%@", type, subtype, data);
+// TCAVIMLog(@"房间事件通知: type = %d, subtype=%d data=%p", type, subtype, data);
 }
 
 - (void)OnPrivilegeDiffNotify:(int)privilege
