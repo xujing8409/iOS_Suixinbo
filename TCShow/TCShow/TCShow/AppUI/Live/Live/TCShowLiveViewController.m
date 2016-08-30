@@ -243,26 +243,33 @@
         NSDate *startTime = [NSDate date];
         TCAVIMLog(@"主播退出直播间上报开始:%@", [kTCAVIMLogDateFormatter stringFromDate:startTime]);
 #endif
-        
         __weak TCShowLiveUIViewController *ws = self;
-        LiveEndRequest *req = [[LiveEndRequest alloc] initWithHandler:^(BaseRequest *request) {
+        if ([IMAPlatform sharedInstance].isConnected)
+        {
+            LiveEndRequest *req = [[LiveEndRequest alloc] initWithHandler:^(BaseRequest *request) {
 #if kSupportTimeStatistics
-            NSDate *date = [NSDate date];
-            TCAVIMLog(@"主播退出直播间上报开始:%@ 成功回调时间:%@ 接口耗时:%0.3f (s)", [kTCAVIMLogDateFormatter stringFromDate:startTime], [kTCAVIMLogDateFormatter stringFromDate:date], [date timeIntervalSinceDate:startTime]);
+                NSDate *date = [NSDate date];
+                TCAVIMLog(@"主播退出直播间上报开始:%@ 成功回调时间:%@ 接口耗时:%0.3f (s)", [kTCAVIMLogDateFormatter stringFromDate:startTime], [kTCAVIMLogDateFormatter stringFromDate:date], [date timeIntervalSinceDate:startTime]);
 #endif
-            // 上传成功，界面开始计时
-            LiveEndResponseData *rec = (LiveEndResponseData *)request.response.data;
-            [ws showLiveResult:rec.record];
-        } failHandler:^(BaseRequest *request) {
+                // 上传成功，界面开始计时
+                LiveEndResponseData *rec = (LiveEndResponseData *)request.response.data;
+                [ws showLiveResult:rec.record];
+            } failHandler:^(BaseRequest *request) {
 #if kSupportTimeStatistics
-            NSDate *date = [NSDate date];
-            TCAVIMLog(@"主播退出直播间上报开始:%@ 失败回调时间:%@ 接口耗时:%0.3f (s)", [kTCAVIMLogDateFormatter stringFromDate:startTime], [kTCAVIMLogDateFormatter stringFromDate:date], [date timeIntervalSinceDate:startTime]);
+                NSDate *date = [NSDate date];
+                TCAVIMLog(@"主播退出直播间上报开始:%@ 失败回调时间:%@ 接口耗时:%0.3f (s)", [kTCAVIMLogDateFormatter stringFromDate:startTime], [kTCAVIMLogDateFormatter stringFromDate:date], [date timeIntervalSinceDate:startTime]);
 #endif
+                TCShowLiveListItem *item = (TCShowLiveListItem *)[ws.roomEngine getRoomInfo];
+                [ws showLiveResult:item];
+            }];
+            req.liveItem = (TCShowLiveListItem *)self.liveController.roomInfo;;
+            [[WebServiceEngine sharedEngine] asyncRequest:req wait:YES];
+        }
+        else
+        {
             TCShowLiveListItem *item = (TCShowLiveListItem *)[ws.roomEngine getRoomInfo];
             [ws showLiveResult:item];
-        }];
-        req.liveItem = (TCShowLiveListItem *)self.liveController.roomInfo;;
-        [[WebServiceEngine sharedEngine] asyncRequest:req wait:YES];
+        }
         
         self.isPostLiveStart = NO;
     }
@@ -284,12 +291,15 @@
 
 - (void)onPostHeartBeat
 {
-    LiveHostHeartBeatRequest *req = [[LiveHostHeartBeatRequest alloc] initWithHandler:nil failHandler:^(BaseRequest *request) {
-        // 上传心跳失败
-        DebugLog(@"上传心跳失败");
-    }];
-    req.liveItem = (TCShowLiveListItem *)self.liveController.roomInfo;
-    [[WebServiceEngine sharedEngine] asyncRequest:req wait:NO];
+    if ([IMAPlatform sharedInstance].isConnected)
+    {
+        LiveHostHeartBeatRequest *req = [[LiveHostHeartBeatRequest alloc] initWithHandler:nil failHandler:^(BaseRequest *request) {
+            // 上传心跳失败
+            DebugLog(@"上传心跳失败");
+        }];
+        req.liveItem = (TCShowLiveListItem *)self.liveController.roomInfo;
+        [[WebServiceEngine sharedEngine] asyncRequest:req wait:NO];
+    }
 }
 
 - (void)onEnterBackground
