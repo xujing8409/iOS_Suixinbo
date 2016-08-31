@@ -216,7 +216,7 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 // 测速功能IMSDK 2.2才开放，到时再改为1
 // 是否集成网络测速功能 1:是 0:否
 #ifndef kIsMeasureSpeed
-#define kIsMeasureSpeed 0
+#define kIsMeasureSpeed 1
 #endif
 
 
