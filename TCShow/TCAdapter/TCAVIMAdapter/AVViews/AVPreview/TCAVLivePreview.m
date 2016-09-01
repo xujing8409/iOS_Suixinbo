@@ -54,6 +54,8 @@
 - (void)dealloc
 {
     DebugLog(@"[%@] : %p 释放成功", [self class], self);
+    _frameDispatcher.imageView = nil;
+    _frameDispatcher = nil;
     [self stopPreview];
     [_imageView destroyOpenGL];
     _imageView = nil;
