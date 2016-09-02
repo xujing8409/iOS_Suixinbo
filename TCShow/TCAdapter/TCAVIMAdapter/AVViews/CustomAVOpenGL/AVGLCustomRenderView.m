@@ -98,7 +98,6 @@
                 if (_enableCutting == YES)
                 {
                     float widTest = (float)GL_SCREEN_WIDTH/GL_SCREEN_HEIGHT * _image.width/_image.height;
-                    NSLog(@"(%f,%f,%d,%d)",GL_SCREEN_WIDTH,GL_SCREEN_HEIGHT,_image.width,_image.height);
                     if (widTest > 1) {
                         //PC端 720P的情况下，应该要X轴做裁剪
                         if (self.isFloat)
@@ -121,7 +120,6 @@
                         }
                         else
                         {
-                            NSLog(@"(%f)",GROUP_SMALL_VIEW_WIDTH);
                             if (viewWidth == GROUP_SMALL_VIEW_WIDTH)
                             {
                                 //小画面
