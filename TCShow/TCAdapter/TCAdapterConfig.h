@@ -234,8 +234,17 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 #define TCAVLog(log)
 #endif
 
+//==================================================================================
 
+#ifndef kTCInteractSubViewVerticalSize
+#define kTCInteractSubViewVerticalSize CGSizeMake(90, 120)
+#endif
+
+#ifndef kTCInteractSubViewHorizontalSize
+#define kTCInteractSubViewHorizontalSize CGSizeMake(120, 90)
+#endif
 
 #endif /* TCAdapterConfig_h */
+
 
 

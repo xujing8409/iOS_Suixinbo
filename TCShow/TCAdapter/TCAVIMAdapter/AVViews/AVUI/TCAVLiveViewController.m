@@ -274,7 +274,8 @@
 
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine videoFrame:(QAVVideoFrame *)frame
 {
-    [_livePreview render:frame mirrorReverse:[engine isFrontCamera] fullScreen:YES];
+//    [_livePreview render:frame mirrorReverse:[engine isFrontCamera] fullScreen:YES];
+    [_livePreview render:frame roomEngine:engine fullScreen:YES];
 }
 
 - (void)onAppEnterForeground

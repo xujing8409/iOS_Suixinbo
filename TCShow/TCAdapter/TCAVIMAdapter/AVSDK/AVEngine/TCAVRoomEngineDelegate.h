@@ -25,6 +25,9 @@
 // tip: 成功或失败的提示语
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine enterRoom:(id<AVRoomAble>)room succ:(BOOL)succ tipInfo:(NSString *)tip;
 
+// 当因无网或未传心跳包到后端
+- (void)onAVEngine:(TCAVBaseRoomEngine *)engine disConnect:(id<AVRoomAble>)room;
+
 // 当前用户主动进入调用exitLive退出AVRoom回调
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine exitRoom:(id<AVRoomAble>)room succ:(BOOL)succ tipInfo:(NSString *)tip;
 

@@ -4,7 +4,7 @@
 
 IMSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160830/IMSDK2.2.1.Release.zip 下载后解压，然后再放至对应放到工程目录  TCShow/TCAdapter/TIMAdapter/Framework/IMSDK
 
-AVSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160830/AVSDK1.8.2.21.Release.zip  下载后解压，然后再放至对应放到工程目录  TCShow/TCAdapter/TCAVIMAdapter/Libs
+AVSDK : http://tcshowsdks-10022853.cos.myqcloud.com/20160902/AVSDK1.8.2.27.Release.zip.zip 下载后解压，然后再放至对应放到工程目录  TCShow/TCAdapter/TCAVIMAdapter/Libs
 
 新版本随心播经过重构，完善了功能，处理了大量的异常情况，请开发者在编码过程中注意，异常情况包括如下：
 
