@@ -16,7 +16,7 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        _iLiveRotationType = ILiveRotation_Auto;
+        _iLiveRotationType = kAVGLCustomRenderViewRotateMode;
     }
     return self;
 }
@@ -246,7 +246,7 @@
         }
     }
     
-    if (_iLiveRotationType != ILiveRotation_Crop && _image.dataFormat != Data_Format_NV12)
+    if (_iLiveRotationType == ILiveRotation_Crop && _image.dataFormat != Data_Format_NV12)
     {
         vertX = -1;
         vertY = -1;
