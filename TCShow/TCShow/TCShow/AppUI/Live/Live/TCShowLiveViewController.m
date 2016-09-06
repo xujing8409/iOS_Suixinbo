@@ -304,17 +304,23 @@
 
 - (void)onEnterBackground
 {
-    [self onPostHeartBeat];
-    [_liveView pauseLive];
-    [_heartTimer invalidate];
-    _heartTimer = nil;
+    if (self.isPostLiveStart)
+    {
+        [self onPostHeartBeat];
+        [_liveView pauseLive];
+        [_heartTimer invalidate];
+        _heartTimer = nil;
+    }
     
 }
 - (void)onEnterForeground
 {
-    [self onPostHeartBeat];
-    [_liveView resumeLive];
-    [self startLiveTimer];
+    if (self.isPostLiveStart)
+    {
+        [self onPostHeartBeat];
+        [_liveView resumeLive];
+        [self startLiveTimer];
+    }
 }
 
 
@@ -414,11 +420,53 @@
     }
     else
     {
-        TCAVLiveRoomEngine *re = (TCAVLiveRoomEngine *)_roomEngine;
-        [re asyncStartRecordCompletion:^(BOOL succ, TCAVLiveRoomRecordRequest *req) {
-            rec.selected = succ;
-            [[HUDHelper sharedInstance] tipMessage:succ ? @"开始录制" : @"开启录制失败"];
+        
+        UIActionSheet *sheet = [[UIActionSheet alloc] init];
+        [sheet bk_addButtonWithTitle:@"音频录制" handler:^{
+            
+            TCAVLiveRoomEngine *engine = (TCAVLiveRoomEngine *)_roomEngine;
+            NSString *tag = @"8921";
+            AVRecordInfo *avRecordinfo = [[AVRecordInfo alloc] init];
+            avRecordinfo.fileName = [[engine getRoomInfo] liveTitle];
+            avRecordinfo.tags = @[tag];
+            avRecordinfo.classId = [tag intValue];
+            avRecordinfo.isTransCode = NO;
+            avRecordinfo.isScreenShot = NO;
+            avRecordinfo.isWaterMark = NO;
+            avRecordinfo.recordType = AV_RECORD_TYPE_AUDIO;
+            
+            rec.enabled = NO;
+            [engine asyncStartRecord:avRecordinfo completion:^(BOOL succ, TCAVLiveRoomRecordRequest *req) {
+                DebugLog(@"开始音频录制成功");
+                rec.enabled = YES;
+                rec.selected = succ;
+            }];
+            
         }];
+        
+        [sheet bk_addButtonWithTitle:@"视频录制" handler:^{
+            TCAVLiveRoomEngine *engine = (TCAVLiveRoomEngine *)_roomEngine;
+            NSString *tag = @"8921";
+            AVRecordInfo *avRecordinfo = [[AVRecordInfo alloc] init];
+            avRecordinfo.fileName = [[engine getRoomInfo] liveTitle];
+            avRecordinfo.tags = @[tag];
+            avRecordinfo.classId = [tag intValue];
+            avRecordinfo.isTransCode = NO;
+            avRecordinfo.isScreenShot = NO;
+            avRecordinfo.isWaterMark = NO;
+            avRecordinfo.recordType = AV_RECORD_TYPE_VIDEO;
+            
+            rec.enabled = NO;
+            [engine asyncStartRecord:avRecordinfo completion:^(BOOL succ, TCAVLiveRoomRecordRequest *req) {
+                DebugLog(@"开始视频录制成功");
+                rec.enabled = YES;
+                rec.selected = succ;
+            }];
+        }];
+        
+        
+        [sheet bk_setCancelButtonWithTitle:@"取消" handler:nil];
+        [sheet showInView:self.view];
     }
     
 }

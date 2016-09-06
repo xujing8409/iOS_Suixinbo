@@ -1000,7 +1000,12 @@ static BOOL kRectHostCancelInteract = NO;
 - (void)onAppEnterForeground
 {
     [super onAppEnterForeground];
-    [self startRenderTimer];
+    
+    TCShowMultiUILiveViewController *vc = (TCShowMultiUILiveViewController *)_liveView;
+    if (vc.isPostLiveStart)
+    {
+        [self startRenderTimer];
+    }
 }
 
 - (void)startRenderTimer
