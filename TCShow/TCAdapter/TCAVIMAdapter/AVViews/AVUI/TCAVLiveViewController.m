@@ -198,9 +198,9 @@
 
 - (void)exitLive
 {
+    [_livePreview stopPreview];
     if (_msgHandler)
     {
-        [_livePreview stopPreview];
         [_msgHandler exitLiveChatRoom:^{
             [super exitLive];
         } fail:^(int code, NSString *msg) {

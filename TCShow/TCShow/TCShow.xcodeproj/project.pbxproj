@@ -2207,6 +2207,7 @@
 		92D383541CDA37C80001EA04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TCShow/TCShow-Prefix.pch";
@@ -2219,6 +2220,7 @@
 		92D383551CDA37C80001EA04 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TCShow/TCShow-Prefix.pch";
@@ -2300,7 +2302,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "32d8f732-d114-494a-adda-1c2bdeec6d7e";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2438,7 +2440,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2475,7 +2477,7 @@
 				OTHER_CFLAGS = "-O0";
 				OTHER_CPLUSPLUSFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

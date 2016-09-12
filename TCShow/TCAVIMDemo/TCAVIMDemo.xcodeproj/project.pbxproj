@@ -2152,7 +2152,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2276,7 +2276,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2308,7 +2308,7 @@
 					"$(SRCROOT)/../TCAdapter/TIMAdapter/Framework/WXApi",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo6s;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mm40qq.TCShowDemo8s;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

@@ -72,6 +72,7 @@
 // AVSDK成员变化通知，不创建IM聊天室情况下使用
 // 若创建了IM聊天室，建议使用IM聊天室来来处理直播成员变化（AVSDK 里面的房间，当人数达到一定数量(>50)时，AVSDK不保证这些通知会到达）
 // 本次重构中主要侧重使用IM作直播房间监听
+// users为 id<IMUserAble>对像，
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users exitRoom:(id<AVRoomAble>)room;
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users enterRoom:(id<AVRoomAble>)room;
 - (void)onAVEngine:(TCAVBaseRoomEngine *)engine users:(NSArray *)users event:(QAVUpdateEvent)event;
