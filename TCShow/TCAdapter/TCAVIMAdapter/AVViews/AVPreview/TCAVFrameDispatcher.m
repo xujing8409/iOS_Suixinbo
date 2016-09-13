@@ -169,4 +169,8 @@
     }
     return YES;
 }
+
+- (BOOL)calcFullScr2{
+    return YES;
+}
 @end

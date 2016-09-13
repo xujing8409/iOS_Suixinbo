@@ -29,6 +29,12 @@
 
 @implementation AVSingleFrameDispatcher
 
+- (void)dealloc
+{
+    DebugLog(@"[%@] dealloc", [self class]);
+    [super dealloc];
+}
+
 -(void)dispatchVideoFrame:(QAVVideoFrame*)args isSubFrame:(BOOL) isSubFrame format:(ENDataFormat)enDataFormat
 {
     if (self.imageView != nil) {
@@ -121,5 +127,7 @@
     }
     return YES;
 }
-
+- (BOOL)calcFullScr2{
+    return YES;
+}
 @end

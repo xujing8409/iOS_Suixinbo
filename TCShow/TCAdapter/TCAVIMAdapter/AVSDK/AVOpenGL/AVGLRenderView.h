@@ -15,8 +15,8 @@
 
 @interface AVGLNickView : UIView
 {
-    UIImageView *_backGroundView;
-    UILabel     *_nickLabel;
+    UIImageView * _backGroundView;
+    UILabel     * _nickLabel;
 }
 
 @property (nonatomic,retain)UIImageView * backGroundView;
@@ -115,7 +115,11 @@ typedef struct
     
     AVGLNickView     *_nickView;//昵称label.
     BOOL        _isShowNickName;
-
+    
+    //对于纹理宽度不被8整除的要做下stride.
+    Byte*       _strideBuf;
+    int         _bufLen;
+    float        _StridedTexCoord;
 }
 
 @property (nonatomic,retain) AVGLImage * image;
