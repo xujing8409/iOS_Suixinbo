@@ -148,6 +148,8 @@
     _liveView = [[TCShowLiveView alloc] initWith:(id<TCShowLiveRoomAble>)room];
     _liveView.topView.delegate = self;
     [self.view addSubview:_liveView];
+    
+    self.isPostLiveStart = !_liveController.isHost;
 }
 
 - (BOOL)isPureMode

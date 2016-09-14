@@ -204,6 +204,7 @@ static BOOL kRectHostCancelInteract = NO;
     _liveView = liveView;
     
     [kInteractAlert dismissWithClickedButtonIndex:0 animated:YES];
+    self.isPostLiveStart = !_liveController.isHost;
 }
 
 
