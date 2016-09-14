@@ -277,6 +277,7 @@
     }
     else
     {
+        self.isPostLiveStart = NO;
         self.navigationController.navigationBarHidden = NO;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
