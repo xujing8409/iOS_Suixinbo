@@ -309,7 +309,7 @@
         DebugLog(@"avContext已销毁");
         return;
     }
-    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.quitRoom|%@|quit av room|SUCCEED|result %d", [self isHostLive] ? @"host" : @"viewer", ((IMAHost *)_IMUser).imUserId, result]));
+    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.quitRoom|%@|quit av room|SUCCEED|result", [self isHostLive] ? @"host" : @"viewer", ((IMAHost *)_IMUser).imUserId]));
 #if kSupportTimeStatistics
     NSDate *date = [NSDate date];
     TCAVIMLog(@"%@ 从退房:%@ 到ExitRoom时间:%@ 总耗时:%0.3f (s)", [self isHostLive] ? @"主播" : @"观众", [kTCAVIMLogDateFormatter stringFromDate:_logStartDate], [kTCAVIMLogDateFormatter stringFromDate:date] , -[_logStartDate timeIntervalSinceDate:date]);
@@ -337,7 +337,7 @@
         DebugLog(@"avContext已销毁");
         return;
     }
-    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.sdkDisconnect|%@|sdkDisconnect room|SUCCEED|result %d", [self isHostLive] ? @"host" : @"viewer", ((IMAHost *)_IMUser).imUserId, result]));
+    TCAVLog(([NSString stringWithFormat:@" *** clogs.%@.sdkDisconnect|%@|sdkDisconnect room|SUCCEED|result %d", [self isHostLive] ? @"host" : @"viewer", ((IMAHost *)_IMUser).imUserId, reason]));
     
     __weak TCAVBaseRoomEngine *ws = self;
 #if kIsUseAVSDKAsLiveScene

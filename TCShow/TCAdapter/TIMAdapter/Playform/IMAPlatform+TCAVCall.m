@@ -24,7 +24,7 @@ static NSString *const kIMAPlatformCallViewController = @"kIMAPlatformCallViewCo
 }
 
 
-- (void)onRecvCall:(AVIMCMD *)cmd conversation:(IMAConversation *)conv isFromChatting:(BOOL)isChatting
+- (void)onRecvCall:(AVIMCMD *)cmd conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting
 {
     // 说明正在通话中
     if (self.callViewController)

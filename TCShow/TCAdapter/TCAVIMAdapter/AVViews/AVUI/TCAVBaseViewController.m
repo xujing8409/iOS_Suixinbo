@@ -112,17 +112,18 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 - (void)viewDidLoad
 {
+    [self startEnterLiveInViewDidLoad];
+    
     [super viewDidLoad];
     
     self.view.backgroundColor = kBlackColor;
     self.navigationController.navigationBarHidden = YES;
     
-    if ([self isImmediatelyEnterLive])
-    {
-        [self checkNetWorkBeforeLive];
-    }
+    
     
 }
+
+
 
 
 - (void)onAudioInterruption:(NSNotification *)notification
@@ -468,6 +469,14 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 
 @implementation TCAVBaseViewController (ProtectedMethod)
 
+- (void)startEnterLiveInViewDidLoad
+{
+    if ([self isImmediatelyEnterLive])
+    {
+        [self checkNetWorkBeforeLive];
+    }
+}
+
 - (BOOL)isImmediatelyEnterLive
 {
     return YES;
@@ -564,6 +573,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     _hasHandleCall = NO;
     _isPhoneInterupt = NO;
     DebugLog(@"返回前台");
+    TCAVIMLog(@"返回前台");
     [_roomEngine onRoomEnterForeground];
 }
 
@@ -577,6 +587,7 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
 {
     _isAtForeground = NO;
     DebugLog(@"进入后台");
+    TCAVIMLog(@"进入后台");
     [_roomEngine onRoomEnterBackground];
 }
 

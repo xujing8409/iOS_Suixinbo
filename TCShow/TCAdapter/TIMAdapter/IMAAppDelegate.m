@@ -59,6 +59,45 @@
     
     return YES;
 }
+
+#if kSupportCallScene
+//============================================
+
+- (TCAVCallViewController *)presentCallViewControllerWith:(id<IMUserAble>)user type:(BOOL)isVoice callMsgHandler:(id<AVIMCallHandlerAble>)callHandler
+{
+    //    if ([user isC2CType] || [user isGroupType])
+    //    {
+    //        IMAHost *host = [IMAPlatform sharedInstance].host;
+    //        IMACallRoom *callRoom = [[IMACallRoom alloc] init];
+    //        callRoom.callSponsor = host;
+    //        callRoom.callRoomID = [host getAVCallRoomID];
+    //
+    //        TCAVCallViewController *callVC = [[TCAVCallViewController alloc] initWith:callRoom user:host];
+    //        callVC.enableIM = NO;
+    //        [self.topViewController presentViewController:callVC animated:YES completion:nil];
+    //        return callVC;
+    //    }
+    return nil;
+}
+
+- (TCAVCallViewController *)presentCommingCallViewControllerWith:(AVIMCMD *)callUser conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting
+{
+    //    // 目前只支持好友
+    //    IMAUser *user = [[IMAPlatform sharedInstance].contactMgr getUserByUserId:[callUser.sender imUserId]];
+    //
+    //    IMAHost *host = [IMAPlatform sharedInstance].host;
+    //    // 没有获取到，去查陌生人
+    ////    BOOL isVoice = [callUser isVoiceCall];
+    //    TCAVCallViewController *callVC = [[TCAVCallViewController alloc] initWith:callUser user:host];
+    //    callVC.enableIM = NO;
+    //
+    //    [self.topViewController presentViewController:callVC animated:YES completion:nil];
+    //    return callVC;
+    
+    return nil;
+    
+}
+#endif
 @end
 
 #else
@@ -191,7 +230,44 @@
     }
 }
 
+#if kSupportCallScene
+//============================================
 
+- (TCAVCallViewController *)presentCallViewControllerWith:(id<IMUserAble>)user type:(BOOL)isVoice callMsgHandler:(id<AVIMCallHandlerAble>)callHandler
+{
+    //    if ([user isC2CType] || [user isGroupType])
+    //    {
+    //        IMAHost *host = [IMAPlatform sharedInstance].host;
+    //        IMACallRoom *callRoom = [[IMACallRoom alloc] init];
+    //        callRoom.callSponsor = host;
+    //        callRoom.callRoomID = [host getAVCallRoomID];
+    //
+    //        TCAVCallViewController *callVC = [[TCAVCallViewController alloc] initWith:callRoom user:host];
+    //        callVC.enableIM = NO;
+    //        [self.topViewController presentViewController:callVC animated:YES completion:nil];
+    //        return callVC;
+    //    }
+    return nil;
+}
+
+- (TCAVCallViewController *)presentCommingCallViewControllerWith:(AVIMCMD *)callUser conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting
+{
+    //    // 目前只支持好友
+    //    IMAUser *user = [[IMAPlatform sharedInstance].contactMgr getUserByUserId:[callUser.sender imUserId]];
+    //
+    //    IMAHost *host = [IMAPlatform sharedInstance].host;
+    //    // 没有获取到，去查陌生人
+    ////    BOOL isVoice = [callUser isVoiceCall];
+    //    TCAVCallViewController *callVC = [[TCAVCallViewController alloc] initWith:callUser user:host];
+    //    callVC.enableIM = NO;
+    //
+    //    [self.topViewController presentViewController:callVC animated:YES completion:nil];
+    //    return callVC;
+    
+    return nil;
+    
+}
+#endif
 @end
 
 

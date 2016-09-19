@@ -75,7 +75,15 @@
                         degree = 180;
                     }
                 }
-                degree = 270+degree;
+                if (peerFrameAngle == 1 || peerFrameAngle == 3)
+                {
+                    degree = [self calcRotateAngle:peerFrameAngle selfAngle:selfFrameAngle];
+                }
+                else
+                {
+                    degree = 270+degree;
+                }
+                
                 //始终全屏显示
                 isFullScreenShow = YES;
                 break;

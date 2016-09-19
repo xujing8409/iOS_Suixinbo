@@ -835,7 +835,7 @@ static BOOL kRectHostCancelInteract = NO;
     // 添加推荐配置
     if (_isHost)
     {
-        return EAVCtrlState_All;
+        return EAVCtrlState_Mic | EAVCtrlState_Speaker | EAVCtrlState_Camera;
     }
     else
     {

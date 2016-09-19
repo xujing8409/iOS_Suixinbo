@@ -34,6 +34,7 @@
     _avRoomId.layer.borderWidth = 1.0;
     _avRoomId.layer.cornerRadius = 5.0;
     _avRoomId.placeholder = @"音视频房间ID(int)";
+    _avRoomId.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_avRoomId];
     
 //    _groupId = [[UITextField alloc] init];
@@ -53,7 +54,7 @@
     [self.view addSubview:_hostId];
     
     _joinButton = [[ImageTitleButton alloc] initWithStyle:ETitleLeftImageRightCenter];
-    [_joinButton setTitle:@"加入" forState:UIControlStateNormal];
+    [_joinButton setTitle:@"创建/加入" forState:UIControlStateNormal];
     [_joinButton setTitleColor:kWhiteColor forState:UIControlStateNormal];
     [_joinButton setTitleColor:kLightGrayColor forState:UIControlStateHighlighted];
     [_joinButton setBackgroundColor:kBlueColor];
@@ -69,6 +70,15 @@
     _exitButton.layer.cornerRadius = 5.0;
     [_exitButton addTarget:self action:@selector(onLogout:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_exitButton];
+    
+    _loginUser = [[UILabel alloc] init];
+    _loginUser.layer.borderColor = kGrayColor.CGColor;
+    _loginUser.layer.borderWidth = 1.0;
+    _loginUser.layer.cornerRadius = 5.0;
+    _loginUser.textAlignment = NSTextAlignmentCenter;
+    NSString *curLoginId = [IMAPlatform sharedInstance].host.imUserId;
+    _loginUser.text = [NSString stringWithFormat:@"当前登录用户:%@",curLoginId];
+    [self.view addSubview:_loginUser];
     
 }
 
@@ -156,6 +166,9 @@
     [_exitButton layoutBelow:_joinButton margin:kDefaultMargin];
     
     
+    [_loginUser sizeWith:CGSizeMake(self.view.bounds.size.width * 2/3, 44)];
+    [_loginUser layoutBelow:_exitButton margin:kDefaultMargin*5];
+    [_loginUser layoutParentHorizontalCenter];
 }
 
 @end

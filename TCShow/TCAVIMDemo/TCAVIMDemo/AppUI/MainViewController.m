@@ -8,11 +8,6 @@
 
 #import "MainViewController.h"
 
-@interface TCMenuItem : MenuItem
-
-@property (nonatomic, copy) NSString *funcDesc;
-
-@end
 
 
 @implementation TCMenuItem

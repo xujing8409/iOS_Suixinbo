@@ -71,11 +71,11 @@
         _imageView.frame = self.bounds;
         
         NSString *uid = [user imUserId];
-        AVGLRenderView *glView = [_imageView getSubviewForKey:uid];
+        AVGLCustomRenderView *glView = (AVGLCustomRenderView *)[_imageView getSubviewForKey:uid];
         
         if (!glView)
         {
-            glView = [[AVGLRenderView alloc] initWithFrame:[user avInteractArea]];
+            glView = [[AVGLCustomRenderView alloc] initWithFrame:[user avInteractArea]];
             [_imageView addSubview:glView forKey:uid];
         }
         else

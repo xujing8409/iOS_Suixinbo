@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) TCAVCallViewController *callViewController;
 
-- (void)onRecvCall:(AVIMCMD *)cmd conversation:(IMAConversation *)conv isFromChatting:(BOOL)isChatting;
+- (void)onRecvCall:(AVIMCMD *)cmd conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting;
 
 @end
 #endif

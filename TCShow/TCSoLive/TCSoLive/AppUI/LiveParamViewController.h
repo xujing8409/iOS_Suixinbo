@@ -35,5 +35,7 @@ typedef NS_ENUM(int, DemoType)
 
 @property (nonatomic, strong) UITextField *hostId;
 
+@property (nonatomic, strong) UILabel *loginUser;
+
 - (void)configDemoType:(DemoType)type;
 @end

@@ -8,6 +8,12 @@
 
 #import "MenuTableViewController.h"
 
+@interface TCMenuItem : MenuItem
+
+@property (nonatomic, copy) NSString *funcDesc;
+
+@end
+
 @interface MainViewController : MenuTableViewController
 
 @end

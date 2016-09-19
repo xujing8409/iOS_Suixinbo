@@ -236,12 +236,9 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 
 //==================================================================================
 
-#ifndef kTCInteractSubViewVerticalSize
-#define kTCInteractSubViewVerticalSize CGSizeMake(90, 120)
-#endif
 
-#ifndef kTCInteractSubViewHorizontalSize
-#define kTCInteractSubViewHorizontalSize CGSizeMake(120, 90)
+#ifndef kTCInteractSubViewSize
+#define kTCInteractSubViewSize CGSizeMake(90, 120)
 #endif
 
 //typedef enum iLiveRotationType
@@ -258,6 +255,14 @@ static NSDateFormatter *kTCAVIMLogDateFormatter = nil;
 #ifndef kAVGLCustomRenderViewRotateMode
 #define kAVGLCustomRenderViewRotateMode 0
 #endif
+
+//==================================================================================
+// 是否使用TCILiveSDK内容
+
+#ifndef kSupportILiveSDK
+#define kSupportILiveSDK 1
+#endif
+//==================================================================================
 
 #endif /* TCAdapterConfig_h */
 

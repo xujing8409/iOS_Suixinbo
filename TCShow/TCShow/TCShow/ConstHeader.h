@@ -11,8 +11,6 @@
 
 #define kTextRedColor       RGBOF(0xD54A45)
 
-#define kTCShowMultiSubViewSize CGSizeMake(80, 120)
-
 //=========================================================
 // CommonLibrary UI样式配置
 
@@ -36,6 +34,13 @@
 
 // 用户App(非随心播)改成0
 #define kIsTCShowSupportIMCustom 1
+
+#if DEBUG
+#define kAVSDKDefaultOpenMic 1
+#endif
+
+#define kIsMeasureSpeed 1
+//#define kSupportIMMsgCache 0
 //=========================================================
 
 #define kDefaultUserIcon            [UIImage imageNamed:@"default_head@2x.jpg"]

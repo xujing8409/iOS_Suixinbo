@@ -30,7 +30,7 @@
 @interface AVIMCMD : NSObject<AVIMMsgAble>
 
 @property (nonatomic, strong) id<IMUserAble> sender;            // 发送的时候可不填，IM会在TIMMessage带上发送者信息
-@property (nonatomic, assign) NSInteger userAction;             // 对应AVIMCommand命令字，必须字段
+@property (nonatomic, assign) NSInteger userAction;             // 对应AVIMCommand命令字，必填字段
 @property (nonatomic, strong) NSString *actionParam;            // 自定义参数字段，可为空，为空不传
 
 - (instancetype)initWith:(NSInteger)command;

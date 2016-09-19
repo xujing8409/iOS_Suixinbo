@@ -118,7 +118,7 @@
     }
     
     _stopDisplay=NO;
-    //[self display];
+    [self display];
 //    _timer = [NSTimer scheduledTimerWithTimeInterval:0.05f target:self selector:@selector(display) userInfo:nil repeats:YES];
 //    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     _timer = [[CADisplayLink displayLinkWithTarget:self selector:@selector(display)] retain];

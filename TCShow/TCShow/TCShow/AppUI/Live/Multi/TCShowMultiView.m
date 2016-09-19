@@ -144,7 +144,7 @@
 
 - (CGSize)viewSize
 {
-    const CGSize size = kTCInteractSubViewVerticalSize;
+    const CGSize size = kTCInteractSubViewSize;
     
     return CGSizeMake(size.width, kMargin + _multiOverlays.count * (kMargin + size.height));
 }
@@ -154,8 +154,8 @@
 {
     CGRect rect = self.bounds;
     rect = CGRectInset(rect, 0, kDefaultMargin);
-    const CGSize size = kTCInteractSubViewVerticalSize;
-    CGRect subRect = CGRectMake(rect.origin.x+(size.height-size.width), rect.origin.y, size.width, size.height);
+    const CGSize size = kTCInteractSubViewSize;
+    CGRect subRect = CGRectMake(rect.origin.x, rect.origin.y, size.width, size.height);
     
     for (TCShowMultiSubView *renderView in _multiOverlays)
     {

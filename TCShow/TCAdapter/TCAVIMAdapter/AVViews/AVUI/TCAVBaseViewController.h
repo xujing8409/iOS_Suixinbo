@@ -72,6 +72,9 @@
 // 供子类重写
 @interface TCAVBaseViewController (ProtectedMethod)
 
+// 方便已使用TCAdapter接入的人，转为使用TCILiveSDK接入
+- (void)startEnterLiveInViewDidLoad;
+
 // 是否直接进入到直播
 // 直播/互动直播场下: 直接进入, return YES
 // 电话场景下：等电话拔电话流程结束后，再进入 , return NO

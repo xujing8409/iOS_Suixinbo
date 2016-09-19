@@ -73,8 +73,8 @@
     
     
     [_topView setFrameAndLayout:CGRectMake(0, 0, rect.size.width, 110)];
-    
-    [_multiView sizeWith:CGSizeMake(120, kDefaultMargin)];
+    CGSize subViewSize = kTCInteractSubViewSize;
+    [_multiView sizeWith:CGSizeMake(subViewSize.width, kDefaultMargin)];
     [_multiView layoutBelow:_topView];
     [_multiView alignParentRightWithMargin:kDefaultMargin];
     [_multiView relayoutFrameOfSubViews];

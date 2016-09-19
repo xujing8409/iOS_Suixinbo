@@ -11,13 +11,22 @@
 
 // 该类主要是把集成IMSDK常用的操作与App相关事件关联起来
 // 方便用户继承
-@interface IMAAppDelegate : BaseAppDelegate
 
+@class TCAVCallViewController;
+@class AVIMCMD;
+@protocol AVIMCallHandlerAble;
+@interface IMAAppDelegate : BaseAppDelegate
+- (TCAVCallViewController *)presentCallViewControllerWith:(id<IMUserAble>)user type:(BOOL)isVoice callMsgHandler:(id<AVIMCallHandlerAble>)callHandler;
+- (TCAVCallViewController *)presentCommingCallViewControllerWith:(AVIMCMD *)callUser conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting;
 @end
 
 #else
 
 #import <UIKit/UIKit.h>
+
+@class TCAVCallViewController;
+@class AVIMCMD;
+@protocol AVIMCallHandlerAble;
 
 @interface IMAAppDelegate : UIResponder<UIApplicationDelegate>
 
@@ -49,6 +58,9 @@
 
 - (void)presentViewController:(UIViewController *)vc animated:(BOOL)animated completion:(void (^)())completion;
 - (void)dismissViewController:(UIViewController *)vc animated:(BOOL)animated completion:(void (^)())completion;
+
+- (TCAVCallViewController *)presentCallViewControllerWith:(id<IMUserAble>)user type:(BOOL)isVoice callMsgHandler:(id<AVIMCallHandlerAble>)callHandler;
+- (TCAVCallViewController *)presentCommingCallViewControllerWith:(AVIMCMD *)callUser conversation:(id<AVIMCallHandlerAble>)conv isFromChatting:(BOOL)isChatting;
 
 @end
 
