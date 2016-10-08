@@ -148,8 +148,6 @@
         cell = [[TCShowMultiUserListViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MultiUserCell"];
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 65, 20)];
-        
-        btn.tag = 1000 + indexPath.row;
         [btn addTarget:self action:@selector(onClickConnect:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = btn;
     }
@@ -158,6 +156,7 @@
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[iu imUserIconUrl]] placeholderImage:kDefaultUserIcon];
     cell.textLabel.text = [iu imUserName];
     UIButton *btn = (UIButton *)cell.accessoryView;
+    btn.tag = 1000 + indexPath.row;
     BOOL conn = [_delegate onUserListView:self isInteratcUser:iu];
     if (conn)
     {
