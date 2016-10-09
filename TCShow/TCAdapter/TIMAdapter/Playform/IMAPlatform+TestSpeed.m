@@ -118,10 +118,12 @@ UIAlertView *_alert;
     {
         [text appendString:[NSMutableString stringWithFormat:@"%d:",item.interfacePort]];
         
-        struct in_addr ipAddr;
-        ipAddr.s_addr = item.interfaceIP;
-        char * charIpAddr = inet_ntoa(ipAddr);
-        [text appendString:[NSString stringWithCString:charIpAddr encoding:NSUTF8StringEncoding]];
+        NSString *ipAddr = [self ip4FromUInt:item.interfaceIP];
+        
+//        struct in_addr ipAddr;
+//        ipAddr.s_addr = item.interfaceIP;
+//        char * charIpAddr = inet_ntoa(ipAddr);
+        [text appendString:ipAddr];
         
         [text appendString:[NSString stringWithFormat:@":%@,%@", item.idc, item.isp]];
         
@@ -143,6 +145,41 @@ UIAlertView *_alert;
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"测速结果" message:text delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+- (NSString *)ip4FromUInt:(unsigned int)ipNumber
+{
+    if (sizeof (unsigned int) != 4)
+    {
+        DebugLog(@"Unkown type!");
+        return @"";
+    }
+    
+    unsigned int mask = 0xFF000000;
+    
+    unsigned int array[sizeof(unsigned int)];
+    
+    int steps = 8;
+    int counter;
+    
+    for (counter = 0; counter < 4 ; counter++)
+    {
+        array[counter] = ((ipNumber & mask) >> (32-steps*(counter+1)));
+        mask >>= steps;
+    }
+    
+    NSMutableString *mutableString = [NSMutableString string];
+    
+    for (int index = counter-1; index >=0; index--)
+    {
+        [mutableString appendString:[NSString stringWithFormat:@"%d",array[index]]];
+        if (index != 0)
+        {
+            [mutableString appendString:@"."];
+        }
+    }
+    
+    return mutableString;
 }
 
 

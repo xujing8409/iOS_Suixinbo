@@ -62,6 +62,10 @@
                 degree = isLocal ? degree + 180.0f : degree;
                 //计算是否全屏显示
                 isFullScreenShow = [self calcFullScr:peerFrameAngle selfAngle:selfFrameAngle];
+                if (frame.frameDesc.height > frame.frameDesc.width)
+                {
+                    isFullScreenShow = !isFullScreenShow;
+                }
                 break;
             case ILiveRotation_FullScreen:
                 //计算旋转角度
@@ -84,6 +88,10 @@
                     degree = 270+degree;
                 }
                 
+                if (frame.frameDesc.height > frame.frameDesc.width)
+                {
+                    degree -= 90;
+                }
                 //始终全屏显示
                 isFullScreenShow = YES;
                 break;

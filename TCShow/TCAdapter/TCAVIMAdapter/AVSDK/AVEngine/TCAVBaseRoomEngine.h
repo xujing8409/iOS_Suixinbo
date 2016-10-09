@@ -116,6 +116,7 @@
 // 修改角色不包括修改音频场景，音频场景仍然需要在进入房间前指定而且进入房间以后不能修改
 - (QAVResult)changeAVControlRole:(NSString *)role;
 
+- (NSDictionary *)getLiveQualityParam;
 @end
 
 
