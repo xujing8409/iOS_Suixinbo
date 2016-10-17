@@ -18,7 +18,9 @@
 
 - (NSDictionary *)packageParams
 {
-    return [_pageItem serializeSelfPropertyToJsonObject];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[_pageItem serializeSelfPropertyToJsonObject]];
+    [dic setObject:@([kSdkAppId integerValue]) forKey:@"appid"];
+    return dic;
 }
 
 - (Class)responseDataClass
