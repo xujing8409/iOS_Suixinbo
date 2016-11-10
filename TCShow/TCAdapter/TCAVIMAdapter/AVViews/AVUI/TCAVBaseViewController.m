@@ -18,7 +18,7 @@
     DebugLog(@"界面[%@ : %p] 释放成功", [self class], self);
     _roomEngine = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[TIMManager sharedInstance] setUserStatusListener:[IMAPlatform sharedInstance]];
+   
     
     AVAudioSession *aSession = [AVAudioSession sharedInstance];
     [aSession setCategory:_audioSesstionCategory withOptions:_audioSesstionCategoryOptions error:nil];
@@ -331,6 +331,9 @@ static BOOL kIsAlertingForceOfflineOnLiving = NO;
     [self removePhoneListener];
     
     [self removeNetwokChangeListner];
+    
+     [[TIMManager sharedInstance] setUserStatusListener:[IMAPlatform sharedInstance]];
+    
     _isExiting = YES;
     if (_isHost)
     {

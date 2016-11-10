@@ -111,7 +111,7 @@ static NSString *const kTCAVLiveRoomEngineRecordTryItem = @"kTCAVLiveRoomEngineR
 {
     NSString *tag = @"8921";
     AVRecordInfo *avRecordinfo = [[AVRecordInfo alloc] init];
-    avRecordinfo.fileName = [_roomInfo liveTitle];
+    avRecordinfo.fileName = [NSString stringWithFormat:@"%d", [_roomInfo liveAVRoomId]];
     avRecordinfo.tags = @[tag];
     avRecordinfo.classId = [tag intValue];
     avRecordinfo.isTransCode = NO;

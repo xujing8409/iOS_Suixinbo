@@ -131,6 +131,101 @@
 //==================================================
 @implementation TCShowLiveListItem
 
+- (void)saveToLocal
+{
+    NSMutableDictionary *tcShowUserDic = [NSMutableDictionary dictionary];
+    [tcShowUserDic setObject:self.host.avatar ? self.host.avatar : @"" forKey:@"host_avatar"];
+    [tcShowUserDic setObject:self.host.username ? self.host.username : @"" forKey:@"host_username"];
+    [tcShowUserDic setObject:self.host.uid ? self.host.uid : @"" forKey:@"host_uid"];
+    [tcShowUserDic setObject:[NSNumber numberWithInteger:self.host.avCtrlState] forKey:@"host_avCtrlState"];
+    [tcShowUserDic setObject:[NSNumber numberWithInteger:self.host.avMultiUserState] forKey:@"host_avMultiUserState"];
+    
+    NSMutableDictionary *lbsDic = [NSMutableDictionary dictionary];
+    [lbsDic setObject:[NSNumber numberWithInteger:self.lbs.longitude] forKey:@"lbs_longitude"];
+    [lbsDic setObject:[NSNumber numberWithInteger:self.lbs.latitude] forKey:@"lbs_latitude"];
+    [lbsDic setObject:self.lbs.address ? self.lbs.address : @"" forKey:@"lbs_address"];
+    
+    
+    NSMutableDictionary *listItemDic = [NSMutableDictionary dictionary];
+    [listItemDic setObject:tcShowUserDic forKey:@"host"];
+    [listItemDic setObject:lbsDic forKey:@"lbs"];
+    [listItemDic setObject:self.title ? self.title : @"" forKey:@"title"];
+    [listItemDic setObject:self.cover ? self.cover : @"" forKey:@"cover"];
+    [listItemDic setObject:[NSNumber numberWithInteger:self.createTime] forKey:@"createTime"];
+    [listItemDic setObject:[NSNumber numberWithInteger:self.timeSpan] forKey:@"timeSpan"];
+    [listItemDic setObject:[NSNumber numberWithInteger:self.liveAudience] forKey:@"liveAudience"];
+    [listItemDic setObject:[NSNumber numberWithInteger:self.admireCount] forKey:@"admireCount"];
+    [listItemDic setObject:[NSNumber numberWithInteger:self.watchCount] forKey:@"watchCount"];
+    [listItemDic setObject:self.chatRoomId ? self.chatRoomId : @"" forKey:@"chatRoomId"];
+    [listItemDic setObject:[NSNumber numberWithInt:self.avRoomId] forKey:@"avRoomId"];
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    NSString *useridKey = [NSString stringWithFormat:@"LiveListItem_%@", [IMAPlatform sharedInstance].host.imUserId];
+    
+    [ud setObject:listItemDic forKey:useridKey];
+}
+
+- (void)cleanLocalData
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    NSString *useridKey = [NSString stringWithFormat:@"LiveListItem_%@", [IMAPlatform sharedInstance].host.imUserId];
+    
+    [ud setObject:nil forKey:useridKey];
+}
+
++ (instancetype)loadFromToLocal
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *useridKey = [NSString stringWithFormat:@"LiveListItem_%@", [IMAPlatform sharedInstance].host.imUserId];
+    if (useridKey)
+    {
+        NSDictionary *listItemDic = [ud dictionaryForKey:useridKey];
+        if (!listItemDic)
+        {
+            return nil;
+        }
+        
+        NSLog(@"%@", listItemDic);
+        NSMutableDictionary *tcShowUserDic = [listItemDic objectForKey:@"host"];
+        NSMutableDictionary *lbsDic = [listItemDic objectForKey:@"lbs"];
+        
+        TCShowLiveListItem *item = [[TCShowLiveListItem alloc] init];
+        
+        item.host = [[TCShowUser alloc] init];
+        item.host.avatar = [tcShowUserDic objectForKey:@"host_avatar"];
+        item.host.username = [tcShowUserDic objectForKey:@"host_username"];
+        item.host.uid = [tcShowUserDic objectForKey:@"host_uid"];
+        item.host.avCtrlState = [[tcShowUserDic objectForKey:@"host_avCtrlState"] integerValue];
+        item.host.avMultiUserState = [[tcShowUserDic objectForKey:@"host_avMultiUserState"] integerValue];
+        
+        item.lbs = [[LocationItem alloc] init];
+        item.lbs.longitude = [[lbsDic objectForKey:@"lbs_longitude"] integerValue];
+        item.lbs.latitude = [[lbsDic objectForKey:@"lbs_latitude"] integerValue];
+        item.lbs.address = [lbsDic objectForKey:@"lbs_address"];
+        
+        item.title = [listItemDic objectForKey:@"title"];
+        item.cover = [listItemDic objectForKey:@"cover"];
+        item.createTime = [[listItemDic objectForKey:@"createTime"] integerValue];
+        item.timeSpan = [[listItemDic objectForKey:@"timeSpan"] integerValue];
+        item.liveAudience = [[listItemDic objectForKey:@"liveAudience"] integerValue];
+        item.admireCount = [[listItemDic objectForKey:@"admireCount"] integerValue];
+        item.watchCount = [[listItemDic objectForKey:@"watchCount"] integerValue];
+        item.chatRoomId = [listItemDic objectForKey:@"chatRoomId"];
+        item.avRoomId = [[listItemDic objectForKey:@"avRoomId"] intValue];
+        
+        //加载之后置空
+        [ud setObject:nil forKey:useridKey];
+        
+        return item;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 - (NSString *)liveIMChatRoomId
 {
     return self.chatRoomId;

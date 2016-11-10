@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+
+
 @interface AppDelegate ()
 
 @end
@@ -27,6 +29,7 @@
 }
 
 #if kIsIMAAppFromBase
+
 #else
 // 一般用户自己App都会重写该方法
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -49,7 +52,31 @@
         return;
     }
     
-    
     self.window.rootViewController = [[TarBarController alloc] init];
+    
+    if (!_resotreLiveParam)
+    {
+        _resotreLiveParam = [[TCShowLiveListItem alloc] init];
+    }
+    //获取恢复房间参数
+    //延迟1秒,是为了等待登录成功之后配置好host的值。
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        TCShowLiveListItem *item = [TCShowLiveListItem loadFromToLocal];
+        if (item)
+        {
+            UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:@"提示" message:@"是否恢复上次直播间" cancelButtonTitle:@"取消" otherButtonTitles:@[@"确定"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 1)
+                {
+                    _resotreLiveParam = item;
+                    
+                    TCShowMultiLiveViewController *vc = [[TCShowMultiLiveViewController alloc] initWith:item user:[IMAPlatform sharedInstance].host];
+                    [[AppDelegate sharedAppDelegate] pushViewController:vc];
+                }
+            }];
+            [alert show];
+        }
+    });
+    
 }
 @end

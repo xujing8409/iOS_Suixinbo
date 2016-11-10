@@ -12,7 +12,7 @@
 
 @class TCAVMultiLivePreview;
 
-// 做多人互动直播时：Host先进
+// 做多人互动直播时：
 // 1. 角色解释 :
 //    Host ----- 主播:创建当前直播的人
 //    Guest ------ 普通观众:看直播的人
@@ -72,7 +72,7 @@
 
 @property (nonatomic, weak) TCAVMultiLivePreview *preview;
 
-@property (nonatomic, strong) NSMutableArray *multiResource;
+@property (nonatomic, readonly) NSMutableArray *multiResource;
 
 
 // 是否是主屏幕用户

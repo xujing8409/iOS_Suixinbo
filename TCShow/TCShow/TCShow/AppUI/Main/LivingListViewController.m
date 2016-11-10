@@ -141,6 +141,12 @@
     TCShowLiveListItem *item = _datas[indexPath.row];
     TCShowMultiLiveViewController *vc = [[TCShowMultiLiveViewController alloc] initWith:item user:[IMAPlatform sharedInstance].host];
     [[AppDelegate sharedAppDelegate] pushViewController:vc];
+    
+    //设置恢复房间参数
+    if ([AppDelegate sharedAppDelegate].resotreLiveParam)
+    {
+        [AppDelegate sharedAppDelegate].resotreLiveParam = item;
+    }
 #else
     // 如果是直播TCShowLiveViewController
     TCShowLiveListItem *item = _datas[indexPath.row];

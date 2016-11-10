@@ -14,7 +14,7 @@
 @interface UploadImageHelper ()
 {
     TXYUploadManager   *_uploadManager;
-    TXYPhotoUploadTask *_uploadPhotoTask;
+//    TXYPhotoUploadTask *_uploadPhotoTask;
 }
 
 @end

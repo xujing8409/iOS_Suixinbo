@@ -43,6 +43,8 @@
 {
 @protected
     MenuButton          *_liveHost;
+    ImageTitleButton    *_netStatus;
+    ImageTitleButton    *_liveStatus;
     ImageTitleButton    *_liveTime;
     ImageTitleButton    *_liveAudience;
     ImageTitleButton    *_livePraise;
@@ -52,6 +54,9 @@
     
 @protected
     __weak id<TCShowLiveRoomAble> _room;
+    
+    __weak TCAVBaseRoomEngine  *_roomEngine;
+    NSTimer             *_liveStatusTimer;
 }
 
 @property (nonatomic, readonly) MenuButton *liveHost;
@@ -71,6 +76,8 @@
 
 - (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room;
 
+- (void)setRoomEngine:(TCAVBaseRoomEngine *)engine;
+
 @end
 
 
@@ -89,6 +96,8 @@
     
 @protected
     __weak id<TCShowLiveRoomAble> _room;
+    
+    __weak TCAVBaseRoomEngine  *_roomEngine;
     
 }
 @property (nonatomic, weak) id<TCShowLiveTopViewDelegate> delegate;

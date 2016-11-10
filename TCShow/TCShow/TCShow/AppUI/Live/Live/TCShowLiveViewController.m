@@ -175,6 +175,7 @@
 - (void)uiStartLive
 {
     __weak TCShowLiveUIViewController *ws = self;
+    __weak TCShowLiveView *wlv = _liveView;
     
 #if kSupportTimeStatistics
     NSDate *startTime = [NSDate date];
@@ -187,6 +188,7 @@
 #endif
         // 上传成功，界面开始计时
         [ws startLiveTimer];
+        [wlv startLive];
         ws.isPostLiveStart = YES;
         
         
@@ -204,6 +206,7 @@
     req.liveItem = (TCShowLiveListItem *)self.liveController.roomInfo;
     [[WebServiceEngine sharedEngine] asyncRequest:req wait:NO];
 }
+
 
 - (void)showLiveResult:(TCShowLiveListItem *)item
 {
@@ -234,12 +237,13 @@
 - (void)uiEndLive
 {
     DebugLog(@"");
+    
+    [_liveView pauseLive];
+    
     if (self.isPostLiveStart)
     {
         [_heartTimer invalidate];
         _heartTimer = nil;
-        
-        [_liveView pauseLive];
         
 #if kSupportTimeStatistics
         NSDate *startTime = [NSDate date];
@@ -283,13 +287,23 @@
     }
 }
 
+- (void)startStatusListen
+{
+    TCShowLiveView *lv = _liveView;
+    [lv startLive];
+}
+
+- (void)stopStatusListen
+{
+    TCShowLiveView *lv = _liveView;
+    [lv pauseLive];
+}
+
 - (void)startLiveTimer
 {
     [_heartTimer invalidate];
     _heartTimer = nil;
     _heartTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(onPostHeartBeat) userInfo:nil repeats:YES];
-    
-    [_liveView startLive];
 }
 
 - (void)onPostHeartBeat
@@ -307,10 +321,11 @@
 
 - (void)onEnterBackground
 {
+    [_liveView pauseLive];
+    
     if (self.isPostLiveStart)
     {
         [self onPostHeartBeat];
-        [_liveView pauseLive];
         [_heartTimer invalidate];
         _heartTimer = nil;
     }
@@ -318,10 +333,12 @@
 }
 - (void)onEnterForeground
 {
+    [_liveView startLive];
+    [_liveView resumeLive];
+    
     if (self.isPostLiveStart)
     {
         [self onPostHeartBeat];
-        [_liveView resumeLive];
         [self startLiveTimer];
     }
 }
@@ -717,6 +734,8 @@
 
 - (void)onExitLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
 {
+    [[AppDelegate sharedAppDelegate].resotreLiveParam cleanLocalData];
+    
     [self releaseIMMsgHandler];
     
     
@@ -724,6 +743,10 @@
     
     TCShowLiveUIViewController *vc = (TCShowLiveUIViewController *)_liveView;
     
+    if (succ)
+    {
+        [vc stopStatusListen];
+    }
     
     if (_isHost)
     {
@@ -761,6 +784,19 @@
 {
     TCShowLiveUIViewController *uivc = (TCShowLiveUIViewController *)_liveView;
     [uivc onStartRecord:succ recordRequest:req];
+}
+
+- (void)onEnterLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
+{
+    if (succ)
+    {
+        [[AppDelegate sharedAppDelegate].resotreLiveParam saveToLocal];
+        
+        TCShowLiveUIViewController *lv = (TCShowLiveUIViewController *)_liveView;
+        [lv startStatusListen];
+    }
+    
+    [super onEnterLiveSucc:succ tipInfo:tip];
 }
 
 @end

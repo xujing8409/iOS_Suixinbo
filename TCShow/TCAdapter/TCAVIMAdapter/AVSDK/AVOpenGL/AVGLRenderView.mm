@@ -1126,6 +1126,8 @@ Vertex loadintVertex[4] =
 //绑定图像数据接口
 - (void)setImage:(AVGLImage *)image
 {
+    [EAGLContext setCurrentContext: [[AVGLShareInstance shareInstance] context]];
+    
     _onlyDisplayBackGround = NO;
     
     switch (image.viewStatus)

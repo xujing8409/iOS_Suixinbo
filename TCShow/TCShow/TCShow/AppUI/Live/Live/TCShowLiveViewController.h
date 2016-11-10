@@ -35,6 +35,9 @@
 
 - (void)uiEndLive;
 
+- (void)startStatusListen;
+- (void)stopStatusListen;
+
 - (void)showLiveResult:(TCShowLiveListItem *)item;
 
 - (void)onStartPush:(BOOL)succ pushRequest:(TCAVLiveRoomPushRequest *)req;

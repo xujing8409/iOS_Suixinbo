@@ -221,8 +221,11 @@
         [[AppDelegate sharedAppDelegate] pushViewController:vc];
     }
     
-    
-    
+    //设置恢复房间参数
+    if ([AppDelegate sharedAppDelegate].resotreLiveParam)
+    {
+        [AppDelegate sharedAppDelegate].resotreLiveParam = liveRoom;
+    }
 }
 
 //- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

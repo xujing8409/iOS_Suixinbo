@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : IMAAppDelegate
+{
+    TCShowLiveListItem    *_resotreLiveParam;
+}
 
+@property (nonatomic, strong) TCShowLiveListItem *resotreLiveParam;
 
 @end
 

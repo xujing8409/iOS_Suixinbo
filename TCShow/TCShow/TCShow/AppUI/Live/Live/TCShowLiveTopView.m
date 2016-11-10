@@ -16,14 +16,21 @@
     if (self = [super initWithFrame:CGRectZero])
     {
         _room = room;
+        
         [self addOwnViews];
         [self configOwnViews];
         
         self.backgroundColor = [kBlackColor colorWithAlphaComponent:0.3];
         self.layer.cornerRadius = 25;
         self.layer.masksToBounds = YES;
+        
     }
     return self;
+}
+
+- (void)setRoomEngine:(TCAVBaseRoomEngine *)engine
+{
+    _roomEngine = engine;
 }
 
 - (BOOL)isHost
@@ -38,11 +45,19 @@
     _liveHost.layer.masksToBounds = YES;
     [self addSubview:_liveHost];
     
+    _netStatus = [[ImageTitleButton alloc] initWithStyle:EImageLeftTitleRightCenter];
+    [_netStatus setBackgroundImage:[[UIImage imageNamed:@"net3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+    [self addSubview:_netStatus];
+    
+    _liveStatus = [[ImageTitleButton alloc] initWithStyle:EImageLeftTitleRightCenter];
+    _liveStatus.layer.cornerRadius = 5;
+    _liveStatus.backgroundColor = kGreenColor;
+    
+    [self addSubview:_liveStatus];
     
     if ([self isHost])
     {
         _liveTime = [[ImageTitleButton alloc] initWithStyle:EImageLeftTitleRightCenter];
-        [_liveTime setImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
         [_liveTime setTitleColor:kWhiteColor forState:UIControlStateNormal];
         [self addSubview:_liveTime];
     }
@@ -107,9 +122,17 @@
     [_liveHost layoutParentVerticalCenter];
     [_liveHost alignParentLeftWithMargin:3];
     
-    [_liveTime sizeWith:CGSizeMake(20, 20)];
+    [_netStatus sizeWith:CGSizeMake(20, 20)];
+    [_netStatus layoutToRightOf:_liveHost margin:5];
+    [_netStatus alignParentTopWithMargin:kDefaultMargin];
+    
+    [_liveStatus sizeWith:CGSizeMake(22, 10)];
+    [_liveStatus layoutToRightOf:_liveHost margin:5];
+    [_liveStatus alignParentBottomWithMargin:kDefaultMargin];
+    
+    [_liveTime sizeWith:CGSizeMake(15, 15)];
     [_liveTime alignTop:_liveHost];
-    [_liveTime layoutToRightOf:_liveHost margin:3];
+    [_liveTime layoutToRightOf:_netStatus margin:3];
     [_liveTime scaleToParentRightWithMargin:10];
     
     [_liveAudience sizeWith:CGSizeMake(_liveTime.bounds.size.width/2, _liveTime.bounds.size.height)];
@@ -118,15 +141,6 @@
     
     [_livePraise sameWith:_liveAudience];
     [_livePraise layoutToRightOf:_liveAudience];
-    
-    
-}
-
-- (void)startLive
-{
-    [_liveTimer invalidate];
-    _liveTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onLiveTimer) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_liveTimer forMode:NSRunLoopCommonModes];
     
     
 }
@@ -166,12 +180,118 @@
     }
 }
 
+//刷新网络状态和直播状态
+- (void)refreshNetAndLiveStatus
+{
+    if (!_roomEngine)
+    {
+        return;
+    }
+    
+    NSDictionary *paramDic = [_roomEngine getLiveQualityParam];
+//    NSLog(@"%@", @"+++++++++++++++++++++++++++++++++++++++++");
+//    NSLog(@"往返延时--------->%@",[paramDic objectForKey:@"rtt"]);
+//    NSLog(@"下行丢包率-------->%@",[paramDic objectForKey:@"loss_rate_recv"]);
+//    NSLog(@"上行丢包率-------->%@",[paramDic objectForKey:@"loss_rate_send"]);
+//    NSLog(@"udt下行丢包率---->%@",[paramDic objectForKey:@"loss_rate_recv_udt"]);
+//    NSLog(@"udt上行丢包率---->%@",[paramDic objectForKey:@"loss_rate_send_udt"]);
+//    NSLog(@"%@", @"----------------------------------------");
+    
+    static NSInteger time = 0;
+    if (time % 3 == 0)
+    {
+        int recvRate = [[paramDic objectForKey:@"loss_rate_recv"] intValue];
+        int sendRate = [[paramDic objectForKey:@"loss_rate_send"] intValue];
+        int udtRecvRate = [[paramDic objectForKey:@"loss_rate_recv_udt"] intValue];
+        int udtSendRate = [[paramDic objectForKey:@"loss_rate_send_udt"] intValue];
+        
+        //直播质量
+        //红色示警(值为预估值，不精确)
+        if (recvRate > 4000 || sendRate > 4000 || udtRecvRate > 2000 || udtSendRate > 500)
+        {
+            _liveStatus.backgroundColor = kRedColor;
+        }
+        //黄色示警
+        else if (recvRate > 2000 || sendRate > 2000 || udtRecvRate > 1000 || udtSendRate > 300)
+        {
+            _liveStatus.backgroundColor = kYellowColor;
+        }
+        else//正常
+        {
+//            [_liveStatus setBackgroundImage:[[UIImage imageNamed:@"liveStatusRed"] imageWithRenderingMode:UIImageRenderingModeAutomatic] forState:UIControlStateNormal];
+//            [_liveStatus setImage:[UIImage imageNamed:@"liveStatusRed"] forState:UIControlStateNormal];
+            _liveStatus.backgroundColor = kGreenColor;
+        }
+        
+        //网络质量(暂时用丢包率表示)
+        int status = 0;
+        // 如果下行为0，证明有可能是主播端，没有下行视频，那么要看上行视频
+        if (recvRate == 0)
+        {
+            if (sendRate > 4000)
+            {
+                status = 3;//红色警告
+            }
+            else if (sendRate > 2000)
+            {
+                status = 2;//黄色警告
+            }
+            else
+            {
+                status = 0;//正常
+            }
+        }
+        else
+        {
+            if (recvRate > 4000)
+            {
+                status = 3;//红色警告
+            }
+            else if (recvRate > 2000)
+            {
+                status = 2;//黄色警告
+            }
+            else
+            {
+                status = 0;//正常
+            }
+        }
+        
+        if (status == 0)
+        {
+            [_netStatus setBackgroundImage:[[UIImage imageNamed:@"net3"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        }
+        else if (status == 1)
+        {
+            [_netStatus setBackgroundImage:[[UIImage imageNamed:@"net2"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [_netStatus setBackgroundImage:[[UIImage imageNamed:@"net1"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forState:UIControlStateNormal];
+        }
+    }
+    time++;
+}
+
 - (void)onRefrshPraiseAndAudience
 {
     [_liveAudience setTitle:[NSString stringWithFormat:@"%d", (int)[_room liveAudience]] forState:UIControlStateNormal];
     [_livePraise setTitle:[NSString stringWithFormat:@"%d", (int)[_room livePraise]] forState:UIControlStateNormal];
 }
 
+- (void)startLive
+{
+    if ([self isHost])
+    {
+        [_liveTimer invalidate];
+        _liveTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onLiveTimer) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:_liveTimer forMode:NSRunLoopCommonModes];
+    }
+    
+    [_liveStatusTimer invalidate];
+    _liveStatusTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshNetAndLiveStatus) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_liveStatusTimer forMode:NSRunLoopCommonModes];
+}
 
 - (void)pauseLive
 {
@@ -180,12 +300,16 @@
         [_liveTimer invalidate];
         _liveTimer = nil;
     }
+    
+    if (_liveStatusTimer)
+    {
+        [_liveStatusTimer invalidate];
+        _liveStatusTimer = nil;
+    }
 }
-
 
 - (void)resumeLive
 {
-    
     [self startLive];
 }
 
@@ -280,14 +404,14 @@
 }
 - (void)pauseLive
 {
-    
     [_timeView pauseLive];
 }
+
 - (void)resumeLive
 {
-    
     [_timeView resumeLive];
 }
+
 
 - (void)onRefrshPraiseAndAudience
 {
@@ -442,6 +566,10 @@
 - (void)onRefrshPARView:(TCAVLiveRoomEngine *)engine
 {
     [_parView onRefrshPARView:engine];
+    
+    _roomEngine = engine;
+    
+    [_timeView setRoomEngine:engine];
 }
 
 - (void)changeRoomInfo:(id<TCShowLiveRoomAble>)room

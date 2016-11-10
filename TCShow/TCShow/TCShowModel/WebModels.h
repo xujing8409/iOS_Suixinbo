@@ -86,6 +86,10 @@
 @property (nonatomic, copy) NSString *chatRoomId;           // 直播聊天室
 @property (nonatomic, assign) int avRoomId;                 // 直播房间号
 
++ (instancetype)loadFromToLocal;
+
+- (void)saveToLocal;
+- (void)cleanLocalData;
 
 - (NSDictionary *)toLiveStartJson;
 - (NSDictionary *)toHeartBeatJson;

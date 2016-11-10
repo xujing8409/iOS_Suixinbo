@@ -8,7 +8,6 @@
 #if kSupportMultiLive
 #import "TCShowMultiLiveViewController.h"
 
-
 @interface TCShowMultiUserListViewCell : UITableViewCell
 
 @end
@@ -919,6 +918,8 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (void)onExitLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
 {
+    [[AppDelegate sharedAppDelegate].resotreLiveParam cleanLocalData];
+    
 #if TARGET_IPHONE_SIMULATOR
     [[HUDHelper sharedInstance] tipMessage:tip delay:0.5 completion:^{
         self.navigationController.navigationBarHidden = NO;
@@ -933,6 +934,12 @@ static BOOL kRectHostCancelInteract = NO;
 #if kSupportIMMsgCache
     [self stopRenderTimer];
 #endif
+    
+    if (succ)
+    {
+        TCShowLiveUIViewController *lv = (TCShowLiveUIViewController *)_liveView;
+        [lv stopStatusListen];
+    }
     
     if (_isHost)
     {
@@ -984,6 +991,14 @@ static BOOL kRectHostCancelInteract = NO;
 
 - (void)onEnterLiveSucc:(BOOL)succ tipInfo:(NSString *)tip
 {
+    if (succ)
+    {
+        [[AppDelegate sharedAppDelegate].resotreLiveParam saveToLocal];
+        
+        TCShowLiveUIViewController *lv = (TCShowLiveUIViewController *)_liveView;
+        [lv startStatusListen];
+    }
+    
     [super onEnterLiveSucc:succ tipInfo:tip];
     if (succ)
     {
