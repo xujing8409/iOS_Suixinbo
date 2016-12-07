@@ -26,6 +26,7 @@
 {
     [IMAPlatform configHostClass:[TCShowHost class]];
     [[NSClassFromString(@"UICalloutBarButton") appearance] setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    int a = 0;
 }
 
 #if kIsIMAAppFromBase
